@@ -3,9 +3,32 @@
 <form>
     <label for="category">Category:</label>
     <select name="category" class="form-control">
-        <option value="" >All Products</option>
-        <option value="dog">Dogs</option>
-        <option value="cat">Cats</option>
+        @if (string.IsNullOrEmpty(ViewBag.selectedCategory))
+        {
+            <option value="" selected>All Products</option>
+        }
+        else
+        {
+            <option value="">All Products</option>
+        }
+
+        @if (ViewBag.selectedCategory == "dog")
+        {
+            <option value="dog" selected>Dogs</option>
+        }
+        else
+        {
+            <option value="dog">Dogs</option>
+        }
+
+        @if (ViewBag.selectedCategory == "cat")
+        {
+            <option value="cat" selected>Cats</option>
+        }
+        else
+        {
+            <option value="cat">Cats</option>
+        }
     </select>
     <label for="sort">Sort By</label>
     <select name="sort" class="form-control">

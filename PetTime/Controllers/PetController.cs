@@ -54,8 +54,10 @@ namespace PetTime.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Details(int? id, int quantity, string breed)
         {
+            Console.WriteLine("User added" + id.ToString() + " , " + quantity.ToString());
             //TODO: Take the POSTED details and update the users cart
             return RedirectToAction("Index", "Cart");
         }

@@ -15,6 +15,7 @@ namespace PetTime.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Index(CheckoutModel model)
         {
             if(ModelState.IsValid)
