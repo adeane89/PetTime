@@ -1,0 +1,33 @@
+﻿@model PetCart
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+@if (Model.Pets.Count == 0)
+{
+    <p>You have nothing in your cart,<a asp-controller="Pet" asp-action="index"> check out some products</a></p>
+
+}
+else
+{
+    <table class="table">
+        @foreach (var pet in Model.Pets)
+        {
+        <tr>
+            <td>@pet.Name</td>
+            <td>@((pet.Price ?? 0).ToString("C"))</td>
+            <td>@pet.Description</td>
+            <td>
+                <form method="post">
+                    <input type="hidden" value="@pet.ID" />
+                    <button class="btn btn-danger">Remove</button>
+                </form>
+            </td>
+
+        </tr>
+        }
+    </table>
+}
+
+<button asp-controller="pet" asp-action="" class="btn btn-primary" >Checkout</button>

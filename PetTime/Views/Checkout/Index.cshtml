@@ -1,7 +1,28 @@
-﻿
+﻿@model CheckoutModel
 @{
     ViewData["Title"] = "Index";
 }
 
 <h2>Checkout</h2>
+@if(!this.ViewData.ModelState.IsValid)
+{
+    <div class="alet alert-danger">
+        <ul>
+            @foreach (var error in (this.ViewData.ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => x.Value.Errors)))
+            {
+                @foreach (var message in error)
+                {
+                    <li>@message.ErrorMessage</li>
+                }
+            }
+        </ul>
+    </div>
 
+}
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Email">Email</label>
+        <input type="email" asp-for="Email" required class="form-control"/>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Submit Order" />
+</form>
