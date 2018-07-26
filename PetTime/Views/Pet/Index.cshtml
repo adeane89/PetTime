@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Pet>
+
+<form>
+    <label for="category">Category:</label>
+    <select name="category" class="form-control">
+        <option value="" >All Products</option>
+        <option value="dog">Dogs</option>
+        <option value="cat">Cats</option>
+    </select>
+    <label for="sort">Sort By</label>
+    <select name="sort" class="form-control">
+        <option value="name">Name</option>
+    </select>
+    <button class="btn btn-secondary">Filter</button>
+</form>
+
+@foreach (var pet in Model)
+{
+<div>
+    <h1>@pet.Name</h1>
+    <p>@pet.Description</p>
+    <img src="@pet.ImagePath" alt="@pet.Name" />
+    <p>@(pet.Price.HasValue ? pet.Price.Value.ToString("c") : "No Price")</p>
+    <a asp-controller="Pet" asp-action="Details" asp-route-id="@pet.ID" class="btn btn-primary">View Details</a>
+</div>
+}
+
+
