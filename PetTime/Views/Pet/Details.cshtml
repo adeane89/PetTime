@@ -8,13 +8,6 @@
 <img class="img-fluid"src="/@Model.ImagePath" />
 <form method="post">
     <input type="hidden" name="id" value="@Model.ID" />
-    <select name="breed">
-        <option value="Golden Retriever">Golden Retriever</option>
-        <option value="GoldenDoodle">GoldenDoodle</option>
-        <option value="English Springer Spaniel">English Springer Spaniel</option>
-        <option value="Corgi">Corgi</option>
-        <option value="Labrador Retriever">Labrador Retriever</option>
-    </select>
     <select name="quantity">
         <option value="1">1</option>
         <option value="1">2</option>
@@ -28,31 +21,11 @@
         <option value="Sixty minutes">Sixty minutes</option>
         <option value="Ninety minutes">Ninety minutes</option>
     </select>
-    <select name="time">
-        <option value="9:00 AM">9:00 AM</option>
-        <option value="9:30 AM">9:30 AM</option>
-        <option value="10:00 AM">10:00 AM</option>
-        <option value="10:30 AM">10:30 AM</option>
-        <option value="11:00 AM">11:00 AM</option>
-        <option value="11:30 AM">11:30 AM</option>
-        <option value="12:00 PM">12:00 PM</option>
-        <option value="12:30 PM">12:30 PM</option>
-        <option value="1:00 PM">1:00 PM</option>
-        <option value="1:30 PM">1:30 PM</option>
-        <option value="2:00 PM">2:00 PM</option>
-        <option value="2:30 PM">2:30 PM</option>
-        <option value="3:00 PM">3:00 PM</option>
-        <option value="3:30 PM">3:30 PM</option>
-        <option value="4:00 PM">4:00 PM</option>
-        <option value="4:30 PM">4:30 PM</option>
-    </select>
-    <select name="date">
-        <option value="Monday">Monday</option>
-        <option value="Tuesday">Tuesday</option>
-        <option value="Wednesday">Wednesday</option>
-        <option value="Thursday">Thursday</option>
-        <option value="Friday">Friday</option>
-        <option value="Saturday">Saturday</option>
-    </select>
+    <div>
+        <label for="event-time">Date/time:</label>
+        <input type="datetime-local" id="party-time"
+               name="event-time" value="2018-07-27T19:30"
+               min="2018-07-27T00:00" max="2019-06-14T00:00" />
+    </div>
     <button class="btn btn-secondary">Add to Cart</button>
 </form>

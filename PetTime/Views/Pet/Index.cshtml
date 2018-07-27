@@ -1,33 +1,36 @@
 ﻿@model IEnumerable<Pet>
 
+<a asp-controller="Pet" asp-action="Corporate" class="btn btn-primary">View Corporate Deals!</a>
+<a asp-controller="Therapy" asp-action="Index" class="btn btn-primary">View Therapy Animal Information!</a>
 <form>
+    <h2>Sort Animals</h2>
     <label for="category">Category:</label>
     <select name="category" class="form-control">
         @if (string.IsNullOrEmpty(ViewBag.selectedCategory))
         {
-            <option value="" selected>All Products</option>
+            <option value="" selected>All Animals</option>
         }
         else
         {
-            <option value="">All Products</option>
+            <option value="">All Animals</option>
         }
 
-        @if (ViewBag.selectedCategory == "dog")
+        @if (ViewBag.selectedCategory == "dogs")
         {
-            <option value="dog" selected>Dogs</option>
+            <option value="dogs" selected>Dogs</option>
         }
         else
         {
-            <option value="dog">Dogs</option>
+            <option value="dogs">Dogs</option>
         }
 
-        @if (ViewBag.selectedCategory == "cat")
+        @if (ViewBag.selectedCategory == "cats")
         {
-            <option value="cat" selected>Cats</option>
+            <option value="cats" selected>Cats</option>
         }
         else
         {
-            <option value="cat">Cats</option>
+            <option value="cats">Cats</option>
         }
     </select>
     <label for="sort">Sort By</label>
@@ -39,13 +42,13 @@
 
 @foreach (var pet in Model)
 {
-<div>
-    <h1>@pet.Name</h1>
-    <p>@pet.Description</p>
-    <img src="@pet.ImagePath" alt="@pet.Name" />
-    <p>@(pet.Price.HasValue ? pet.Price.Value.ToString("c") : "No Price")</p>
-    <a asp-controller="Pet" asp-action="Details" asp-route-id="@pet.ID" class="btn btn-primary">View Details</a>
-</div>
+    <div class="img">
+        <h1>@pet.Name</h1>
+        <p>@pet.Description</p>
+        <img src="@pet.ImagePath" alt="@pet.Name" />
+        <p>@(pet.Price.HasValue ? pet.Price.Value.ToString("c") : "No Price")</p>
+        <a asp-controller="Pet" asp-action="Details" asp-route-id="@pet.ID" class="btn btn-primary">View Details</a>
+    </div>
 }
 
 

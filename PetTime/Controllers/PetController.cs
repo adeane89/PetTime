@@ -17,25 +17,30 @@ namespace PetTime.Controllers
             if (string.IsNullOrEmpty(category))
             {
                 ViewData["Title"] = "All Products";
-                model.Add(new Pet { ID = 1, Name = "Puppy", Description = "Come cuddle with an adorable puppy and forget about your stress!", ImagePath = "./images/puppy.jpg" });
-                model.Add(new Pet { ID = 2, Name = "Dog", Description = "Come cuddle with an older dog and relax your time away", ImagePath = "./images/dog.jpg" });
-                model.Add(new Pet { ID = 3, Name = "Kitten", Description = "Come cuddle with kitten", ImagePath = "./images/kitten.jpg" });
-                model.Add(new Pet { ID = 4, Name = "Cat", Description = "Come cuddle with cat", ImagePath = "./images/cat.jpg" });
+                model.Add(new Pet { ID = 1, Name = "Puppy", Description = "Goldendoodle", ImagePath = "./images/puppy2.jpg" });
+                model.Add(new Pet { ID = 2, Name = "Puppy", Description = "English springer spaniel", ImagePath = "./images/puppy3.jpg" });
+                model.Add(new Pet { ID = 3, Name = "Puppy", Description = "Corgi", ImagePath = "./images/puppy4.jpg" });
+                model.Add(new Pet { ID = 4, Name = "Puppy", Description = "Labrador Retriever", ImagePath = "./images/puppy5.jpg" });
+                
+                model.Add(new Pet { ID = 5, Name = "Kitten", Description = "Come cuddle with kitten", ImagePath = "./images/kitten.jpg" });
+                model.Add(new Pet { ID = 6, Name = "Cat", Description = "Come cuddle with cat", ImagePath = "./images/cat.jpg" });
 
                 Console.WriteLine("Get All Products");
             }
             else if (category.ToLowerInvariant() == "dogs")
             {
                 ViewData["Title"] = "Dog Services Avaliable";
-                model.Add(new Pet { ID = 1, Name = "Puppy", Description = "Come cuddle with an adorable puppy and forget about your stress!", ImagePath = "./images/puppy.jpg" });
-                model.Add(new Pet { ID = 2, Name = "Dog", Description = "Come cuddle with an older dog and relax your time away", ImagePath = "./images/dog.jpg" });
+                model.Add(new Pet { ID = 1, Name = "Puppy", Description = "Goldendoodle", ImagePath = "./images/puppy2.jpg" });
+                model.Add(new Pet { ID = 2, Name = "Puppy", Description = "English springer spaniel", ImagePath = "./images/puppy3.jpg" });
+                model.Add(new Pet { ID = 3, Name = "Puppy", Description = "Corgi", ImagePath = "./images/puppy4.jpg" });
+                model.Add(new Pet { ID = 4, Name = "Puppy", Description = "Labrador Retriever", ImagePath = "./images/puppy5.jpg" });
                 Console.WriteLine("Get All Dogs");
             }
             else if (category.ToLowerInvariant() == "cats")
             {
                 ViewData["Title"] = "Cat Services Avaliable";
-                model.Add(new Pet { ID = 3, Name = "Kitten", Description = "Come cuddle with kitten", ImagePath = "./images/kitten.jpg" });
-                model.Add(new Pet { ID = 4, Name = "Cat", Description = "Come cuddle with cat", ImagePath = "./images/cat.jpg" });
+                model.Add(new Pet { ID = 5, Name = "Kitten", Description = "Come cuddle with kitten", ImagePath = "./images/kitten.jpg" });
+                model.Add(new Pet { ID = 6, Name = "Cat", Description = "Come cuddle with cat", ImagePath = "./images/cat.jpg" });
                 Console.WriteLine("Get All Cats");
             }
             return View(model);
@@ -46,9 +51,9 @@ namespace PetTime.Controllers
             Pet model = new Pet
             {
                 ID = 1,
-                Name = "puppy",
-                Description = "puppy",
-                ImagePath = "./images/puppy.jpg"
+                Name = "Animal",
+                Description = "animal",
+                ImagePath = "./images/puppycat.jpg"
             };
             return View(model);
         }
@@ -58,6 +63,21 @@ namespace PetTime.Controllers
         public IActionResult Details(int? id, int quantity, string breed)
         {
             Console.WriteLine("User added" + id.ToString() + " , " + quantity.ToString());
+            //TODO: Take the POSTED details and update the users cart
+            return RedirectToAction("Index", "Cart");
+        }
+        
+        public IActionResult Corporate()
+        { 
+            ViewData["Message"] = "Your corporate page.";
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Corporate(int? id, int quantity)
+        {
+            //Console.WriteLine("User added" + id.ToString() + " , " + quantity.ToString());
             //TODO: Take the POSTED details and update the users cart
             return RedirectToAction("Index", "Cart");
         }

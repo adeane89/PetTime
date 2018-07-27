@@ -12,5 +12,14 @@ namespace PetTime.Controllers
         {
             return View();
         }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Index(int? id, int quantity)
+        {
+            //Console.WriteLine("User added" + id.ToString() + " , " + quantity.ToString());
+            //TODO: Take the POSTED details and update the users cart
+            return RedirectToAction("Index", "Cart");
+        }
     }
 }
