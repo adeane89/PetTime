@@ -17,31 +17,37 @@ namespace PetTime.Controllers
             if (string.IsNullOrEmpty(category))
             {
                 ViewData["Title"] = "All Products";
-                model.Add(new Pet { ID = 1, Name = "Puppy", Description = "Goldendoodle", ImagePath = "./images/puppy2.jpg" });
-                model.Add(new Pet { ID = 2, Name = "Puppy", Description = "English springer spaniel", ImagePath = "./images/puppy3.jpg" });
-                model.Add(new Pet { ID = 3, Name = "Puppy", Description = "Corgi", ImagePath = "./images/puppy4.jpg" });
-                model.Add(new Pet { ID = 4, Name = "Puppy", Description = "Labrador Retriever", ImagePath = "./images/puppy5.jpg" });
-                
-                model.Add(new Pet { ID = 5, Name = "Kitten", Description = "Come cuddle with kitten", ImagePath = "./images/kitten.jpg" });
-                model.Add(new Pet { ID = 6, Name = "Cat", Description = "Come cuddle with cat", ImagePath = "./images/cat.jpg" });
+                model.Add(new Pet { ID = 1, Name = "Puppy", Description = "Golden Retreiver", ImagePath = "./images/puppy1.jpg" });
+                model.Add(new Pet { ID = 2, Name = "Puppy", Description = "Goldendoodle", ImagePath = "./images/puppy2.jpg" });
+                model.Add(new Pet { ID = 3, Name = "Puppy", Description = "English Springer Spaniel", ImagePath = "./images/puppy3.jpg" });
+                model.Add(new Pet { ID = 4, Name = "Puppy", Description = "Corgi", ImagePath = "./images/puppy4.jpg" });
+                model.Add(new Pet { ID = 5, Name = "Puppy", Description = "Labrador Retriever", ImagePath = "./images/puppy5.jpg" });
 
                 Console.WriteLine("Get All Products");
             }
-            else if (category.ToLowerInvariant() == "dogs")
+            else if (category.ToLowerInvariant() == "golden")
             {
-                ViewData["Title"] = "Dog Services Avaliable";
-                model.Add(new Pet { ID = 1, Name = "Puppy", Description = "Goldendoodle", ImagePath = "./images/puppy2.jpg" });
-                model.Add(new Pet { ID = 2, Name = "Puppy", Description = "English springer spaniel", ImagePath = "./images/puppy3.jpg" });
-                model.Add(new Pet { ID = 3, Name = "Puppy", Description = "Corgi", ImagePath = "./images/puppy4.jpg" });
-                model.Add(new Pet { ID = 4, Name = "Puppy", Description = "Labrador Retriever", ImagePath = "./images/puppy5.jpg" });
+                ViewData["Title"] = "";
+                model.Add(new Pet { ID = 1, Name = "Puppy", Description = "Golden Retreiver", ImagePath = "./images/puppy1.jpg" });
                 Console.WriteLine("Get All Dogs");
             }
-            else if (category.ToLowerInvariant() == "cats")
+            else if (category.ToLowerInvariant() == "doodle")
             {
-                ViewData["Title"] = "Cat Services Avaliable";
-                model.Add(new Pet { ID = 5, Name = "Kitten", Description = "Come cuddle with kitten", ImagePath = "./images/kitten.jpg" });
-                model.Add(new Pet { ID = 6, Name = "Cat", Description = "Come cuddle with cat", ImagePath = "./images/cat.jpg" });
-                Console.WriteLine("Get All Cats");
+                ViewData["Title"] = "";
+                model.Add(new Pet { ID = 2, Name = "Puppy", Description = "Goldendoodle", ImagePath = "./images/puppy2.jpg" });
+                Console.WriteLine("Get All");
+            }
+            else if (category.ToLowerInvariant() == "spaniel")
+            {
+                ViewData["Title"] = "";
+                model.Add(new Pet { ID = 3, Name = "Puppy", Description = "English Springer Spaniel", ImagePath = "./images/puppy3.jpg" });
+                Console.WriteLine("Get All");
+            }
+            else if (category.ToLowerInvariant() == "corgi")
+            {
+                ViewData["Title"] = "";
+                model.Add(new Pet { ID = 4, Name = "Puppy", Description = "Corgi", ImagePath = "./images/puppy4.jpg" });
+                Console.WriteLine("Get All");
             }
             return View(model);
         }
@@ -53,7 +59,7 @@ namespace PetTime.Controllers
                 ID = 1,
                 Name = "Animal",
                 Description = "animal",
-                ImagePath = "./images/puppycat.jpg"
+                ImagePath = "./images/puppy1.jpg"
             };
             return View(model);
         }

@@ -2,52 +2,64 @@
 
 <a asp-controller="Pet" asp-action="Corporate" class="btn btn-primary">View Corporate Deals!</a>
 <a asp-controller="Therapy" asp-action="Index" class="btn btn-primary">View Therapy Animal Information!</a>
-<form>
-    <h2>Sort Animals</h2>
-    <label for="category">Category:</label>
+<form class="breedform">
+    <label for="category">Sort:</label>
     <select name="category" class="form-control">
         @if (string.IsNullOrEmpty(ViewBag.selectedCategory))
         {
-            <option value="" selected>All Animals</option>
+            <option value="" selected>All Breeds</option>
         }
         else
         {
-            <option value="">All Animals</option>
+            <option value="">All Breeds</option>
         }
 
-        @if (ViewBag.selectedCategory == "dogs")
+        @if (ViewBag.selectedCategory == "golden")
         {
-            <option value="dogs" selected>Dogs</option>
+            <option value="golden" selected>Golden Retreiver</option>
         }
         else
         {
-            <option value="dogs">Dogs</option>
+            <option value="golden">Golden Retreiver</option>
         }
 
-        @if (ViewBag.selectedCategory == "cats")
+        @if (ViewBag.selectedCategory == "doodle")
         {
-            <option value="cats" selected>Cats</option>
+            <option value="doodle" selected>Doodles</option>
         }
         else
         {
-            <option value="cats">Cats</option>
+            <option value="doodle">Doodles</option>
         }
-    </select>
-    <label for="sort">Sort By</label>
-    <select name="sort" class="form-control">
-        <option value="name">Name</option>
-    </select>
+
+        @if (ViewBag.selectedCategory == "spaniel")
+        {
+            <option value="spaniel" selected>Springer Spaniel</option>
+        }
+        else
+        {
+            <option value="spaniel">Springer Spaniel</option>
+        }
+        @if (ViewBag.selectedCategory == "corgi")
+        {
+            <option value="corgi" selected>Corgi</option>
+        }
+        else
+        {
+            <option value="corgi">Corgi</option>
+        }
+        </select>
     <button class="btn btn-secondary">Filter</button>
 </form>
 
 @foreach (var pet in Model)
 {
-    <div class="img">
-        <h1>@pet.Name</h1>
-        <p>@pet.Description</p>
+    <div class="petmodel">
+        <h1>@pet.Description</h1>
         <img src="@pet.ImagePath" alt="@pet.Name" />
-        <p>@(pet.Price.HasValue ? pet.Price.Value.ToString("c") : "No Price")</p>
-        <a asp-controller="Pet" asp-action="Details" asp-route-id="@pet.ID" class="btn btn-primary">View Details</a>
+        <p>
+            <a asp-controller="Pet" asp-action="Details" asp-route-id="@pet.ID" class="btn btn-primary">View Details</a>
+        </p>
     </div>
 }
 

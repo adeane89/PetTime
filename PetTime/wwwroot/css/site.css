@@ -1,4 +1,7 @@
-﻿
+﻿@font-face {
+    font-family: "Westfalia";
+    src: url('Westfalia-Regular.otf')
+}
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
@@ -13,14 +16,19 @@
     line-height: 1.4;
 }
 
+.carousel-item img {
+    width: 50%;
+    height: 50%;
+    margin: auto;
+}
 /* Make .svg files in the carousel display properly in older browsers */
 .carousel-inner .item img[src$=".svg"] {
-    width: 100%;
+    width: 90%;
 }
 
 .container {
     background-color: #e3f2fd;
-}   
+}
 /* QR code generator */
 #qrCode {
     margin: 15px;
@@ -44,8 +52,7 @@ legend {
     font: 1rem 'Fira Sans', sans-serif;
 }
 
-input,
-select {
+input, select {
     margin: .4rem;
 }
 
@@ -54,32 +61,52 @@ label {
     text-align: right;
     width: 30%;
 }
-/* The navigation bar */
-.navbar {
-    overflow: hidden;
-    background-color: #333;
-    position: fixed; /* Set the navbar to fixed position */
-    top: 0; /* Position the navbar at the top of the page */
-    width: 100%; /* Full width */
+/* Links inside the navbar */
+.navbar a {
+    float: left;
+    display: block;
+    color: #333;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: large;
 }
 
-    /* Links inside the navbar */
-    .navbar a {
-        float: left;
-        display: block;
-        color: #f2f2f2;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-    }
-
-        /* Change background on mouse-over */
-        .navbar a:hover {
-            background: #ddd;
-            color: black;
-        }
+    /* Change background on mouse-over */
+.navbar a:hover {
+        background: #ddd;
+        color: black;
+}
 
 /* Main content */
 .main {
-    margin-top: 30px; /* Add a top margin to avoid content overlay */
+    margin-top: 50px; /* Add a top margin to avoid content overlay */
+}
+.body {
+    background-color: #4BC6B9;
+    font-family: 'Barlow', sans-serif;
+}
+
+.nav {
+    z-index: 1;
+    background-color: whitesmoke;
+    margin: 25px 25px 25px 25px
+}
+
+.navbar img {
+    width: 8vw;
+    height: 8vh;
+}
+
+.petmodel {
+    display: inline-block;
+}
+
+.petmodel img {
+    max-height: 300px;
+    max-width: 200px;
+}
+
+.breedform {
+    width: 30%;
 }
