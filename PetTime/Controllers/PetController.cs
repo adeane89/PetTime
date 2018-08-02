@@ -72,9 +72,9 @@ namespace PetTime.Controllers
             //TODO: Take the POSTED details and update the users cart
             return RedirectToAction("Index", "Cart");
         }
-        
+
         public IActionResult Corporate()
-        { 
+        {
             ViewData["Message"] = "Your corporate page.";
             return View();
         }

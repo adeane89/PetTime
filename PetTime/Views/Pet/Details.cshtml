@@ -1,31 +1,35 @@
 ﻿@model Pet
 
-@{ 
-    ViewData["Title"]="Details"; 
-} 
-
-<h2>@Model.Name></h2>
-<img class="img-fluid"src="/@Model.ImagePath" />
-<form method="post">
-    <input type="hidden" name="id" value="@Model.ID" />
-    <select name="quantity">
-        <option value="1">1</option>
-        <option value="1">2</option>
-        <option value="1">3</option>
-        <option value="1">4</option>
-        <option value="1">5</option>
-    </select>
-    <select name="time length">
-        <option value="Fifteen minutes">Fifteen minutes</option>
-        <option value="Thirty minutes">Thirty minutes</option>
-        <option value="Sixty minutes">Sixty minutes</option>
-        <option value="Ninety minutes">Ninety minutes</option>
-    </select>
-    <div>
-        <label for="event-time">Date/time:</label>
-        <input type="datetime-local" id="party-time"
-               name="event-time" value="2018-07-27T19:30"
-               min="2018-07-27T00:00" max="2019-06-14T00:00" />
+@{
+    ViewData["Title"] = "Details";
+}
+@await Html.PartialAsync("_NavbarPartial")
+<div class="pages">
+    <h2>@Model.Name</h2>
+    <div class="container petmodelimage">
+        <img class="img-fluid" src="/@Model.ImagePath" />
+        <form method="post">
+            <input type="hidden" name="id" value="@Model.ID" />
+            <select name="quantity">
+                <option value="1">1</option>
+                <option value="1">2</option>
+                <option value="1">3</option>
+                <option value="1">4</option>
+                <option value="1">5</option>
+            </select>
+            <select name="time length">
+                <option value="Fifteen minutes">Fifteen minutes</option>
+                <option value="Thirty minutes">Thirty minutes</option>
+                <option value="Sixty minutes">Sixty minutes</option>
+                <option value="Ninety minutes">Ninety minutes</option>
+            </select>
+            <div>
+                <label for="event-time">Date/time:</label>
+                <input type="datetime-local" id="party-time"
+                       name="event-time" value="2018-07-27T19:30"
+                       min="2018-07-27T00:00" max="2019-06-14T00:00" />
+            </div>
+            <button class="btn btn-secondary">Add to Cart</button>
+        </form>
     </div>
-    <button class="btn btn-secondary">Add to Cart</button>
-</form>
+    </div>

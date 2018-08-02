@@ -10,7 +10,7 @@ namespace PetTime.Models
     {
         [Required]
         [EmailAddress]
-        [RegularExpression(@"a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}")]
+        [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]
         [Display(Name = "Email Address")]
         public string Email { get; set; }
     }

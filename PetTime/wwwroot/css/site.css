@@ -27,7 +27,7 @@
 }
 
 .container {
-    background-color: #e3f2fd;
+    background-color: whitesmoke;
 }
 /* QR code generator */
 #qrCode {
@@ -61,42 +61,12 @@ label {
     text-align: right;
     width: 30%;
 }
-/* Links inside the navbar */
-.navbar a {
-    float: left;
-    display: block;
-    color: #333;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: large;
-}
-
-    /* Change background on mouse-over */
-.navbar a:hover {
-        background: #ddd;
-        color: black;
-}
-
-/* Main content */
-.main {
-    margin-top: 50px; /* Add a top margin to avoid content overlay */
-}
 .body {
-    background-color: #4BC6B9;
-    font-family: 'Barlow', sans-serif;
-}
-
-.nav {
-    z-index: 1;
     background-color: whitesmoke;
-    margin: 25px 25px 25px 25px
+    font-family: 'Barlow', sans-serif;
+    color: #1b3764;
 }
 
-.navbar img {
-    width: 8vw;
-    height: 8vh;
-}
 
 .petmodel {
     display: inline-block;
@@ -109,4 +79,196 @@ label {
 
 .breedform {
     width: 30%;
+}
+
+.petmodelimage img {
+    width: 8vw;
+    height: 15vh;
+}
+
+.petmodelimage {
+    background: 0;
+}
+
+a:link {
+    text-decoration: none;
+    color: whitesmoke;
+}
+
+/********************************/
+/*       Fade Bs-carousel       */
+/********************************/
+.fade-carousel {
+    position: relative;
+    height: 100vh;
+}
+
+    .fade-carousel .carousel-inner .item {
+        height: 100vh;
+    }
+
+    .fade-carousel .carousel-indicators > li {
+        margin: 0 2px;
+        background-color: #efa35c;
+        border-color: #efa35c;
+        opacity: .7;
+    }
+
+        .fade-carousel .carousel-indicators > li.active {
+            width: 10px;
+            height: 10px;
+            opacity: 1;
+        }
+
+/********************************/
+/*          Hero Headers        */
+/********************************/
+.hero {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 0 rgba(0,0,0,.75);
+    -webkit-transform: translate3d(-50%,-50%,0);
+    -moz-transform: translate3d(-50%,-50%,0);
+    -ms-transform: translate3d(-50%,-50%,0);
+    -o-transform: translate3d(-50%,-50%,0);
+    transform: translate3d(-50%,-50%,0);
+}
+
+    .hero h1 {
+        font-size: 6em;
+        font-weight: bold;
+        margin: 0;
+        padding: 0;
+    }
+
+.fade-carousel .carousel-inner .item .hero {
+    opacity: 0;
+    -webkit-transition: 2s all ease-in-out .1s;
+    -moz-transition: 2s all ease-in-out .1s;
+    -ms-transition: 2s all ease-in-out .1s;
+    -o-transition: 2s all ease-in-out .1s;
+    transition: 2s all ease-in-out .1s;
+}
+
+.fade-carousel .carousel-inner .item.active .hero {
+    opacity: 1;
+    -webkit-transition: 2s all ease-in-out .1s;
+    -moz-transition: 2s all ease-in-out .1s;
+    -ms-transition: 2s all ease-in-out .1s;
+    -o-transition: 2s all ease-in-out .1s;
+    transition: 2s all ease-in-out .1s;
+}
+
+/********************************/
+/*            Overlay           */
+/********************************/
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background-color: #080d15;
+    opacity: .7;
+}
+
+/********************************/
+/*          Custom Buttons      */
+/********************************/
+.btn.btn-lg {
+    padding: 10px 40px;
+}
+
+.btn.btn-hero,
+.btn.btn-hero:hover,
+.btn.btn-hero:focus {
+    color: #f5f5f5;
+    background-color: #4ab8b8;
+    border-color: #1abc9c;
+    outline: none;
+    margin: 20px auto;
+}
+
+/********************************/
+/*       Slides backgrounds     */
+/********************************/
+.fade-carousel .slides .slide-1,
+.fade-carousel .slides .slide-2,
+.fade-carousel .slides .slide-3 {
+    height: 100vh;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.fade-carousel .slides .slide-1 {
+    background-image: url(../images/relax.jpg);
+}
+
+.fade-carousel .slides .slide-2 {
+    background-image: url(../images/relax2.jpg);
+}
+
+.fade-carousel .slides .slide-3 {
+    background-image: url(../images/relax3.jpg);
+}
+
+/********************************/
+/*          Media Queries       */
+/********************************/
+@media screen and (min-width: 980px) {
+    .hero {
+        width: 980px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .hero h1 {
+        font-size: 4em;
+    }
+}
+
+.navbar-wrapper {
+    position: relative;
+}
+
+.carousel {
+    top: 0;
+}
+
+.carousel-inner {
+    width: 100%;
+    overflow: hidden;
+}
+
+.navbar {
+    position: absolute;
+    top: 0;
+    z-index: 10;
+    background-color: #1b3764;
+    opacity: 0.70;
+    width: 100%;
+    height: 10vh;
+    margin-top: 30px;
+}
+    .navbar a {
+        float: left;
+        display: block;
+        color: whitesmoke;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 3vh;
+    }
+
+.pages {
+    margin-top: 150px;
+}
+
+.about {
+    text-align: center;s
 }

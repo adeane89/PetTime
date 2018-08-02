@@ -40,16 +40,6 @@ namespace PetTime.Controllers
         {
             //look through the card items to remove the id that is removed 
             return RedirectToAction("Index");
-
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Index(int? id, int quantity)
-        {
-            //Console.WriteLine("User added" + id.ToString() + " , " + quantity.ToString());
-            //TODO: Take the POSTED details and update the users cart
-            return RedirectToAction("Index", "Checkout");
         }
     }
 }
