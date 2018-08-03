@@ -264,11 +264,25 @@ a:link {
         text-decoration: none;
         font-size: 3vh;
     }
+#map {
+    height: 400px; /* The height is 400 pixels */
+    width: 40%; /* The width is the width of the web page */
+}
 
-.pages {
-    margin-top: 150px;
+.pages{
+    background-image: url(../images/golden.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 150px;
 }
 
 .about {
-    text-align: center;s
+    background-color: whitesmoke;
+    opacity: .8;
+}
+
+.events {
+    font-size: 20px;
+    background-color: whitesmoke;
+    opacity: .75;
 }

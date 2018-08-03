@@ -7,7 +7,7 @@
     <h2>Index</h2>
     @if (Model.Pets.Count == 0)
     {
-        <p>You have nothing in your cart,<a asp-controller="Pet" asp-action="index"> check out some animals or host an event!</a></p>
+        <p>You have nothing scheduled,<a asp-controller="Pet" asp-action="index"> check out some animals or host an event!</a></p>
 
     }
     else
@@ -30,5 +30,5 @@
             }
         </table>
     }
-    <a asp-controller="Checkout" asp-action="Index" class="btn btn-primary">Checkout</a>
+    <a asp-controller="Checkout" asp-action="Index" class="btn btn-primary">Continue to Payment</a>
     </div>

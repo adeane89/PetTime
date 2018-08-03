@@ -1,60 +1,75 @@
-﻿
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    ViewData["Title"] = "Therapy";
 }
 @await Html.PartialAsync("_NavbarPartial")
-<div class="pages">
-    <h2>Therapy</h2>
-    <a asp-controller="Pet" asp-action="Corporate" class="btn btn-primary">Corporate Deals!</a>
-    <a asp-controller="Pet" asp-action="Index" class="btn btn-primary">Schedule a visit!</a>
-
-    <form method="post">
-        <div class="form-group">
-            <label for="formGroupExampleInput">What kind of event is this for?</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" required placeholder="Ex: School, party, etc">
+<div class="pages overlay">
+    <div class="row">
+        <div class="col-8">
+            <form method="post">
+                <div class="form-group">
+                    <label for="formGroupExampleInput">What kind of event is this for?</label>
+                    <input type="hidden" name="id" value="event" required />
+                    <select name="event">
+                        <option value="1">Corporate</option>
+                        <option value="2">School</option>
+                        <option value="3">Party</option>
+                        <option value="4">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput2">How many animals would you like to join?</label>
+                    <input type="hidden" name="id" value="quantity" required />
+                    <select name="quantity">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+                <label for="formGroupExampleInput3">How long would you like your event to be?</label>
+                <select name="length">
+                    <option value="1">One hour</option>
+                    <option value="2">Two hours</option>
+                    <option value="3">Three hours</option>
+                </select>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="One Time">
+                    <label class="form-check-label" for="inlineCheckbox1">One time</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Recurring">
+                    <label class="form-check-label" for="inlineCheckbox2">Recurring</label>
+                </div>
+                <div>
+                    <label for="event-time">Date/time:</label>
+                    <input type="datetime-local" id="party-time"
+                           name="event-time" value="2018-07-27T19:30"
+                           min="2018-07-27T00:00" max="2019-06-14T00:00" />
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Are there any specific instructions we should follow?</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Ex: Allergies, sensory issues, etc">
+                </div>
+                <div>
+                    <button asp-controller="Cart" asp-action="Index" class="btn btn-primary">Add to Cart</button>
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-            <label for="formGroupExampleInput2">How many animals would you like to join?</label>
-            <input type="hidden" name="id" value="quantity" required />
-            <select name="quantity">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-            </select>
+        <div class="col-4">
+            <p>
+                <a asp-controller="Pet" asp-action="Index" class="btn btn-primary">Schedule a visit!</a>
+            </p>
+            <p>
+                <a asp-controller="Pet" asp-action="Corporate" class="btn btn-primary">Corporate Deals!</a>
+            </p>
+            <p>
+                <a asp-controller="Therapy" asp-action="Index" class="btn btn-primary">Therapy Animal Information!</a>
+            </p>
         </div>
-        <label for="formGroupExampleInput3">How long would you like your event to be?</label>
-        <select name="length">
-            <option value="1">One hour</option>
-            <option value="1">Two hours</option>
-            <option value="1">Three hours</option>
-        </select>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="One Time">
-            <label class="form-check-label" for="inlineCheckbox1">One time</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Recurring">
-            <label class="form-check-label" for="inlineCheckbox2">Recurring</label>
-        </div>
-        <div>
-            <label for="event-time">Date/time:</label>
-            <input type="datetime-local" id="party-time"
-                   name="event-time" value="2018-07-27T19:30"
-                   min="2018-07-27T00:00" max="2019-06-14T00:00" />
-        </div>
-        <div class="form-group">
-            <label for="formGroupExampleInput">Are there any specific instructions we should follow?</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Ex: Allergies, sensory issues, etc">
-        </div>
-        <div>
-            <button asp-controller="Cart" asp-action="Index" class="btn btn-primary">Add to Cart</button>
-        </div>
-    </form>
 </div>

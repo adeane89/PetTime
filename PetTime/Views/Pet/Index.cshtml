@@ -1,67 +1,83 @@
 ﻿@model IEnumerable<Pet>
+@{
+    ViewData["Title"] = "Services";
+}
 @await Html.PartialAsync("_NavbarPartial")
-<div class="pages">
-    <a asp-controller="Pet" asp-action="Corporate" class="btn btn-primary">Corporate Deals!</a>
-    <a asp-controller="Therapy" asp-action="Index" class="btn btn-primary">Therapy Animal Information!</a>
-    <form class="breedform">
-        <label for="category">Sort:</label>
-        <select name="category" class="form-control">
-            @if (string.IsNullOrEmpty(ViewBag.selectedCategory))
-            {
-                <option value="" selected>All Breeds</option>
-            }
-            else
-            {
-                <option value="">All Breeds</option>
-            }
+<div class="pages overlay">
+    <div class="row">
+        <div class="col-8">
+            <form class="breedform">
+                <label for="category">Sort:</label>
+                <select name="category" class="form-control">
+                    @if (string.IsNullOrEmpty(ViewBag.selectedCategory))
+                    {
+                        <option value="" selected>All Breeds</option>
+                    }
+                    else
+                    {
+                        <option value="">All Breeds</option>
+                    }
 
-            @if (ViewBag.selectedCategory == "golden")
-            {
-                <option value="golden" selected>Golden Retreiver</option>
-            }
-            else
-            {
-                <option value="golden">Golden Retreiver</option>
-            }
+                    @if (ViewBag.selectedCategory == "golden")
+                    {
+                        <option value="golden" selected>Golden Retreiver</option>
+                    }
+                    else
+                    {
+                        <option value="golden">Golden Retreiver</option>
+                    }
 
-            @if (ViewBag.selectedCategory == "doodle")
-            {
-                <option value="doodle" selected>Doodles</option>
-            }
-            else
-            {
-                <option value="doodle">Doodles</option>
-            }
+                    @if (ViewBag.selectedCategory == "doodle")
+                    {
+                        <option value="doodle" selected>Doodles</option>
+                    }
+                    else
+                    {
+                        <option value="doodle">Doodles</option>
+                    }
 
-            @if (ViewBag.selectedCategory == "spaniel")
-            {
-                <option value="spaniel" selected>Springer Spaniel</option>
-            }
-            else
-            {
-                <option value="spaniel">Springer Spaniel</option>
-            }
-            @if (ViewBag.selectedCategory == "corgi")
-            {
-                <option value="corgi" selected>Corgi</option>
-            }
-            else
-            {
-                <option value="corgi">Corgi</option>
-            }
-        </select>
-        <button class="btn btn-secondary">Filter</button>
-    </form>
+                    @if (ViewBag.selectedCategory == "spaniel")
+                    {
+                        <option value="spaniel" selected>Springer Spaniel</option>
+                    }
+                    else
+                    {
+                        <option value="spaniel">Springer Spaniel</option>
+                    }
+                    @if (ViewBag.selectedCategory == "corgi")
+                    {
+                        <option value="corgi" selected>Corgi</option>
+                    }
+                    else
+                    {
+                        <option value="corgi">Corgi</option>
+                    }
+                </select>
+                <button class="btn btn-secondary">Filter</button>
+            </form>
 
-    @foreach (var pet in Model)
-    {
-        <div class="petmodel">
-            <h1>@pet.Description</h1>
-            <img src="@pet.ImagePath" alt="@pet.Name" />
+            @foreach (var pet in Model)
+            {
+                <div class="petmodel">
+                    <h1>@pet.Description</h1>
+                    <img src="@pet.ImagePath" alt="@pet.Name" />
+                    <p>
+                        <a asp-controller="Pet" asp-action="Details" asp-route-id="@pet.ID" class="btn btn-primary">View Details</a>
+                    </p>
+                </div>
+            }
+        </div>
+        <div class="col-4">
             <p>
-                <a asp-controller="Pet" asp-action="Details" asp-route-id="@pet.ID" class="btn btn-primary">View Details</a>
+                <a asp-controller="Pet" asp-action="Index" class="btn btn-primary">Schedule a visit!</a>
+            </p>
+            <p>
+                <a asp-controller="Pet" asp-action="Corporate" class="btn btn-primary">Corporate Deals!</a>
+            </p>
+            <p>
+                <a asp-controller="Therapy" asp-action="Index" class="btn btn-primary">Therapy Animal Information!</a>
             </p>
         </div>
-    }
     </div>
+</div>
 
