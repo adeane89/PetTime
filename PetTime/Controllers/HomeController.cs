@@ -22,10 +22,15 @@ namespace PetTime.Controllers
             return View();
         }
 
-        public IActionResult Contact()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult About(ContactModel model)
         {
-            ViewData["Message"] = "Your contact page.";
-
+            if (ModelState.IsValid)
+            {
+                //todo: need to send this to an email address?
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 

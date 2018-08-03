@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<Pet>
 @await Html.PartialAsync("_NavbarPartial")
 <div class="pages">
-    <a asp-controller="Pet" asp-action="Corporate" class="btn btn-primary">View Corporate Deals!</a>
-    <a asp-controller="Therapy" asp-action="Index" class="btn btn-primary">View Therapy Animal Information!</a>
+    <a asp-controller="Pet" asp-action="Corporate" class="btn btn-primary">Corporate Deals!</a>
+    <a asp-controller="Therapy" asp-action="Index" class="btn btn-primary">Therapy Animal Information!</a>
     <form class="breedform">
         <label for="category">Sort:</label>
         <select name="category" class="form-control">

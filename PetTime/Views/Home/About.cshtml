@@ -1,5 +1,6 @@
-﻿@{
-    ViewData["Title"] = "About";
+﻿@model ContactModel
+@{
+    ViewData["Title"] = "About Us";
 }
 @await Html.PartialAsync("_NavbarPartial")
 <div class="pages about">
@@ -10,3 +11,76 @@
     <p> Studies have shown that animals can offer stress release for hours after! <a href="https://www.health.harvard.edu/blog/therapy-dog-offers-stress-relief-at-work-201107223111">Click me for proof</a>
     <p>We partner with shelters in the area to encourage pet adoption through our events.</p>
 </div>
+<div>
+    <h3>Contact Us</h3>
+
+    <address>
+        222 W. Ontario<br />
+        Chicago, IL zipcode<br />
+        <abbr title="Phone">P:</abbr>
+        425.555.0100
+    </address>
+    <address>
+        <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
+        <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+    </address>
+</div>
+
+@if (!this.ViewData.ModelState.IsValid)
+{
+    <div class="alet alert-danger">
+        <ul>
+            @foreach (var error in (this.ViewData.ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => x.Value.Errors)))
+            {
+                @foreach (var message in error)
+                {
+                    <li>@message.ErrorMessage</li>
+                }
+            }
+        </ul>
+    </div>
+
+}
+<h3>Got a question? Email us here or give us a call!</h3>
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Email">Email</label>
+        <input type="email" asp-for="Email" required class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Question"></label>
+        <input type="text" asp-for="Question" required class="form-control" />
+    </div>
+    <input type="submit" class="btn btn-primary" value="Submit Order" />
+</form>
+
+
+<style>
+    /* Set the size of the div element that contains the map */
+    #map {
+        height: 400px; /* The height is 400 pixels */
+        width: 40%; /* The width is the width of the web page */
+    }
+</style>
+<!--The div element for the map -->
+<div id="map"></div>
+<script>
+    // Initialize and add the map
+    function initMap() {
+        // The location of Uluru
+        var uluru = { lat: 41.893640, lng: - 87.635128 };
+        // The map, centered at Uluru
+        var map = new google.maps.Map(
+            document.getElementById('map'), { zoom: 14, center: uluru });
+        // The marker, positioned at Uluru
+        var marker = new google.maps.Marker({ position: uluru, map: map });
+    }
+</script>
+<!--Load the API from the specified URL
+* The async attribute allows the browser to render the page while the API loads
+* The key parameter will contain your own API key (which is not needed for this tutorial)
+* The callback parameter executes the initMap() function
+-->
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=[KEY GOES HERE]&callback=initMap">
+</script>

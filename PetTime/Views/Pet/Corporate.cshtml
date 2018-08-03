@@ -4,6 +4,8 @@
 }
 @await Html.PartialAsync("_NavbarPartial")
 <div class="pages">
+    <a asp-controller="Pet" asp-action="Index" class="btn btn-primary">Schedule a visit!</a>
+    <a asp-controller="Therapy" asp-action="Index" class="btn btn-primary">Therapy Animal Information!</a>
     <h2>Host an event!</h2>
 
     <h3>Bring our animals to your space!</h3>
@@ -53,4 +55,4 @@
             <button asp-controller="Cart" asp-action="Index" class="btn btn-primary">Add to Cart</button>
         </div>
     </form>
-    </div>
+</div>
