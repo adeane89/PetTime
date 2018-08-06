@@ -8,11 +8,16 @@ using PetTime.Models;
 
 namespace PetTime.Data
 {
+
+
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Pet> Pets { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+           
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

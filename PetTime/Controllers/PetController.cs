@@ -3,64 +3,46 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PetTime.Data;
 using PetTime.Models;
 
 namespace PetTime.Controllers
 {
     public class PetController : Controller
     {
+        private ApplicationDbContext _context;
+
+        public PetController(ApplicationDbContext context)
+        {
+            this._context = context;
+        }
+
         public IActionResult Index(string category)
         {
-            ViewBag.selected = category;
-            //make sure to put your using statement at the top
-            List<Pet> model = new List<Pet>();
-            if (string.IsNullOrEmpty(category))
+            if (_context.Pets.Count() == 0)
             {
-                ViewData["Title"] = "All Products";
-                model.Add(new Pet { ID = 1, Name = "Puppy", Description = "Golden Retreiver", ImagePath = "./images/puppy1.jpg" });
-                model.Add(new Pet { ID = 2, Name = "Puppy", Description = "Goldendoodle", ImagePath = "./images/puppy2.jpg" });
-                model.Add(new Pet { ID = 3, Name = "Puppy", Description = "English Springer Spaniel", ImagePath = "./images/puppy3.jpg" });
-                model.Add(new Pet { ID = 4, Name = "Puppy", Description = "Corgi", ImagePath = "./images/puppy4.jpg" });
-                model.Add(new Pet { ID = 5, Name = "Puppy", Description = "Labrador Retriever", ImagePath = "./images/puppy5.jpg" });
+                List<Pet> newPets = new List<Pet>();
+                newPets.Add(new Pet { Name = "Puppy", Description = "Golden Retreiver", ImagePath = "./images/puppy1.jpg" });
+                newPets.Add(new Pet { Name = "Puppy1", Description = "Golden Retreiver", ImagePath = "./images/puppy1.jpg" });
+                newPets.Add(new Pet { Name = "Puppy2", Description = "Golden Retreiver", ImagePath = "./images/puppy1.jpg" });
+                newPets.Add(new Pet { Name = "Puppy3", Description = "Golden Retreiver", ImagePath = "./images/puppy1.jpg" });
+                newPets.Add(new Pet { Name = "Puppy4", Description = "Golden Retreiver", ImagePath = "./images/puppy1.jpg" });
+                newPets.Add(new Pet { Name = "Puppy5", Description = "Golden Retreiver", ImagePath = "./images/puppy1.jpg" });
+                newPets.Add(new Pet { Name = "Puppy6", Description = "Golden Retreiver", ImagePath = "./images/puppy1.jpg" });
+                //repeat this many times
 
-                Console.WriteLine("Get All Products");
+                _context.Pets.AddRange(newPets); //add range does not immediately insert these records. it just queues them up
+
+                _context.SaveChanges(); //anytime you update, delete, or add records, you need to call save changes afterwards. the sql statement wil run at this point, not before
             }
-            else if (category.ToLowerInvariant() == "golden")
-            {
-                ViewData["Title"] = "";
-                model.Add(new Pet { ID = 1, Name = "Puppy", Description = "Golden Retreiver", ImagePath = "./images/puppy1.jpg" });
-                Console.WriteLine("Get All Dogs");
-            }
-            else if (category.ToLowerInvariant() == "doodle")
-            {
-                ViewData["Title"] = "";
-                model.Add(new Pet { ID = 2, Name = "Puppy", Description = "Goldendoodle", ImagePath = "./images/puppy2.jpg" });
-                Console.WriteLine("Get All");
-            }
-            else if (category.ToLowerInvariant() == "spaniel")
-            {
-                ViewData["Title"] = "";
-                model.Add(new Pet { ID = 3, Name = "Puppy", Description = "English Springer Spaniel", ImagePath = "./images/puppy3.jpg" });
-                Console.WriteLine("Get All");
-            }
-            else if (category.ToLowerInvariant() == "corgi")
-            {
-                ViewData["Title"] = "";
-                model.Add(new Pet { ID = 4, Name = "Puppy", Description = "Corgi", ImagePath = "./images/puppy4.jpg" });
-                Console.WriteLine("Get All");
-            }
+
+                List<Pet> model = this._context.Pets.ToList();
             return View(model);
         }
 
         public IActionResult Details(int? id)
         {
-            Pet model = new Pet
-            {
-                ID = 1,
-                Name = "Animal",
-                Description = "animal",
-                ImagePath = "./images/puppy1.jpg"
-            };
+            Pet model = _context.Pets.Find(id);
             return View(model);
         }
 

@@ -11,9 +11,10 @@ using System;
 namespace PetTime.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180806163804_Pets")]
+    partial class Pets
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -185,10 +186,6 @@ namespace PetTime.Data.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("Age");
-
-                    b.Property<DateTime?>("DateCreated");
-
-                    b.Property<DateTime?>("DateLastModified");
 
                     b.Property<DateTime>("DateTime");
 

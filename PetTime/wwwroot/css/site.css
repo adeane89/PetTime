@@ -269,11 +269,12 @@ a:link {
     width: 40%; /* The width is the width of the web page */
 }
 
-.pages{
+.pages {
     background-image: url(../images/golden.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     padding-top: 150px;
+    background-attachment: fixed;
 }
 
 .about {
@@ -285,4 +286,6 @@ a:link {
     font-size: 20px;
     background-color: whitesmoke;
     opacity: .75;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
 }
