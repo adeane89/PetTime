@@ -8,11 +8,15 @@ using PetTime.Models;
 
 namespace PetTime.Data
 {
-
-
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Pet> Pets { get; set; }
+
+        public DbSet<CategoryModel> Categories { get; set; }
+
+        public DbSet<PetCart> PetCarts { get; set; }
+
+        public DbSet<PetCartProduct> PetCartProducts { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -23,9 +27,11 @@ namespace PetTime.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            // Customize the ASP.NET Identity model and override the defaults if needed.
-            // For example, you can rename the ASP.NET Identity table names and more.
-            // Add your customizations after calling base.OnModelCreating(builder);
+            builder.Entity<CategoryModel>().HasKey(x => x.Name);
+
+            builder.Entity<CategoryModel>().Property(x => x.DateCreated).HasDefaultValueSql("GetDate()");
+            builder.Entity<CategoryModel>().Property(x => x.DateLastModified).HasDefaultValueSql("GetDate()");
+            builder.Entity<CategoryModel>().Property(x => x.Name).HasMaxLength(100);
         }
     }
 }

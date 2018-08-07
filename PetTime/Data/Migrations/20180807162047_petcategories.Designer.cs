@@ -11,9 +11,10 @@ using System;
 namespace PetTime.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180807162047_petcategories")]
+    partial class petcategories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -219,57 +220,13 @@ namespace PetTime.Data.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("PetCartID");
-
                     b.Property<decimal?>("Price");
 
                     b.HasKey("ID");
 
                     b.HasIndex("CategoryModelName");
 
-                    b.HasIndex("PetCartID");
-
                     b.ToTable("Pets");
-                });
-
-            modelBuilder.Entity("PetTime.Models.PetCart", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime?>("DateCreated");
-
-                    b.Property<DateTime?>("DateLastModified");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("PetCarts");
-                });
-
-            modelBuilder.Entity("PetTime.Models.PetCartProduct", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime?>("DateCreated");
-
-                    b.Property<DateTime?>("DateLastModified");
-
-                    b.Property<int>("PetCartID");
-
-                    b.Property<int?>("PetID");
-
-                    b.Property<int>("PetProductID");
-
-                    b.Property<int?>("Quantity");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("PetCartID");
-
-                    b.HasIndex("PetID");
-
-                    b.ToTable("PetCartProducts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -322,22 +279,6 @@ namespace PetTime.Data.Migrations
                     b.HasOne("PetTime.Models.CategoryModel", "Category")
                         .WithMany("Pets")
                         .HasForeignKey("CategoryModelName");
-
-                    b.HasOne("PetTime.Models.PetCart")
-                        .WithMany("Pets")
-                        .HasForeignKey("PetCartID");
-                });
-
-            modelBuilder.Entity("PetTime.Models.PetCartProduct", b =>
-                {
-                    b.HasOne("PetTime.Models.PetCart", "PetCart")
-                        .WithMany()
-                        .HasForeignKey("PetCartID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("PetTime.Models.Pet", "Pet")
-                        .WithMany("PetCartProducts")
-                        .HasForeignKey("PetID");
                 });
 #pragma warning restore 612, 618
         }

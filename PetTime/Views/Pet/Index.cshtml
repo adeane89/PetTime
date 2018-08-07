@@ -17,40 +17,17 @@
                     {
                         <option value="">All Breeds</option>
                     }
+                    @foreach (string category in (string[])ViewData["Categories"])
+                    {
+                        @if (ViewBag.selectedCategory == category)
+                        {
+                            <option value="@category" selected>@category</option>
+                        }
+                        else
+                        {
+                            <option value="@category">@category</option>
+                        }
 
-                    @if (ViewBag.selectedCategory == "golden")
-                    {
-                        <option value="golden" selected>Golden Retreiver</option>
-                    }
-                    else
-                    {
-                        <option value="golden">Golden Retreiver</option>
-                    }
-
-                    @if (ViewBag.selectedCategory == "doodle")
-                    {
-                        <option value="doodle" selected>Doodles</option>
-                    }
-                    else
-                    {
-                        <option value="doodle">Doodles</option>
-                    }
-
-                    @if (ViewBag.selectedCategory == "spaniel")
-                    {
-                        <option value="spaniel" selected>Springer Spaniel</option>
-                    }
-                    else
-                    {
-                        <option value="spaniel">Springer Spaniel</option>
-                    }
-                    @if (ViewBag.selectedCategory == "corgi")
-                    {
-                        <option value="corgi" selected>Corgi</option>
-                    }
-                    else
-                    {
-                        <option value="corgi">Corgi</option>
                     }
                 </select>
                 <button class="btn btn-secondary">Filter</button>

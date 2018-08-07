@@ -5,15 +5,14 @@ using System.Threading.Tasks;
 
 namespace PetTime.Models
 {
-    public class PetCart
+    public class PetCartProduct
     {
-        public PetCart()
-        {
-            this.Pets = new HashSet<Pet>();
-        }
-
         public int ID { get; set; }
-        public ICollection<Pet> Pets { get; set; }
+        public PetCart PetCart { get; set; }
+        public int PetCartID { get; set; }
+        public Pet Pet { get; set; }
+        public int PetProductID { get; set; }
+        public int? Quantity { get; set; }
         public DateTime? DateCreated { get; set; }
         public DateTime? DateLastModified { get; set; }
     }

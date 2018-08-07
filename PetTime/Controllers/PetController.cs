@@ -21,22 +21,30 @@ namespace PetTime.Controllers
         {
             if (_context.Pets.Count() == 0)
             {
-                List<Pet> newPets = new List<Pet>();
-                newPets.Add(new Pet { Name = "Puppy", Description = "Golden Retreiver", ImagePath = "./images/puppy1.jpg" });
-                newPets.Add(new Pet { Name = "Puppy1", Description = "Golden Retreiver", ImagePath = "./images/puppy1.jpg" });
-                newPets.Add(new Pet { Name = "Puppy2", Description = "Golden Retreiver", ImagePath = "./images/puppy1.jpg" });
-                newPets.Add(new Pet { Name = "Puppy3", Description = "Golden Retreiver", ImagePath = "./images/puppy1.jpg" });
-                newPets.Add(new Pet { Name = "Puppy4", Description = "Golden Retreiver", ImagePath = "./images/puppy1.jpg" });
-                newPets.Add(new Pet { Name = "Puppy5", Description = "Golden Retreiver", ImagePath = "./images/puppy1.jpg" });
-                newPets.Add(new Pet { Name = "Puppy6", Description = "Golden Retreiver", ImagePath = "./images/puppy1.jpg" });
-                //repeat this many times
+                List<Pet> doodles = new List<Pet>();
+                doodles.Add(new Pet { Name = "Puppy", Description = "Goldendoodle", ImagePath = "./images/puppy1.jpg" });
+                _context.Categories.Add(new CategoryModel { Name = "Goldendoodle", Pets = doodles });
 
-                _context.Pets.AddRange(newPets); //add range does not immediately insert these records. it just queues them up
+                List<Pet> retreivers = new List<Pet>();
+                retreivers.Add(new Pet { Name = "Golden Retreiver", Description = "Golden Retreiver", ImagePath = "./images/puppy.jpg" });
+                _context.Categories.Add(new CategoryModel { Name = "Golden Retreiver", Pets = retreivers });
 
-                _context.SaveChanges(); //anytime you update, delete, or add records, you need to call save changes afterwards. the sql statement wil run at this point, not before
+                _context.SaveChanges();
             }
+            
+            ViewBag.selectedCategory = category;
+            List<Pet> model;
+            if (String.IsNullOrEmpty(category))
+            {
+                model = this._context.Pets.ToList();
+            }
+            else
+            {
+                model = this._context.Pets.Where(x => x.CategoryModelName == category).ToList();
+            }
+            
+            ViewData["Categories"] = this._context.Categories.Select(x => x.Name).ToArray();
 
-                List<Pet> model = this._context.Pets.ToList();
             return View(model);
         }
 
