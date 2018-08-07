@@ -3,22 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PetTime.Data;
+using PetTime.Models;
 
 namespace PetTime.Controllers
 {
     public class TherapyController : Controller
     {
+        private ApplicationDbContext _context;
+
+        public TherapyController(ApplicationDbContext context)
+        {
+            this._context = context;
+        }
         public IActionResult Index()
         {
             return View();
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Index(int? id, int quantity)
+        public IActionResult Index(TherapyCart model)
         {
-            //Console.WriteLine("User added" + id.ToString() + " , " + quantity.ToString());
-            //TODO: Take the POSTED details and update the users cart
+            _context.TherapyCarts.Add(model);
+            _context.SaveChanges();
             return RedirectToAction("Index", "Cart");
         }
     }

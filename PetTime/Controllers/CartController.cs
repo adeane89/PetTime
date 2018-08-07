@@ -4,18 +4,31 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PetTime.Models;
+using Microsoft.EntityFrameworkCore;
+using PetTime.Data;
 
 namespace PetTime.Controllers
 {
     public class CartController : Controller
     {
+        private ApplicationDbContext _context;
+        public CartController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
-            PetCart model = new PetCart
+            PetCart model = null;
+            if (Request.Cookies.ContainsKey("cart_id"))
             {
-                ID = 1,
-                Pets = null
-            };
+                int existingCartID = int.Parse(Request.Cookies["cart_id"]);
+                model = _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).FirstOrDefault(x => x.ID == existingCartID);
+            }
+            else
+            {
+                model = new PetCart();
+            }
+
             return View(model);
         }
 

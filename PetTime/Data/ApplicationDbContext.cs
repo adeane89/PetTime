@@ -18,6 +18,10 @@ namespace PetTime.Data
 
         public DbSet<PetCartProduct> PetCartProducts { get; set; }
 
+        public DbSet<CorporateCart> CorporateCarts { get; set; }
+
+        public DbSet<TherapyCart> TherapyCarts { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PetTime.Data;
 using PetTime.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace PetTime.Controllers
 {
@@ -55,11 +56,54 @@ namespace PetTime.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Details(int? id, int quantity, string breed)
         {
-            Console.WriteLine("User added" + id.ToString() + " , " + quantity.ToString());
-            //TODO: Take the POSTED details and update the users cart
+            PetCart cart = null;
+            //make sure cart_id is cased properly everywhere!
+
+            if(Request.Cookies.ContainsKey("cart_id"))
+            {
+                int existingCartID = int.Parse(Request.Cookies["cart_id"]);
+                //Using Microsoft.EntityFramework.Core (has the include)
+                cart = _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefault(x => x.ID == existingCartID);
+                //cart = _context.PetCarts.Find(existingCartID);
+            }
+            if(cart == null)
+            {
+                cart = new PetCart
+                {
+                    DateCreated = DateTime.Now,
+                    DateLastModified = DateTime.Now
+                };
+
+                _context.PetCarts.Add(cart);
+            }
+            //at this point, the cart is not null = it's either newly created or existing
+
+            //find the first product in the cart with the prodcut id we are looking for if none exists, return null
+            PetCartProduct product = cart.PetCartProducts.FirstOrDefault(x => x.PetID == id);
+            if (product == null)
+            {
+                product = new PetCartProduct
+                {
+                    DateCreated = DateTime.Now,
+                    DateLastModified = DateTime.Now,
+                    PetID = id ?? 0,
+                    Quantity = quantity
+                };
+                cart.PetCartProducts.Add(product);
+            }
+            product.Quantity += quantity;
+            product.DateLastModified = DateTime.Now;
+            
+            _context.SaveChanges();
+
+            //at the end of this page, set the cookie!
+            Response.Cookies.Append("cart_id", cart.ID.ToString(), new Microsoft.AspNetCore.Http.CookieOptions
+            {
+                Expires = DateTime.Now.AddYears(1)
+            });
+
             return RedirectToAction("Index", "Cart");
         }
 
@@ -71,10 +115,10 @@ namespace PetTime.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Corporate(int? id, int quantity)
+        public IActionResult Corporate(CorporateCart model)
         {
-            //Console.WriteLine("User added" + id.ToString() + " , " + quantity.ToString());
-            //TODO: Take the POSTED details and update the users cart
+            _context.CorporateCarts.Add(model);
+            _context.SaveChanges();
             return RedirectToAction("Index", "Cart");
         }
     }

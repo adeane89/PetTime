@@ -11,9 +11,10 @@ using System;
 namespace PetTime.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180807202902_TherapyCorporateCarts")]
+    partial class TherapyCorporateCarts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -257,19 +258,11 @@ namespace PetTime.Data.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CorporateCartID");
-
                     b.Property<DateTime?>("DateCreated");
 
                     b.Property<DateTime?>("DateLastModified");
 
-                    b.Property<int?>("TherapyCartID");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("CorporateCartID");
-
-                    b.HasIndex("TherapyCartID");
 
                     b.ToTable("PetCarts");
                 });
@@ -374,17 +367,6 @@ namespace PetTime.Data.Migrations
                     b.HasOne("PetTime.Models.CategoryModel", "Category")
                         .WithMany("Pets")
                         .HasForeignKey("CategoryModelName");
-                });
-
-            modelBuilder.Entity("PetTime.Models.PetCart", b =>
-                {
-                    b.HasOne("PetTime.Models.CorporateCart", "CorporateCart")
-                        .WithMany()
-                        .HasForeignKey("CorporateCartID");
-
-                    b.HasOne("PetTime.Models.TherapyCart", "TherapyCart")
-                        .WithMany()
-                        .HasForeignKey("TherapyCartID");
                 });
 
             modelBuilder.Entity("PetTime.Models.PetCartProduct", b =>
