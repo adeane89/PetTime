@@ -9,5 +9,17 @@ namespace PetTime.Models
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class ApplicationUser : IdentityUser
     {
+        public ApplicationUser() : base()
+        {
+            this.PetCart = new PetCart();
+        }
+
+        public ApplicationUser(string userName) : base(userName)
+        {
+            this.PetCart = new PetCart();
+        }
+
+        public PetCart PetCart { get; set; }
+        public int PetCartID { get; set; }
     }
 }

@@ -36,6 +36,8 @@ namespace PetTime.Data
             builder.Entity<CategoryModel>().Property(x => x.DateCreated).HasDefaultValueSql("GetDate()");
             builder.Entity<CategoryModel>().Property(x => x.DateLastModified).HasDefaultValueSql("GetDate()");
             builder.Entity<CategoryModel>().Property(x => x.Name).HasMaxLength(100);
+
+            builder.Entity<ApplicationUser>().HasOne(x => x.PetCart).WithOne(x => x.ApplicationUser).HasForeignKey<PetCart>(x => x.ApplicationUserID);
         }
     }
 }
