@@ -60,7 +60,7 @@ namespace PetTime.Controllers
         }
 
         [HttpPost]
-        public IActionResult Details(int? id, int quantity, string breed)
+        public IActionResult Details(int? id, int quantity, string breed, string length, DateTime startDate)
         {
             PetCart cart = null;
             if (User.Identity.IsAuthenticated)
@@ -111,12 +111,16 @@ namespace PetTime.Controllers
                     DateCreated = DateTime.Now,
                     DateLastModified = DateTime.Now,
                     PetID = id ?? 0,
-                    Quantity = quantity
-                };
+                    Quantity = quantity,
+                    Length = length,
+                    StartDate = startDate
+    };
                 cart.PetCartProducts.Add(product);
             }
             product.Quantity += quantity;
             product.DateLastModified = DateTime.Now;
+            product.StartDate = startDate;
+            product.Length = length;
             
             _context.SaveChanges();
 
@@ -139,11 +143,159 @@ namespace PetTime.Controllers
             return View();
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Corporate(CorporateCart model)
         {
-            _context.CorporateCarts.Add(model);
+            PetCart cart = null;
+            if (User.Identity.IsAuthenticated)
+            {
+                //authenticated path
+                var currentUser = _userManager.GetUserAsync(User).Result;
+                cart = _context.PetCarts.Include(x => x.PetCartProducts).Include(x => x.CorporateCart).FirstOrDefault(x => x.ApplicationUserID == currentUser.Id);
+                if (cart == null)
+                {
+                    cart = new PetCart();
+                    cart.ApplicationUserID = currentUser.Id;
+                    cart.DateCreated = DateTime.Now;
+                    cart.DateLastModified = DateTime.Now;
+                    _context.PetCarts.Add(cart);
+                }
+            }
+            else
+            {
+                if (Request.Cookies.ContainsKey("cart_id"))
+                {
+                    int existingCartID = int.Parse(Request.Cookies["cart_id"]);
+                    cart = _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefault(x => x.ID == existingCartID);
+                    cart.DateLastModified = DateTime.Now;
+                }
+
+                if (cart == null)
+                {
+                    cart = new PetCart
+                    {
+                        DateCreated = DateTime.Now,
+                        DateLastModified = DateTime.Now
+                    };
+
+                    _context.PetCarts.Add(cart);
+                }
+            }
+            //at this point, the cart is not null = it's either newly created or existing
+
+            //find the first product in the cart with the prodcut id we are looking for if none exists, return null
+            CorporateCart prod = cart.CorporateCart;
+           
+            if (prod == null)
+            {
+                prod = new CorporateCart
+                {
+                    DateCreated = DateTime.Now,
+                    DateLastModified = DateTime.Now,
+                    AnimalCount = model.AnimalCount,
+                    StartDate = model.StartDate,
+                    EventType = model.EventType,
+                    Length = model.Length
+                };
+                cart.CorporateCart = model;
+            }
+            prod.DateLastModified = DateTime.Now;
+            prod.StartDate = model.StartDate;
+            prod.Length = model.Length;
+            prod.EventType = model.EventType;
+            prod.AnimalCount = model.AnimalCount;
+
+            if (!User.Identity.IsAuthenticated)
+            {
+                //at the end of this page, set the cookie!
+                Response.Cookies.Append("cart_id", cart.ID.ToString(), new Microsoft.AspNetCore.Http.CookieOptions
+                {
+                    Expires = DateTime.Now.AddYears(1)
+                });
+            }
+
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Cart");
+        }
+         public IActionResult Therapy()
+        {
+            ViewData["Message"] = "Your therapy page.";
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Therapy(TherapyCart model)
+        {
+            PetCart cart = null;
+            if (User.Identity.IsAuthenticated)
+            {
+                //authenticated path
+                var currentUser = _userManager.GetUserAsync(User).Result;
+                cart = _context.PetCarts.Include(x => x.PetCartProducts).Include(x => x.TherapyCart).FirstOrDefault(x => x.ApplicationUserID == currentUser.Id);
+                if (cart == null)
+                {
+                    cart = new PetCart();
+                    cart.ApplicationUserID = currentUser.Id;
+                    cart.DateCreated = DateTime.Now;
+                    cart.DateLastModified = DateTime.Now;
+                    _context.PetCarts.Add(cart);
+                }
+            }
+            else
+            {
+                if (Request.Cookies.ContainsKey("cart_id"))
+                {
+                    int existingCartID = int.Parse(Request.Cookies["cart_id"]);
+                    cart = _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefault(x => x.ID == existingCartID);
+                    cart.DateLastModified = DateTime.Now;
+                }
+
+                if (cart == null)
+                {
+                    cart = new PetCart
+                    {
+                        DateCreated = DateTime.Now,
+                        DateLastModified = DateTime.Now
+                    };
+
+                    _context.PetCarts.Add(cart);
+                }
+            }
+
+            TherapyCart product = cart.TherapyCart;
+           
+            if (product == null)
+            {
+                product = new TherapyCart
+                {
+                    DateCreated = DateTime.Now,
+                    DateLastModified = DateTime.Now,
+                    AnimalCount = model.AnimalCount,
+                    StartDate = model.StartDate,
+                    EventType = model.EventType,
+                    Length = model.Length
+                };
+                cart.TherapyCart = model;
+            }
+            product.DateLastModified = DateTime.Now;
+            product.StartDate = model.StartDate;
+            product.Length = model.Length;
+            product.EventType = model.EventType;
+            product.AnimalCount = model.AnimalCount;
+
+            if (!User.Identity.IsAuthenticated)
+            {
+                //at the end of this page, set the cookie!
+                Response.Cookies.Append("cart_id", cart.ID.ToString(), new Microsoft.AspNetCore.Http.CookieOptions
+                {
+                    Expires = DateTime.Now.AddYears(1)
+                });
+            }
+
             _context.SaveChanges();
             return RedirectToAction("Index", "Cart");
         }

@@ -4,26 +4,28 @@
     ViewData["Title"] = "Details";
 }
 @await Html.PartialAsync("_NavbarPartial")
-<div class="pages">
+<div class="pages overlay">
     <h2>@Model.Name</h2>
     <div class="container petmodelimage">
         <img class="img-fluid" src="/@Model.ImagePath" />
         <form method="post">
             <input type="hidden" name="id" value="@Model.ID" />
-            <select asp-for="AnimalCount">
+            <label for="">How many animals?</label>
+            <select name="quantity">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
             </select>
-            <select asp-for="Length">
-                <option value="1">Fifteen minutes</option>
-                <option value="2">Thirty minutes</option>
-                <option value="3">Sixty minutes</option>
-                <option value="4">Ninety minutes</option>
+            <label for="">How long would you like your event</label>
+            <select name="length">
+                <option value="Fifteen minutes">Fifteen minutes</option>
+                <option value="Thirty minutes">Thirty minutes</option>
+                <option value="Sixty minutes">Sixty minutes</option>
+                <option value="Ninety minutes">Ninety minutes</option>
             </select>
             <label for="event-time">Date/time:</label>
-            <input type="datetime-local" asp-for="StartDate" value="2018-07-27T19:30"
+            <input type="datetime-local" name="startDate" value="2018-07-27T19:30"
                    min="2018-07-27T00:00" max="2019-06-14T00:00" />
             <button class="btn btn-secondary">Schedule Visit</button>
         </form>

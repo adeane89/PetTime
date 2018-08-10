@@ -26,12 +26,12 @@ namespace PetTime.Controllers
             if(User.Identity.IsAuthenticated)
             {
                 var currentUser = _userManager.GetUserAsync(User).Result;
-                model = _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).Single(x => x.ApplicationUserID == currentUser.Id);
+                model = _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).Include(x => x.CorporateCart).Include(x => x.TherapyCart).Single(x => x.ApplicationUserID == currentUser.Id);
             }
             else if (Request.Cookies.ContainsKey("cart_id"))
             {
                 int existingCartID = int.Parse(Request.Cookies["cart_id"]);
-                model = _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).FirstOrDefault(x => x.ID == existingCartID);
+                model = _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).Include(x => x.CorporateCart).Include(x => x.TherapyCart ).FirstOrDefault(x => x.ID == existingCartID);
             }
             else
             {

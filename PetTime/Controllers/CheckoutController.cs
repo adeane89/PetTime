@@ -74,9 +74,6 @@ namespace PetTime.Controllers
                         ProductDescription = cartItem.Pet.Description,
                         ProductName = cartItem.Pet.Name,
                         ProductPrice = cartItem.Pet.Price ?? 0,
-                        ProductAnimalCount = cartItem.Pet.AnimalCount,
-                        ProductEventType = cartItem.Pet.EventType,
-                        ProductLength = cartItem.Pet.Length
                     });
                 }
 

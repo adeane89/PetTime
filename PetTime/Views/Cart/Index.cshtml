@@ -4,34 +4,66 @@
     ViewData["Title"] = "Index";
 }
 @await Html.PartialAsync("_NavbarPartial")
-<div class="pages">
-    <h2>Index</h2>
-    @if (Model.PetCartProducts.Count == 0)
-    {
-        <p>You have nothing scheduled,<a asp-controller="Pet" asp-action="index"> check out some animals or host an event!</a></p>
+<div class="pages overlay">
+    <div class="display">
+        @if (Model.PetCartProducts.Count == 0)
+        {
+            <p>You have nothing scheduled,<a asp-controller="Pet" asp-action="index"> check out some animals or host an event!</a></p>
 
-    }
-    else
-    {
-        <table class="table">
-            @foreach (var product in Model.PetCartProducts)
-            {
-            <tr>
-                <td>@product.Pet.Name</td>
-                <td>@product.Pet.Description</td>
-                <td>@product.Pet.StartDate</td>
-                <td>@product.Pet.AnimalCount</td>
-                <td>@product.Pet.Length</td>
-                <td>
-                    <form asp-action="remove" method="post">
-                        <input type="hidden" value="@product.ID" />
-                        <button class="btn btn-danger">Remove</button>
-                    </form>
-                </td>
+        }
+        else
+        {
+            <h2>Visits</h2>
+            <table class="table">
+                @foreach (var product in Model.PetCartProducts)
+                {
+                    <tr>
+                        <td>@product.Pet.Name</td>
+                        <td>@product.StartDate </td>
+                        <td>@product.Length</td>
+                        <td>@product.Quantity puppies!</td>
+                        <td>
+                            <form asp-action="remove" method="post">
+                                <input type="hidden" value="@product.ID" />
+                                <button class="btn btn-danger">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </table>
+            <h2>Corporate</h2>
+            <table class="table">
+                <tr>
+                    <td>@Model.CorporateCart.EventType</td>
+                    <td>@Model.CorporateCart.StartDate</td>
+                    <td>@Model.CorporateCart.Length</td>
+                    <td>@Model.CorporateCart.AnimalCount puppies!</td>
+                    <td>
+                        <form asp-action="remove" method="post">
+                            <input type="hidden" value="@Model.CorporateCart.ID" />
+                            <button class="btn btn-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+            <h2>Therapy</h2>
+            <table class="table">
+                <tr>
+                    <td>@Model.TherapyCart.EventType</td>
+                    <td>@Model.TherapyCart.StartDate</td>
+                    <td>@Model.TherapyCart.Length</td>
+                    <td>@Model.TherapyCart.AnimalCount puppies!</td>
+                    <td>Instructions: @Model.TherapyCart.Instructions</td>
 
-            </tr>
-            }
-        </table>
-    }
-    <a asp-controller="Checkout" asp-action="Index" class="btn btn-primary">Continue to Payment</a>
+                    <td>
+                        <form asp-action="remove" method="post">
+                            <input type="hidden" value="@Model.CorporateCart.ID" />
+                            <button class="btn btn-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        }
+        <a asp-controller="Checkout" asp-action="Index" class="btn btn-primary">Continue to Payment</a>
     </div>
+</div>

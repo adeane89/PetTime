@@ -17,10 +17,10 @@
                 <div class="form-group">
                     <label for="formGroupExampleInput">What kind of event is this for?</label>
                     <select asp-for="EventType">
-                        <option value="1">Corporate</option>
-                        <option value="2">School</option>
-                        <option value="3">Party</option>
-                        <option value="4">Other</option>
+                        <option value="Corporate">Corporate</option>
+                        <option value="School">School</option>
+                        <option value="Party">Party</option>
+                        <option value="Other">Other</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -41,9 +41,9 @@
                 </div>
                 <label for="formGroupExampleInput3">How long would you like your event to be?</label>
                 <select asp-for="Length">
-                    <option value="1">One hour</option>
-                    <option value="2">Two hours</option>
-                    <option value="3">Three hours</option>
+                    <option value="One hour">One hour</option>
+                    <option value="Two hours">Two hours</option>
+                    <option value="Three hours">Three hours</option>
                 </select>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" asp-for="IsRecurring" value="false">
@@ -71,7 +71,7 @@
                 <a asp-controller="Pet" asp-action="Corporate" class="btn btn-primary">Corporate Deals!</a>
             </p>
             <p>
-                <a asp-controller="Therapy" asp-action="Index" class="btn btn-primary">Therapy Animal Information!</a>
+                <a asp-controller="Pet" asp-action="Therapy" class="btn btn-primary">Therapy Animal Information!</a>
             </p>
         </div>
     </div>

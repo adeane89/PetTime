@@ -13,9 +13,9 @@ namespace PetTime.Models
         }
         public Pet Pet { get; set; }
 
-
         public CorporateCart CorporateCart { get; set; }
         public int? CorporateCartID { get; set; }
+
         public TherapyCart TherapyCart { get; set; }
         public int? TherapyCartID { get; set; }
 

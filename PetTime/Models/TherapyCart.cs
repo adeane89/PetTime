@@ -8,9 +8,9 @@ namespace PetTime.Models
     public class TherapyCart
     {
         public int ID { get; set; }
-        public int? EventType { get; set; }
+        public string EventType { get; set; }
         public int? AnimalCount { get; set; }
-        public int? Length { get; set; }
+        public string Length { get; set; }
         public bool? IsRecurring { get; set; }
         public DateTime? StartDate { get; set; }
         public string Instructions { get; set; }

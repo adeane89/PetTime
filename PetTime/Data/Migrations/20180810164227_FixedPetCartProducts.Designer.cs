@@ -11,9 +11,10 @@ using System;
 namespace PetTime.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180810164227_FixedPetCartProducts")]
+    partial class FixedPetCartProducts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,11 +212,11 @@ namespace PetTime.Data.Migrations
 
                     b.Property<DateTime?>("DateLastModified");
 
-                    b.Property<string>("EventType");
+                    b.Property<int?>("EventType");
 
                     b.Property<bool?>("IsRecurring");
 
-                    b.Property<string>("Length");
+                    b.Property<int?>("Length");
 
                     b.Property<DateTime?>("StartDate");
 
@@ -297,7 +298,9 @@ namespace PetTime.Data.Migrations
 
                     b.Property<DateTime?>("DateLastModified");
 
-                    b.Property<string>("Length");
+                    b.Property<int?>("EventType");
+
+                    b.Property<int?>("Length");
 
                     b.Property<int>("PetCartID");
 
@@ -385,13 +388,13 @@ namespace PetTime.Data.Migrations
 
                     b.Property<DateTime?>("DateLastModified");
 
-                    b.Property<string>("EventType");
+                    b.Property<int?>("EventType");
 
                     b.Property<string>("Instructions");
 
                     b.Property<bool?>("IsRecurring");
 
-                    b.Property<string>("Length");
+                    b.Property<int?>("Length");
 
                     b.Property<DateTime?>("StartDate");
 
