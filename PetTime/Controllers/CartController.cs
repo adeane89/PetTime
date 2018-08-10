@@ -6,20 +6,29 @@ using Microsoft.AspNetCore.Mvc;
 using PetTime.Models;
 using Microsoft.EntityFrameworkCore;
 using PetTime.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace PetTime.Controllers
 {
     public class CartController : Controller
     {
         private ApplicationDbContext _context;
-        public CartController(ApplicationDbContext context)
+        private UserManager<ApplicationUser> _userManager;
+
+        public CartController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
             PetCart model = null;
-            if (Request.Cookies.ContainsKey("cart_id"))
+            if(User.Identity.IsAuthenticated)
+            {
+                var currentUser = _userManager.GetUserAsync(User).Result;
+                model = _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).Single(x => x.ApplicationUserID == currentUser.Id);
+            }
+            else if (Request.Cookies.ContainsKey("cart_id"))
             {
                 int existingCartID = int.Parse(Request.Cookies["cart_id"]);
                 model = _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).FirstOrDefault(x => x.ID == existingCartID);

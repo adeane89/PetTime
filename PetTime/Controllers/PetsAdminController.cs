@@ -22,7 +22,14 @@ namespace PetTime.Controllers
         // GET: PetsAdmin
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Pets.ToListAsync());
+            if(User.Identity.IsAuthenticated)
+            {
+                return View(await _context.Pets.ToListAsync());
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         // GET: PetsAdmin/Details/5

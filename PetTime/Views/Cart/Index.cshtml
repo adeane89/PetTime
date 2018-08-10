@@ -16,18 +16,20 @@
         <table class="table">
             @foreach (var product in Model.PetCartProducts)
             {
-                <tr>
-                    <td>@product.Pet.Name</td>
-                    <td>@((product.Pet.Price ?? 0).ToString("C"))</td>
-                    <td>@product.Pet.Description</td>
-                    <td>
-                        <form method="post">
-                            <input type="hidden" value="@product.ID" />
-                            <button class="btn btn-danger">Remove</button>
-                        </form>
-                    </td>
+            <tr>
+                <td>@product.Pet.Name</td>
+                <td>@product.Pet.Description</td>
+                <td>@product.Pet.StartDate</td>
+                <td>@product.Pet.AnimalCount</td>
+                <td>@product.Pet.Length</td>
+                <td>
+                    <form asp-action="remove" method="post">
+                        <input type="hidden" value="@product.ID" />
+                        <button class="btn btn-danger">Remove</button>
+                    </form>
+                </td>
 
-                </tr>
+            </tr>
             }
         </table>
     }

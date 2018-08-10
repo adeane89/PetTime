@@ -11,9 +11,10 @@ using System;
 namespace PetTime.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180809173955_DetailsViewProper")]
+    partial class DetailsViewProper
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -253,8 +254,6 @@ namespace PetTime.Data.Migrations
 
                     b.Property<decimal?>("Price");
 
-                    b.Property<DateTime?>("StartDate");
-
                     b.HasKey("ID");
 
                     b.HasIndex("CategoryModelName");
@@ -275,8 +274,6 @@ namespace PetTime.Data.Migrations
 
                     b.Property<DateTime?>("DateLastModified");
 
-                    b.Property<int?>("PetID");
-
                     b.Property<int?>("TherapyCartID");
 
                     b.HasKey("ID");
@@ -286,8 +283,6 @@ namespace PetTime.Data.Migrations
                         .HasFilter("[ApplicationUserID] IS NOT NULL");
 
                     b.HasIndex("CorporateCartID");
-
-                    b.HasIndex("PetID");
 
                     b.HasIndex("TherapyCartID");
 
@@ -316,64 +311,6 @@ namespace PetTime.Data.Migrations
                     b.HasIndex("PetID");
 
                     b.ToTable("PetCartProducts");
-                });
-
-            modelBuilder.Entity("PetTime.Models.PetOrder", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("City");
-
-                    b.Property<DateTime?>("DateCreated");
-
-                    b.Property<DateTime?>("DateLastModified");
-
-                    b.Property<string>("Email");
-
-                    b.Property<string>("State");
-
-                    b.Property<string>("StreetAddress");
-
-                    b.Property<string>("ZipCode");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("PetOrders");
-                });
-
-            modelBuilder.Entity("PetTime.Models.PetOrderProduct", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime?>("DateCreated");
-
-                    b.Property<DateTime?>("DateLastModified");
-
-                    b.Property<Guid>("PetOrderID");
-
-                    b.Property<int?>("ProductAnimalCount");
-
-                    b.Property<string>("ProductDescription");
-
-                    b.Property<int?>("ProductEventType");
-
-                    b.Property<int?>("ProductID");
-
-                    b.Property<int?>("ProductLength");
-
-                    b.Property<string>("ProductName");
-
-                    b.Property<decimal>("ProductPrice");
-
-                    b.Property<DateTime?>("StartDate");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("PetOrderID");
-
-                    b.ToTable("PetOrderProducts");
                 });
 
             modelBuilder.Entity("PetTime.Models.TherapyCart", b =>
@@ -464,10 +401,6 @@ namespace PetTime.Data.Migrations
                         .WithMany()
                         .HasForeignKey("CorporateCartID");
 
-                    b.HasOne("PetTime.Models.Pet", "Pet")
-                        .WithMany()
-                        .HasForeignKey("PetID");
-
                     b.HasOne("PetTime.Models.TherapyCart", "TherapyCart")
                         .WithMany()
                         .HasForeignKey("TherapyCartID");
@@ -483,14 +416,6 @@ namespace PetTime.Data.Migrations
                     b.HasOne("PetTime.Models.Pet", "Pet")
                         .WithMany("PetCartProducts")
                         .HasForeignKey("PetID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("PetTime.Models.PetOrderProduct", b =>
-                {
-                    b.HasOne("PetTime.Models.PetOrder", "PetOrder")
-                        .WithMany("PetOrderProducts")
-                        .HasForeignKey("PetOrderID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

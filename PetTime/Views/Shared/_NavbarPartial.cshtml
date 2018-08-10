@@ -9,5 +9,6 @@
         <a asp-controller="Pet" asp-action="Index">Services</a>
         <a asp-controller="Events" asp-action="Index">Events</a>
         <a asp-controller="Cart" asp-action="Index"><i class="fas fa-shopping-cart"></i></a>
+        @await Html.PartialAsync("_LoginPartial")
     </nav>
 </div>

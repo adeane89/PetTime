@@ -5,6 +5,7 @@
 @model LoginViewModel
 @inject SignInManager<ApplicationUser> SignInManager
 
+@await Html.PartialAsync("_NavbarPartial")
 @{
     ViewData["Title"] = "Log in";
 }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using PetTime.Data;
 using PetTime.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace PetTime.Controllers
 {
@@ -13,9 +14,12 @@ namespace PetTime.Controllers
     {
         private ApplicationDbContext _context;
 
-        public PetController(ApplicationDbContext context)
+        private UserManager<ApplicationUser> _userManager;
+
+        public PetController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             this._context = context;
+            this._userManager = userManager;
         }
 
         public IActionResult Index(string category)
@@ -59,24 +63,42 @@ namespace PetTime.Controllers
         public IActionResult Details(int? id, int quantity, string breed)
         {
             PetCart cart = null;
-            //make sure cart_id is cased properly everywhere!
-
-            if(Request.Cookies.ContainsKey("cart_id"))
+            if (User.Identity.IsAuthenticated)
             {
-                int existingCartID = int.Parse(Request.Cookies["cart_id"]);
-                //Using Microsoft.EntityFramework.Core (has the include)
-                cart = _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefault(x => x.ID == existingCartID);
-                //cart = _context.PetCarts.Find(existingCartID);
-            }
-            if(cart == null)
-            {
-                cart = new PetCart
+                //authenticated path
+                var currentUser = _userManager.GetUserAsync(User).Result;
+                cart = _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefault(x => x.ApplicationUserID == currentUser.Id);
+                if (cart == null)
                 {
-                    DateCreated = DateTime.Now,
-                    DateLastModified = DateTime.Now
-                };
+                    cart = new PetCart();
+                    cart.ApplicationUserID = currentUser.Id;
+                    cart.DateCreated = DateTime.Now;
+                    cart.DateLastModified = DateTime.Now;
+                    _context.PetCarts.Add(cart);
+                }
+            }
+            else
+            {
+                //make sure cart_id is cased properly everywhere
+                if (Request.Cookies.ContainsKey("cart_id"))
+                {
+                    int existingCartID = int.Parse(Request.Cookies["cart_id"]);
+                    //Using Microsoft.EntityFramework.Core (has the include)
+                    cart = _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefault(x => x.ID == existingCartID);
+                    //cart = _context.PetCarts.Find(existingCartID);
+                    cart.DateLastModified = DateTime.Now;
+                }
 
-                _context.PetCarts.Add(cart);
+                if (cart == null)
+                {
+                    cart = new PetCart
+                    {
+                        DateCreated = DateTime.Now,
+                        DateLastModified = DateTime.Now
+                    };
+
+                    _context.PetCarts.Add(cart);
+                }
             }
             //at this point, the cart is not null = it's either newly created or existing
 
@@ -98,11 +120,15 @@ namespace PetTime.Controllers
             
             _context.SaveChanges();
 
-            //at the end of this page, set the cookie!
-            Response.Cookies.Append("cart_id", cart.ID.ToString(), new Microsoft.AspNetCore.Http.CookieOptions
+
+            if (!User.Identity.IsAuthenticated)
             {
-                Expires = DateTime.Now.AddYears(1)
-            });
+                //at the end of this page, set the cookie!
+                Response.Cookies.Append("cart_id", cart.ID.ToString(), new Microsoft.AspNetCore.Http.CookieOptions
+                {
+                    Expires = DateTime.Now.AddYears(1)
+                });
+            }
 
             return RedirectToAction("Index", "Cart");
         }

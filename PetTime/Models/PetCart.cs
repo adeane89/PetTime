@@ -11,11 +11,14 @@ namespace PetTime.Models
         {
             this.PetCartProducts = new HashSet<PetCartProduct>();
         }
+        public Pet Pet { get; set; }
+
 
         public CorporateCart CorporateCart { get; set; }
         public int? CorporateCartID { get; set; }
         public TherapyCart TherapyCart { get; set; }
         public int? TherapyCartID { get; set; }
+
         public int ID { get; set; }
         public ICollection<PetCartProduct> PetCartProducts { get; set; }
         public DateTime? DateCreated { get; set; }

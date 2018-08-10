@@ -22,6 +22,10 @@ namespace PetTime.Data
 
         public DbSet<TherapyCart> TherapyCarts { get; set; }
 
+        public DbSet<PetOrder> PetOrders { get; set; }
+
+        public DbSet<PetOrderProduct> PetOrderProducts { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
