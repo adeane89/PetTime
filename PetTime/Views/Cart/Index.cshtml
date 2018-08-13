@@ -3,13 +3,13 @@
 @{
     ViewData["Title"] = "Index";
 }
-@await Html.PartialAsync("_NavbarPartial")
 <div class="pages overlay">
+
+    @await Html.PartialAsync("_NavbarPartial")
     <div class="display">
         @if (Model.PetCartProducts.Count == 0)
         {
             <p>You have nothing scheduled,<a asp-controller="Pet" asp-action="index"> check out some animals or host an event!</a></p>
-
         }
         else
         {
@@ -31,7 +31,15 @@
                     </tr>
                 }
             </table>
-            <h2>Corporate</h2>
+        }
+
+        <h2>Corporate</h2>
+        @if (Model.CorporateCartID == 0)
+        {
+            <p>You have nothing scheduled,<a asp-controller="Pet" asp-action="index"> check out some animals or host an event!</a></p>
+        }
+        else
+        {
             <table class="table">
                 <tr>
                     <td>@Model.CorporateCart.EventType</td>
@@ -46,7 +54,14 @@
                     </td>
                 </tr>
             </table>
-            <h2>Therapy</h2>
+        }
+        <h2>Therapy</h2>
+        @if (Model.TherapyCartID == 0)
+        {
+            <p>You have nothing scheduled,<a asp-controller="Pet" asp-action="index"> check out some animals or host an event!</a></p>
+        }
+        else
+        {
             <table class="table">
                 <tr>
                     <td>@Model.TherapyCart.EventType</td>
@@ -63,6 +78,7 @@
                     </td>
                 </tr>
             </table>
+
         }
         <a asp-controller="Checkout" asp-action="Index" class="btn btn-primary">Continue to Payment</a>
     </div>

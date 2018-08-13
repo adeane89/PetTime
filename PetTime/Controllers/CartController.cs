@@ -43,7 +43,8 @@ namespace PetTime.Controllers
 
         public IActionResult Remove(int id)
         {
-            //look through the card items to remove the id that is removed 
+            //look through the card items to remove the id that is removed
+            
             return RedirectToAction("Index");
         }
     }

@@ -22,45 +22,49 @@ namespace PetTime.Controllers
             this._userManager = userManager;
         }
 
-        public IActionResult Index(string category)
+        public async Task<IActionResult> Index(string category)
         {
             if (_context.Pets.Count() == 0)
             {
                 List<Pet> doodles = new List<Pet>();
-                doodles.Add(new Pet { Name = "Puppy", Description = "Goldendoodle", ImagePath = "./images/puppy1.jpg" });
+                doodles.Add(new Pet { Name = "Goldendoodle", Description = "Goldendoodle", ImagePath = "/images/puppy1.jpg" });
                 _context.Categories.Add(new CategoryModel { Name = "Goldendoodle", Pets = doodles });
 
-                List<Pet> retreivers = new List<Pet>();
-                retreivers.Add(new Pet { Name = "Golden Retreiver", Description = "Golden Retreiver", ImagePath = "./images/puppy.jpg" });
-                _context.Categories.Add(new CategoryModel { Name = "Golden Retreiver", Pets = retreivers });
+                List<Pet> retrievers = new List<Pet>();
+                retrievers.Add(new Pet { Name = "Golden Retriever", Description = "Golden Retriever", ImagePath = "/images/golden.jpg" });
+                _context.Categories.Add(new CategoryModel { Name = "Golden Retriever", Pets = retrievers });
 
-                _context.SaveChanges();
+                List<Pet> corgis = new List<Pet>();
+                corgis.Add(new Pet { Name = "Corgi", Description = "Corgi", ImagePath = "/images/puppy4.jpg" });
+                _context.Categories.Add(new CategoryModel { Name = "Corgi", Pets = corgis });
+
+               await _context.SaveChangesAsync();
             }
             
             ViewBag.selectedCategory = category;
             List<Pet> model;
             if (String.IsNullOrEmpty(category))
             {
-                model = this._context.Pets.ToList();
+                model = await this._context.Pets.ToListAsync();
             }
             else
             {
-                model = this._context.Pets.Where(x => x.CategoryModelName == category).ToList();
+                model = await this._context.Pets.Where(x => x.CategoryModelName == category).ToListAsync();
             }
             
-            ViewData["Categories"] = this._context.Categories.Select(x => x.Name).ToArray();
+            ViewData["Categories"] = await this._context.Categories.Select(x => x.Name).ToArrayAsync();
 
             return View(model);
         }
 
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
-            Pet model = _context.Pets.Find(id);
+            Pet model = await _context.Pets.FindAsync(id);
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult Details(int? id, int quantity, string breed, string length, DateTime startDate)
+        public async Task<IActionResult> Details(int? id, int quantity, string breed, string length, DateTime startDate)
         {
             PetCart cart = null;
             if (User.Identity.IsAuthenticated)
@@ -122,7 +126,7 @@ namespace PetTime.Controllers
             product.StartDate = startDate;
             product.Length = length;
             
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
 
             if (!User.Identity.IsAuthenticated)
@@ -146,7 +150,7 @@ namespace PetTime.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Corporate(CorporateCart model)
+        public async Task<IActionResult> Corporate(CorporateCart model)
         {
             PetCart cart = null;
             if (User.Identity.IsAuthenticated)
@@ -216,7 +220,7 @@ namespace PetTime.Controllers
                 });
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Cart");
         }
          public IActionResult Therapy()
@@ -228,7 +232,7 @@ namespace PetTime.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Therapy(TherapyCart model)
+        public async Task<IActionResult> Therapy(TherapyCart model)
         {
             PetCart cart = null;
             if (User.Identity.IsAuthenticated)
@@ -296,7 +300,7 @@ namespace PetTime.Controllers
                 });
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Cart");
         }
     }

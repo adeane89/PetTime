@@ -2,8 +2,11 @@
     ViewData["Title"] = "Access denied";
 }
 
-@await Html.PartialAsync("_NavbarPartial")
-<header>
-    <h2 class="text-danger">@ViewData["Title"]</h2>
-    <p class="text-danger">You do not have access to this resource.</p>
-</header>
+<div class="pages overlay">
+
+    @await Html.PartialAsync("_NavbarPartial")
+    <header>
+        <h2 class="text-danger">@ViewData["Title"]</h2>
+        <p class="text-danger">You do not have access to this resource.</p>
+    </header>
+</div>

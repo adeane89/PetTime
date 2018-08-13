@@ -2,48 +2,58 @@
 @{
     ViewData["Title"] = "About Us";
 }
+
 @await Html.PartialAsync("_NavbarPartial")
-<div class="pages overlay">
-    <!-- Stack the columns on mobile by making one full-width and the other half-width -->
-    <div class="row">
-        <div class="col-6 col-md-6 about">
-            <h2>@ViewData["Message"]</h2>
-
-            <p>Use this area to provide additional information.</p>
-            <p>Why animals?</p>
-        </div>
-        <div class="col-6 col-md-4">
-            <p> Studies have shown that animals can offer stress release for hours after! <a href="https://www.health.harvard.edu/blog/therapy-dog-offers-stress-relief-at-work-201107223111">Click me for proof</a>
-            <p>We partner with shelters in the area to encourage pet adoption through our events.</p>
-        </div>
+<!-- Third Parallax Image with Portfolio Text -->
+<div class="bgimg-3 w3-display-container w3-opacity-min">
+    <div class="w3-display-middle">
+        <span class="w3-xxlarge w3-text-white w3-wide">ABOUT US</span>
     </div>
+</div>
 
-    <!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
-    <div class="row">
-        <div class="col-6 col-md-4">
-            <div>
-                <h3>Contact Us</h3>
+<!-- Container (Contact Section) -->
+<div class="w3-content w3-container w3-padding-64" id="contact">
+    <h3 class="w3-center">ABOUT US </h3>
+    <p class="w3-center">
+    <p>
+        Studies have shown that animals can offer stress release for hours after!
+        <a href="https://www.health.harvard.edu/blog/therapy-dog-offers-stress-relief-at-work-201107223111">Go check it out!</a>
+    </p>
+    <p>
+        We partner with shelters in the area to encourage pet adoption through our events.
+    </p>
 
-                <address>
-                    222 W. Ontario<br />
-                    Chicago, IL zipcode<br />
-                    <abbr title="Phone">P:</abbr>
-                    425.555.0100
-                </address>
-                <address>
-                    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
-                    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-                </address>
+    <div class="w3-row w3-padding-32 w3-section">
+        <div class="w3-col m4 w3-container">
+            <!-- Add Google Maps -->
+            <div id="map" class="w3-round-large w3-greyscale" style="width:100%;height:400px;"></div>
+            <script>
+                // Initialize and add the map
+                function initMap() {
+                    // The location of Uluru
+                    var uluru = { lat: 41.893640, lng: - 87.635128 };
+                    // The map, centered at Uluru
+                    var map = new google.maps.Map(
+                        document.getElementById('map'), { zoom: 14, center: uluru });
+                    // The marker, positioned at Uluru
+                    var marker = new google.maps.Marker({ position: uluru, map: map });
+                }
+            </script>
+            <!--Load the API from the specified URL
+                * The async attribute allows the browser to render the page while the API loads
+                * The key parameter will contain your own API key (which is not needed for this tutorial)
+                * The callback parameter executes the initMap() function
+                -->
+            <script async defer
+                    src="https://maps.googleapis.com/maps/api/js?key=[Key Here]&callback=initMap">
+            </script>
+        </div>
+        <div class="w3-col m8 w3-panel">
+            <div class="w3-large w3-margin-bottom">
+                <i class="fa fa-map-marker fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Chicago, US<br>
+                <i class="fa fa-phone fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Phone: +00 151515<br>
+                <i class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email: adeane89@gmail.com<br>
             </div>
-        </div>
-        <div class="col-6 col-md-4">.col-6 .col-md-4</div>
-        <div class="col-6 col-md-4">.col-6 .col-md-4</div>
-    </div>
-
-    <!-- Columns are always 50% wide, on mobile and desktop -->
-    <div class="row">
-        <div class="col-6">
-
             @if (!this.ViewData.ModelState.IsValid)
             {
                 <div class="alet alert-danger">
@@ -59,44 +69,22 @@
                 </div>
 
             }
-            <h3>Got a question? Email us here or give us a call!</h3>
+            <p>Swing by or send us a message:</p>
             <form method="post">
-                <div class="form-group">
-                    <label asp-for="Email">Email</label>
-                    <input type="email" asp-for="Email" required class="form-control" />
+                <div class="w3-row-padding" style="margin:0 -16px 8px -16px">
+                    <div class="w3-half">
+                        <input type="text" asp-for="Name" class="w3-input w3-border" type="text" placeholder="Name" required name="Name">
+                    </div>
+                    <div class="w3-half">
+                        <input type="email" asp-for="Email" class="w3-input w3-border" placeholder="Email" required name="Email">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Question"></label>
-                    <input type="text" asp-for="Question" required class="form-control" />
-                </div>
-                <input type="submit" class="btn btn-primary" value="Submit Order" />
+                <input type="text" asp-for="Question" class="w3-input w3-border" placeholder="Message" required name="Message">
+                <button class="w3-button w3-black w3-right w3-section" type="submit">
+                    <i class="fa fa-paper-plane"></i> SEND MESSAGE
+                </button>
             </form>
-
-        </div>
-        <div class="col-6">
-            <div id="map"></div>
-            <script>
-                // Initialize and add the map
-                function initMap() {
-                    // The location of Uluru
-                    var uluru = { lat: 41.893640, lng: - 87.635128 };
-                    // The map, centered at Uluru
-                    var map = new google.maps.Map(
-                        document.getElementById('map'), { zoom: 14, center: uluru });
-                    // The marker, positioned at Uluru
-                    var marker = new google.maps.Marker({ position: uluru, map: map });
-                }
-            </script>
-            <!--Load the API from the specified URL
-    * The async attribute allows the browser to render the page while the API loads
-    * The key parameter will contain your own API key (which is not needed for this tutorial)
-    * The callback parameter executes the initMap() function
-    -->
-            <script async defer
-                    src="https://maps.googleapis.com/maps/api/js?key=[Key Here]&callback=initMap">
-            </script>
         </div>
     </div>
 </div>
-
 

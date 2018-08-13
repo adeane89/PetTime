@@ -1,7 +1,9 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
     @await Html.PartialAsync("_NavbarPartial")
-}<div class="carousel fade-carousel slide" data-ride="carousel" data-interval="4000" id="bs-carousel">
+}
+
+<div class="carousel fade-carousel slide" data-ride="carousel" data-interval="4000" id="bs-carousel">
     <!-- Overlay -->
     <!-- Indicators -->
     <ol class="carousel-indicators">
@@ -16,19 +18,19 @@
             <div class="slide-1 d-block">
                 <div class="overlay"></div>
             </div>
-            <div class="hero">
+            <div class="hero carousel-caption">
                 <hgroup>
                     <h1>Come visit!</h1>
-                    <h3>Drop in or schedule a stop now!</h3>
+                    <h3>Drop in or schedule a visit now!</h3>
                 </hgroup>
-                <a asp-controller="Pet" asp-action="Index" class="btn btn-hero btn-lg" role="button">See all services</a>
+                <a asp-controller="Pet" asp-action="Index" class="btn btn-hero btn-sm" role="button">See all services</a>
             </div>
         </div>
         <div class="carousel-item slides">
             <div class="slide-2 d-block">
                 <div class="overlay"></div>
             </div>
-            <div class="hero">
+            <div class="hero carousel-caption">
                 <hgroup>
                     <h1>Host an Event!</h1>
                     <h3>We can come to your school or business</h3>
@@ -40,7 +42,7 @@
             <div class="slide-3 d-block">
                 <div class="overlay"></div>
             </div>
-            <div class="hero">
+            <div class="hero carousel-caption">
                 <hgroup>
                     <h1>We have therapy dogs!</h1>
                     <h3>Browse our therapy dogs</h3>
@@ -57,3 +59,5 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
 </div>
+
+
