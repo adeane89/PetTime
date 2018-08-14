@@ -11,9 +11,10 @@ using System;
 namespace PetTime.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180814181048_FixedPOP")]
+    partial class FixedPOP
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -303,7 +304,7 @@ namespace PetTime.Data.Migrations
 
                     b.Property<int>("PetID");
 
-                    b.Property<int?>("Quantity");
+                    b.Property<int>("Quantity");
 
                     b.Property<DateTime?>("StartDate");
 

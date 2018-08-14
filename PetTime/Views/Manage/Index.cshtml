@@ -4,8 +4,12 @@
     ViewData.AddActivePage(ManageNavPages.Index);
 }
 
-<h4>@ViewData["Title"]</h4>
-@Html.Partial("_StatusMessage", Model.StatusMessage)
+@await Html.PartialAsync("_NavbarPartial")
+<div class="bgimg-3 w3-display-container w3-opacity-min">
+    <div class="w3-display-middle">
+        <span class="w3-xxlarge w3-text-white w3-wide">@Html.Partial("_StatusMessage", Model.StatusMessage)</span>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-6">
         <form method="post">

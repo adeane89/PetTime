@@ -20,6 +20,7 @@ namespace PetTime.Controllers
             _context = context;
             _userManager = userManager;
         }
+
         public IActionResult Index()
         {
             PetCart model = null;
@@ -31,7 +32,8 @@ namespace PetTime.Controllers
             else if (Request.Cookies.ContainsKey("cart_id"))
             {
                 int existingCartID = int.Parse(Request.Cookies["cart_id"]);
-                model = _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).Include(x => x.CorporateCart).Include(x => x.TherapyCart ).FirstOrDefault(x => x.ID == existingCartID);
+                model = _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).Include(x => x.CorporateCart).Include(x => x.TherapyCart).FirstOrDefault(x => x.ID == existingCartID);
+            
             }
             else
             {
@@ -40,7 +42,7 @@ namespace PetTime.Controllers
 
             return View(model);
         }
-
+      
         public IActionResult Remove(int id)
         {
             //look through the card items to remove the id that is removed

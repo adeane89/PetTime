@@ -3,71 +3,78 @@
     ViewData["Title"] = "Services";
 }
 
-@await Html.PartialAsync("_NavbarPartial")
 <!-- Container (About Section) -->
 <div class="w3-content w3-container w3-padding-64" id="about">
     <h3 class="w3-center">SERVICES</h3>
     <p class="w3-center"><em>We offer individual visits, host corporate events, or parties.</em></p>
-   
+
     <form class="breedform">
-        <label for="category">Sort:</label>
-        <select name="category" class="form-control">
-            @if (string.IsNullOrEmpty(ViewBag.selectedCategory))
-            {
-                <option value="" selected>All Products</option>
-            }
-            else
-            {
-                <option value="">All Products</option>
-            }
-            @foreach (string category in (string[])ViewData["Categories"])
-            {
-                @if (ViewBag.selectedCategory == category)
-                {
-                    <option value="@category" selected>@category</option>
-                }
-                else
-                {
-                    <option value="@category">@category</option>
-                }
-            }
-        </select>
-        <div class="form-group col-2">
+        <div class="w3-row-padding" style="margin:0 -16px 8px -16px">
+            <div class="w3-half">
+                <label for="category"></label>
+                <select name="category" class="form-control">
+                    @if (string.IsNullOrEmpty(ViewBag.selectedCategory))
+                    {
+                        <option value="" selected>All Breeds</option>
+                    }
+                    else
+                    {
+                        <option value="">All Breeds</option>
+                    }
+                    @foreach (string category in (string[])ViewData["Categories"])
+                    {
+                        @if (ViewBag.selectedCategory == category)
+                        {
+                            <option value="@category" selected>@category</option>
+                        }
+                        else
+                        {
+                            <option value="@category">@category</option>
+                        }
+                    }
+                </select>
+            </div>
             <label>&nbsp;</label>
-            <button class="btn btn-default" style="display:block">Sort & Filter</button>
+            <button class="w3-button w3-black w3-right w3-section" type="submit">
+                SORT
+            </button>
         </div>
-        <button class="btn btn-secondary">Filter</button>
     </form>
 
-    <div class="w3-row">
-        <div class="w3-col m6 w3-center w3-padding-large">
+    <div class="card-deck">
+        <div class="card">
+            @foreach (var pet in Model)
+            {
+            <div class="card container">
+                <div class="card-img-top"><img src="@pet.ImagePath" class="w3-round w3-image w3-opacity w3-hover-opacity-off" alt="@pet.Name" width="300" height="200"></div>
+                <div class="card-body">
+                    <p>@(pet.Price.HasValue ? pet.Price.Value.ToString("c") : "No Price")</p>
+                    <h1>@pet.Description</h1>
+                    <p>
+                        <a asp-controller="Pet" asp-action="Details" asp-route-id="@pet.ID" class="btn btn-primary">View Details</a>
+                    </p>
+                </div>
+            </div>
+            }
+            </div>
         </div>
 
-        <!-- Hide this text on small devices -->
-        <div class="w3-col m6 w3-hide-small w3-padding-large">
-            <p>
-            <p>
-                <a asp-controller="Pet" asp-action="Index" class="btn btn-primary">Schedule a visit!</a>
-            </p>
-            <p>
-                <a asp-controller="Pet" asp-action="Corporate" class="btn btn-primary">Corporate Deals!</a>
-            </p>
-            <p>
-                <a asp-controller="Pet" asp-action="Therapy" class="btn btn-primary">Therapy Animal Information!</a>
-            </p>
-            </p>
-        </div>
+
+<div class="w3-row">
+    <div class="w3-col m6 w3-center w3-padding-large">
     </div>
-    <div>
-        @foreach (var pet in Model)
-        {
-            <div class="petmodel">
-                <h1>@pet.Description</h1>
-                <img src="@pet.ImagePath" alt="@pet.Name" />
-                <p>
-                    <a asp-controller="Pet" asp-action="Details" asp-route-id="@pet.ID" class="btn btn-primary">View Details</a>
-                </p>
-            </div>
-        }
+
+    <!-- Hide this text on small devices -->
+    <div class="w3-col m6 w3-hide-small w3-padding-large">
+        <p>
+        <p>
+            <a asp-controller="Pet" asp-action="Index" class="btn btn-primary">Schedule a visit!</a>
+        </p>
+        <p>
+            <a asp-controller="Pet" asp-action="Corporate" class="btn btn-primary">Corporate Deals!</a>
+        </p>
+        <p>
+            <a asp-controller="Pet" asp-action="Therapy" class="btn btn-primary">Therapy Animal Information!</a>
+        </p>
     </div>
-    </div>
+</div>

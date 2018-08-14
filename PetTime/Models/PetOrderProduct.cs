@@ -25,7 +25,9 @@ namespace PetTime.Models
 
         public int? ProductEventType { get; set; }
 
-        public int? ProductAnimalCount { get; set; }
+        public int ProductAnimalCount { get; set; }
+
+        public int Quantity { get; set; }
 
         public int? ProductLength { get; set; }
 

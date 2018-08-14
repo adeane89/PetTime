@@ -11,9 +11,10 @@ using System;
 namespace PetTime.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180814175649_FixedPCP")]
+    partial class FixedPCP
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -291,7 +292,7 @@ namespace PetTime.Data.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("AnimalCount");
+                    b.Property<int?>("AnimalCount");
 
                     b.Property<DateTime?>("DateCreated");
 
@@ -303,7 +304,7 @@ namespace PetTime.Data.Migrations
 
                     b.Property<int>("PetID");
 
-                    b.Property<int?>("Quantity");
+                    b.Property<int>("Quantity");
 
                     b.Property<DateTime?>("StartDate");
 
@@ -364,8 +365,6 @@ namespace PetTime.Data.Migrations
                     b.Property<string>("ProductName");
 
                     b.Property<decimal>("ProductPrice");
-
-                    b.Property<int>("Quantity");
 
                     b.Property<DateTime?>("StartDate");
 

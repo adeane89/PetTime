@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Braintree;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PetTime.Data;
 using PetTime.Models;
+using PetTime.Services;
 
 namespace PetTime.Controllers
 {
@@ -14,27 +16,33 @@ namespace PetTime.Controllers
     {
         private ApplicationDbContext _context;
         private UserManager<ApplicationUser> _userManager;
+        private IEmailSender _emailSender;
+        private IBraintreeGateway _braintreeGateway;
 
-        public CheckoutController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public CheckoutController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IEmailSender emailSender, IBraintreeGateway braintreeGateway)
         {
             _context = context;
             _userManager = userManager;
+            _emailSender = emailSender;
+            _braintreeGateway = braintreeGateway;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             CheckoutModel model = new CheckoutModel();
             if (User.Identity.IsAuthenticated)
             {
-                var currentUser = _userManager.GetUserAsync(User).Result;
+                var currentUser = await _userManager.GetUserAsync(User);
                 model.Email = currentUser.Email;
             }
+
+            ViewBag.ClientAuthorization = await _braintreeGateway.ClientToken.GenerateAsync();
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Index(CheckoutModel model)
+        public async Task<IActionResult> Index(CheckoutModel model, string nonce)
         {
             if(ModelState.IsValid)
             {
@@ -70,6 +78,7 @@ namespace PetTime.Controllers
                     {
                         DateCreated = DateTime.Now,
                         DateLastModified = DateTime.Now,
+                        Quantity = cartItem.Quantity ?? 1,
                         ProductID = cartItem.PetID,
                         ProductDescription = cartItem.Pet.Description,
                         ProductName = cartItem.Pet.Name,
@@ -86,7 +95,18 @@ namespace PetTime.Controllers
                 _context.PetOrders.Add(order);
                 _context.SaveChanges();
 
-                //todo: save this info to the database so we can ship it
+                var result = await _braintreeGateway.Transaction.SaleAsync(new TransactionRequest
+                {
+                    Amount = order.PetOrderProducts.Sum(x => (x.Quantity * x.ProductPrice)),
+                    PaymentMethodNonce = nonce
+                });
+
+                await _emailSender.SendEmailAsync(model.Email, "Your order " + order.ID, 
+                    "Thanks for ordering! You scheduled :" + 
+                    String.Join(",", order.PetOrderProducts.Select(x => x.ProductName)) + 
+                    String.Join(",", order.PetOrderProducts.Select(x => x.Quantity)) + 
+                    String.Join(",", order.PetOrderProducts.Select(x => x.ProductDescription)));
+                
                 return RedirectToAction("Index", "Receipt", new { id = order.ID });
             }
             return View();

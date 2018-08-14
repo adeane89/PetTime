@@ -19,10 +19,9 @@ namespace PetTime.Models
 
         public int? Quantity { get; set; }
 
-        public int? AnimalCount { get; set; }
+        public int AnimalCount { get; set; }
 
         public string Length { get; set; }
-
 
         public DateTime? StartDate { get; set; }
 

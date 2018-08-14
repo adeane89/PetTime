@@ -27,15 +27,26 @@ namespace PetTime
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            //services.AddDbContext<ApplicationDbContext>(options =>
+                //options.UseInMemoryDatabase("Default"));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-           
+
 
             // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<IEmailSender>((IServiceProvider) => new EmailSender(Configuration.GetValue<string>("SendGrid.ApiKey")));
+
+            services.AddTransient<Braintree.IBraintreeGateway>((iServiceProvider) => new Braintree.BraintreeGateway(
+                   Configuration.GetValue<string>("Braintree.Environment"),
+                   Configuration.GetValue<string>("Braintree.MerchantId"),
+                   Configuration.GetValue<string>("Braintree.PublicKey"),
+                   Configuration.GetValue<string>("Braintree.PrivateKey")
+                   ));
+            
 
             services.AddMvc();
         }
@@ -65,11 +76,11 @@ namespace PetTime
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            var roleManager = services.GetService<RoleManager<IdentityRole>>();
-            if(!roleManager.Roles.Any(x => x.Name == "Administrator"))
-            {
-                roleManager.CreateAsync(new IdentityRole("Administrator")).Wait();
-            }
+            //var roleManager = services.GetService<RoleManager<IdentityRole>>();
+            //if(!roleManager.Roles.Any(x => x.Name == "Administrator"))
+            //{
+            //    roleManager.CreateAsync(new IdentityRole("Administrator")).Wait();
+            //}
         }
     }
 }

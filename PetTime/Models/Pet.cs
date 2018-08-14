@@ -19,6 +19,7 @@ namespace PetTime.Models
         public string ImagePath { get; set; }
         public DateTime DateTime { get; set; }
         public int Age { get; set; }
+
         public DateTime? DateCreated { get; set; }
         public DateTime? DateLastModified { get; set; }
 

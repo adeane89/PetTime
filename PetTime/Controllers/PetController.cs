@@ -26,16 +26,16 @@ namespace PetTime.Controllers
         {
             if (_context.Pets.Count() == 0)
             {
-                List<Pet> doodles = new List<Pet>();
-                doodles.Add(new Pet { Name = "Goldendoodle", Description = "Goldendoodle", ImagePath = "/images/puppy1.jpg" });
-                _context.Categories.Add(new CategoryModel { Name = "Goldendoodle", Pets = doodles });
+                List<Pet> springerSpaniel = new List<Pet>();
+                springerSpaniel.Add(new Pet { Name = "English Springer Spaniel", Description = "English Springer Spaniel", ImagePath = "/images/puppy3.jpg", Price = 5.00m, DateCreated = DateTime.Now, DateLastModified = DateTime.Now });
+                _context.Categories.Add(new CategoryModel { Name = "English Springer Spaniel", Pets = springerSpaniel });
 
                 List<Pet> retrievers = new List<Pet>();
-                retrievers.Add(new Pet { Name = "Golden Retriever", Description = "Golden Retriever", ImagePath = "/images/golden.jpg" });
+                retrievers.Add(new Pet { Name = "Golden Retriever", Description = "Golden Retriever", ImagePath = "/images/golden.jpg", Price = 5.00m, DateCreated = DateTime.Now, DateLastModified = DateTime.Now });
                 _context.Categories.Add(new CategoryModel { Name = "Golden Retriever", Pets = retrievers });
 
                 List<Pet> corgis = new List<Pet>();
-                corgis.Add(new Pet { Name = "Corgi", Description = "Corgi", ImagePath = "/images/puppy4.jpg" });
+                corgis.Add(new Pet { Name = "Corgi", Description = "Corgi", ImagePath = "/images/puppy4.jpg", Price = 5.00m, DateCreated = DateTime.Now, DateLastModified = DateTime.Now });
                 _context.Categories.Add(new CategoryModel { Name = "Corgi", Pets = corgis });
 
                await _context.SaveChangesAsync();
@@ -64,7 +64,7 @@ namespace PetTime.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Details(int? id, int quantity, string breed, string length, DateTime startDate)
+        public async Task<IActionResult> Details(int? id, int quantity, string breed, string length, DateTime startDate, int animalCount)
         {
             PetCart cart = null;
             if (User.Identity.IsAuthenticated)
@@ -115,13 +115,15 @@ namespace PetTime.Controllers
                     DateCreated = DateTime.Now,
                     DateLastModified = DateTime.Now,
                     PetID = id ?? 0,
-                    Quantity = quantity,
+                    Quantity = 0,
                     Length = length,
-                    StartDate = startDate
+                    StartDate = startDate,
+                    AnimalCount = 0
     };
                 cart.PetCartProducts.Add(product);
             }
             product.Quantity += quantity;
+            product.AnimalCount += animalCount;
             product.DateLastModified = DateTime.Now;
             product.StartDate = startDate;
             product.Length = length;
