@@ -26,28 +26,29 @@
                 </a>
                 <a asp-controller="Home" asp-action="Index" class="w3-bar-item w3-button">HOME</a>
                 <a asp-controller="Pet" asp-action="Index" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-th"></i> SERVICES</a>
-                <a asp-controller="Events" asp-action="Index" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> EVENTS</a>
-                <a asp-controller="Home" asp-action="About" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> ABOUT US</a>
+                <a asp-controller="Events" asp-action="Index" class="w3-bar-item w3-button w3-hide-small"><i class="far fa-newspaper"></i> EVENTS</a>
+                <a asp-controller="Home" asp-action="About" class="w3-bar-item w3-button w3-hide-small"><i class="fas fa-info-circle"></i> ABOUT US</a>
                 <a asp-controller="Cart" asp-action="Index" class="w3-bar-item w3-button w3-hide-small"><i class="fas fa-shopping-cart"></i> CART</a>
 
                 @if (SignInManager.IsSignedIn(User))
                 {
                     <form asp-controller="Account" asp-action="Logout" method="post" id="logoutForm">
                         <button type="submit" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red">LOG OUT</button>
-                        <a asp-controller="Manage" asp-action="Index" title="Manage" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red">@UserManager.GetUserName(User)</a>
+                        <a asp-controller="Manage" asp-action="Index" title="Manage" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fas fa-user-alt"></i> @UserManager.GetUserName(User)</a>
                     </form>
                 }
                 else
                 {
-                    <a asp-area="" asp-controller="Account" asp-action="Login" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red">LOG IN</a>
-                    <a asp-area="" asp-controller="Account" asp-action="Register" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red">REGISTER</a>
+                    <a asp-area="" asp-controller="Account" asp-action="Login" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red"><i class="fas fa-user-alt"></i> LOG IN</a>
                 }
             </div>
 
             <!-- Navbar on small screens -->
             <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
                 <a asp-controller="Home" asp-action="About" class="w3-bar-item w3-button" onclick="toggleFunction()">ABOUT</a>
-                <a asp-controller="Pet" asp-action="Index" class="w3-bar-item w3-button" onclick="toggleFunction()">SERVICES</a>
+                <a asp-controller="Pet" asp-action="Index" class="w3-bar-item w3-button" onclick="toggleFunction()">SCHEDULE VISIT</a>
+                <a asp-controller="Pet" asp-action="Corporate" class="w3-bar-item w3-button" onclick="toggleFunction()">SCHEDULE EVENT</a>
+                <a asp-controller="Pet" asp-action="Therapy" class="w3-bar-item w3-button" onclick="toggleFunction()">THERAPY DOGS</a>
                 <a asp-controller="Events" asp-action="Index" class="w3-bar-item w3-button" onclick="toggleFunction()">EVENTS</a>
                 <a asp-controller="Cart" asp-action="Index" class="w3-bar-item w3-button" onclick="toggleFunction()">CART</a>
 

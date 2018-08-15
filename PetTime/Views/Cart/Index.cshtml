@@ -11,64 +11,64 @@
     else
     {
         <h3 class="w3-center">VISITS</h3>
-            <table class="table">
-                @foreach (var product in Model.PetCartProducts)
-                {
-                    <tr>
-                        <td>@product.Pet.Name</td>
-                        <td>@product.StartDate </td>
-                        <td>@product.Length</td>
-                        <td>$@((product.Pet.Price ?? 0) * (product.AnimalCount))</td>
-                        <td>@product.AnimalCount puppies!</td>
-                        <td>
-                            <form asp-action="remove" method="post">
-                                <input type="hidden" value="@product.ID" />
-                                <button class="btn btn-danger">Remove</button>
-                            </form>
-                        </td>
-                    </tr>
-                }
-            </table>
-
-            @if (Model.CorporateCart != null)
+        <table class="table">
+            @foreach (var product in Model.PetCartProducts)
             {
+                <tr>
+                    <td>@product.Pet.Name</td>
+                    <td>@product.StartDate </td>
+                    <td>@product.Length</td>
+                    <td>$@((product.Pet.Price ?? 0) * (product.AnimalCount))</td>
+                    <td>@product.AnimalCount puppies!</td>
+                    <td>
+                        <form asp-action="remove" method="post">
+                            <input type="hidden" value="@product.ID" />
+                            <button class="w3-bar-item w3-button" style="border: solid;">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </table>
+
+        @if (Model.CorporateCart != null)
+        {
             <h3 class="w3-center">CORPORATE</h3>
-                <table class="table">
-                    <tr>
-                        <td>@Model.CorporateCart.EventType</td>
-                        <td>@Model.CorporateCart.StartDate</td>
-                        <td>@Model.CorporateCart.Length</td>
-                        <td>@Model.CorporateCart.AnimalCount puppies!</td>
-                        <td>
-                            <form asp-action="remove" method="post">
-                                <input type="hidden" value="@Model.CorporateCartID" />
-                                <button class="btn btn-danger">Remove</button>
-                            </form>
-                        </td>
-                    </tr>
-                </table>
-            }
+            <table class="table">
+                <tr>
+                    <td>@Model.CorporateCart.EventType</td>
+                    <td>@Model.CorporateCart.StartDate</td>
+                    <td>@Model.CorporateCart.Length</td>
+                    <td>@Model.CorporateCart.AnimalCount puppies!</td>
+                    <td>
+                        <form asp-action="remove" method="post">
+                            <input type="hidden" value="@Model.CorporateCartID" />
+                            <button class="w3-bar-item w3-button" style="border: solid;">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        }
 
-            @if (Model.TherapyCart != null)
-            {
-                <h3 class="w3-center">THERAPY</h3>
-                <table class="table">
-                    <tr>
-                        <td>@Model.TherapyCart.EventType</td>
-                        <td>@Model.TherapyCart.StartDate</td>
-                        <td>@Model.TherapyCart.Length</td>
-                        <td>@Model.TherapyCart.AnimalCount puppies!</td>
-                        <td>Instructions: @Model.TherapyCart.Instructions</td>
-                        <td>
-                            <form asp-action="remove" method="post">
-                                <input type="hidden" value="@Model.TherapyCartID" />
-                                <button class="btn btn-danger">Remove</button>
-                            </form>
-                        </td>
-                    </tr>
-                </table>
-            }
-            }
-            <a asp-controller="Checkout" asp-action="Index" class="btn btn-primary">Continue to Payment</a>
-    </div>
+        @if (Model.TherapyCart != null)
+        {
+            <h3 class="w3-center">THERAPY</h3>
+            <table class="table">
+                <tr>
+                    <td>@Model.TherapyCart.EventType</td>
+                    <td>@Model.TherapyCart.StartDate</td>
+                    <td>@Model.TherapyCart.Length</td>
+                    <td>@Model.TherapyCart.AnimalCount puppies!</td>
+                    <td>Instructions: @Model.TherapyCart.Instructions</td>
+                    <td>
+                        <form asp-action="remove" method="post">
+                            <input type="hidden" value="@Model.TherapyCartID" />
+                            <button  class="w3-bar-item w3-button" style="border: solid;">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        }
+    }
+    <a asp-controller="Checkout" asp-action="Index" class="w3-button w3-black w3-right w3-section">
+        <i class="far fa-credit-card"></i> CHECKOUT</a>
 </div>

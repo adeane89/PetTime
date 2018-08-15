@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PetTime.Data;
 using PetTime.Models;
+using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 
@@ -69,9 +70,8 @@ namespace PetTime.Controllers
             PetCart cart = null;
             if (User.Identity.IsAuthenticated)
             {
-                //authenticated path
-                var currentUser = _userManager.GetUserAsync(User).Result;
-                cart = _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefault(x => x.ApplicationUserID == currentUser.Id);
+                var currentUser = await _userManager.GetUserAsync(User);
+                cart = await _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefaultAsync(x => x.ApplicationUserID == currentUser.Id);
                 if (cart == null)
                 {
                     cart = new PetCart();
@@ -87,10 +87,8 @@ namespace PetTime.Controllers
                 if (Request.Cookies.ContainsKey("cart_id"))
                 {
                     int existingCartID = int.Parse(Request.Cookies["cart_id"]);
-                    //Using Microsoft.EntityFramework.Core (has the include)
-                    cart = _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefault(x => x.ID == existingCartID);
-                    //cart = _context.PetCarts.Find(existingCartID);
-                    cart.DateLastModified = DateTime.Now;
+                    cart = await _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefaultAsync(x => x.ID == existingCartID);
+                    //cart.DateLastModified = DateTime.Now;
                 }
 
                 if (cart == null)
@@ -133,7 +131,6 @@ namespace PetTime.Controllers
 
             if (!User.Identity.IsAuthenticated)
             {
-                //at the end of this page, set the cookie!
                 Response.Cookies.Append("cart_id", cart.ID.ToString(), new Microsoft.AspNetCore.Http.CookieOptions
                 {
                     Expires = DateTime.Now.AddYears(1)
@@ -215,7 +212,6 @@ namespace PetTime.Controllers
 
             if (!User.Identity.IsAuthenticated)
             {
-                //at the end of this page, set the cookie!
                 Response.Cookies.Append("cart_id", cart.ID.ToString(), new Microsoft.AspNetCore.Http.CookieOptions
                 {
                     Expires = DateTime.Now.AddYears(1)
@@ -239,7 +235,6 @@ namespace PetTime.Controllers
             PetCart cart = null;
             if (User.Identity.IsAuthenticated)
             {
-                //authenticated path
                 var currentUser = _userManager.GetUserAsync(User).Result;
                 cart = _context.PetCarts.Include(x => x.PetCartProducts).Include(x => x.TherapyCart).FirstOrDefault(x => x.ApplicationUserID == currentUser.Id);
                 if (cart == null)
@@ -295,7 +290,6 @@ namespace PetTime.Controllers
 
             if (!User.Identity.IsAuthenticated)
             {
-                //at the end of this page, set the cookie!
                 Response.Cookies.Append("cart_id", cart.ID.ToString(), new Microsoft.AspNetCore.Http.CookieOptions
                 {
                     Expires = DateTime.Now.AddYears(1)

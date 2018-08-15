@@ -83,6 +83,12 @@ label {
     width: 30%;
 }
 
+.formlabel {
+    display: inline-block;
+    text-align: left;
+    width: 100%;
+}
+
 /********************************/
 /*       Fade Bs-carousel       */
 /********************************/

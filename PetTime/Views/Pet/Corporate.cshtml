@@ -9,27 +9,25 @@
         Host an event!
     </h3>
     <p class="w3-center"><em>Bring our animals to your space!</em></p>
-    <p>
-    </p>
-    <div class="w3-row">
-        <p><b>Puppy Yoga</b></p><br>
+    <div class="w3-center w3-hide-small">
+        <a asp-controller="Pet" asp-action="Index" class="w3-bar-item w3-button" style="border: solid;">Schedule Visit</a>
+        <a asp-controller="Pet" asp-action="Corporate" class="w3-bar-item w3-button" style="border: solid;">Schedule Event</a>
+        <a asp-controller="Pet" asp-action="Therapy" class="w3-bar-item w3-button" style="border: solid;">Therapy Dogs</a>
     </div>
 
     <div class="w3-row">
         <div class="w3-col m6 w3-center w3-padding-large">
-            <img src="~/images/puppy2.jpg" class="w3-round w3-image w3-opacity w3-hover-opacity-off" alt="Photo of Me" width="500" height="333">
+            <img src="~/images/corporate.jpg" class="w3-round w3-image" alt="Photo of Me" width="500" height="333">
         </div>
 
         <!-- Hide this text on small devices -->
-        <div class="w3-col m6 w3-hide-small w3-padding-large">
+        <div class="w3-col m6 w3-padding-large">
             <form method="post">
                 <input asp-for="ID" type="hidden" />
                 <div class="form-group">
-                    <label type="text" placeholder="Message" required name="Message">
+                    <label type="text" class="formlabel" placeholder="Message" required name="Message">
                         What kind of event is this for?
                     </label>
-
-                    <label class="W3- w3-border">What kind of event is this for?</label>
                     <select asp-for="EventType" required class="form-control">
                         <option value="Corporate">Corporate</option>
                         <option value="School">School</option>
@@ -38,9 +36,8 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="formGroupExampleInput2">How many animals would you like to join?</label>
-
-                    <select asp-for="AnimalCount">
+                    <label class="formlabel">How many animals would you like to join?</label>
+                    <select asp-for="AnimalCount" required class="form-control">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -53,42 +50,32 @@
                         <option value="10">10</option>
                     </select>
                 </div>
-                <label for="formGroupExampleInput3">How long would you like your event to be?</label>
-                <select asp-for="Length">
-                    <option value="One hour">One hour</option>
-                    <option value="Two hours">Two hours</option>
-                    <option value="Three hours">Three hours</option>
-                </select>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" asp-for="IsRecurring" value="false">
-                    <label class="form-check-label" for="inlineCheckbox1">One time</label>
+                <div class="form-group">
+                    <label class="formlabel" for="formGroupExampleInput3">How long would you like your event to be?</label>
+                    <select asp-for="Length" required class="form-control">
+                        <option value="One hour">One hour</option>
+                        <option value="Two hours">Two hours</option>
+                        <option value="Three hours">Three hours</option>
+                    </select>
                 </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" asp-for="IsRecurring" value="true">
-                    <label class="form-check-label" for="inlineCheckbox2">Recurring</label>
-                </div>
-                <div>
-                    <label for="event-time">Date/time:</label>
+                <div class="form-group">
+                    <label class="formlabel " for="event-time">Date/time:</label>
                     <input type="datetime-local" asp-for="StartDate" value="2018-07-27T19:30"
-                           min="2018-07-27T00:00" max="2019-06-14T00:00" />
+                           min="2018-07-27T00:00" max="2019-06-14T00:00" required class="form-control" />
+                </div>
+                <div class="form-group">
+                    <input type="radio" asp-for="IsRecurring" value="false">
+                    <label for="inlineCheckbox1">One time</label>
+                    <input type="radio" asp-for="IsRecurring" value="true">
+                    <label for="inlineCheckbox2">Recurring</label>
                 </div>
                 <div>
                     <button class="w3-button w3-black w3-right w3-section" type="submit">
-                        <i class="fa fa-paper-plane"></i> SCHEDULE EVENT
+                        <i class="far fa-calendar-alt"></i> SCHEDULE EVENT
                     </button>
                 </div>
             </form>
-            <div class="col-4">
-                <p>
-                    <a asp-controller="Pet" asp-action="Index" class="btn btn-primary">Schedule a visit!</a>
-                </p>
-                <p>
-                    <a asp-controller="Pet" asp-action="Corporate" class="btn btn-primary">Corporate Deals!</a>
-                </p>
-                <p>
-                    <a asp-controller="Pet" asp-action="Therapy" class="btn btn-primary">Therapy Animal Information!</a>
-                </p>
-            </div>
         </div>
     </div>
-    </div>
+</div>
+
