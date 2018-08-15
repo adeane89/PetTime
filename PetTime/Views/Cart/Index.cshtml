@@ -14,19 +14,19 @@
         <table class="table">
             @foreach (var product in Model.PetCartProducts)
             {
-                <tr>
-                    <td>@product.Pet.Name</td>
-                    <td>@product.StartDate </td>
-                    <td>@product.Length</td>
-                    <td>$@((product.Pet.Price ?? 0) * (product.AnimalCount))</td>
-                    <td>@product.AnimalCount puppies!</td>
-                    <td>
-                        <form asp-action="remove" method="post">
-                            <input type="hidden" value="@product.ID" />
-                            <button class="w3-bar-item w3-button" style="border: solid;">Remove</button>
-                        </form>
-                    </td>
-                </tr>
+            <tr>
+                <td>@product.Pet.Name</td>
+                <td>@product.StartDate </td>
+                <td>@product.Length</td>
+                <td>@(((decimal)(product.AnimalCount * product.Pet.Price)).ToString("c"))</td>
+                <td>@product.AnimalCount puppies!</td>
+                <td>
+                    <form asp-action="remove" method="post">
+                        <input type="hidden" value="@product.ID" />
+                        <button class="w3-bar-item w3-button" style="border: solid;">Remove</button>
+                    </form>
+                </td>
+            </tr>
             }
         </table>
 

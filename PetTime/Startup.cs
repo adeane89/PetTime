@@ -40,16 +40,17 @@ namespace PetTime
             // Add application services.
             services.AddTransient<IEmailSender>((IServiceProvider) => new EmailSender(Configuration.GetValue<string>("SendGrid.ApiKey")));
 
-            services.AddTransient<Braintree.IBraintreeGateway>((iServiceProvider) => new Braintree.BraintreeGateway(
+            services.AddTransient<Braintree.IBraintreeGateway>((IServiceProvider) => new Braintree.BraintreeGateway(
                    Configuration.GetValue<string>("Braintree.Environment"),
                    Configuration.GetValue<string>("Braintree.MerchantId"),
                    Configuration.GetValue<string>("Braintree.PublicKey"),
                    Configuration.GetValue<string>("Braintree.PrivateKey")
                    ));
-            
 
-            services.AddMvc();
-        }
+            services.AddTransient<Map>((IServiceProvider) => new Map { MapKey = Configuration.GetValue<string>("GoogleMaps.ApiKey") } );
+
+           services.AddMvc();
+            }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider services)

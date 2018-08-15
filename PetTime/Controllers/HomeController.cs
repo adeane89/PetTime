@@ -6,17 +6,27 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PetTime.Models;
 
+using PetTime.Services;
+
 namespace PetTime.Controllers
 {
     public class HomeController : Controller
     {
+        private Map _map;
+
+        public HomeController(Map map)
+        {
+            this._map = map;
+        }
+        
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult About(Map apiKey)
         {
+            ViewBag.ApiKey = _map.MapKey;
             ViewData["Message"] = "About Us";
 
             return View();
@@ -26,11 +36,6 @@ namespace PetTime.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult About(ContactModel model)
         {
-            if (ModelState.IsValid)
-            {
-                //todo: need to send this to an email address?
-                return RedirectToAction("Index", "Home");
-            }
             return View();
         }
 

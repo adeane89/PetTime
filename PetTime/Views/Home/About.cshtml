@@ -1,6 +1,7 @@
 ﻿@model ContactModel
 @{
     ViewData["Title"] = "About Us";
+    string apiUrl = "https://maps.googleapis.com/maps/api/js?key=" + @ViewBag.ApiKey + "&callback=initMap";
 }
 <!-- Third Parallax Image with Portfolio Text -->
 <div class="bgimg-3 w3-display-container w3-opacity-min">
@@ -42,8 +43,10 @@
                 }
             </script>
             <script async defer
-                    src="https://maps.googleapis.com/maps/api/js?key=[Key Here]&callback=initMap">
+                    src="@apiUrl">
             </script>
+         
+
         </div>
         <div class="w3-col m8 w3-panel">
             <div class="w3-large w3-margin-bottom">
