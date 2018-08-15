@@ -51,10 +51,14 @@
         {
             <div class="card container" style="text-align: center" width="300" height="200">
                 <p><b>@pet.Description</b></p>
-                <div class="card-img-top"><img src="@pet.ImagePath" class="w3-round w3-image w3-opacity w3-hover-opacity-off" alt="@pet.Name" width="300" height="200"></div>
+                <div class="card-img-top">
+                    <a asp-controller="Pet" asp-action="Details" asp-route-id="@pet.ID">
+                        <img src="@pet.ImagePath" class="w3-round w3-image w3-opacity w3-hover-opacity-off" width="300" height="200">
+                    </a>
+                </div>
                 <div class="card-body">
                     <p style="text-align: center">
-                        <a asp-controller="Pet" asp-action="Details" asp-route-id="@pet.ID"  class="w3-bar-item w3-button" style="border: solid">View Details</a>
+                        <a asp-controller="Pet" asp-action="Details" asp-route-id="@pet.ID" class="w3-bar-item w3-button" style="border: solid">Pick Me!</a>
                     </p>
                 </div>
             </div>
