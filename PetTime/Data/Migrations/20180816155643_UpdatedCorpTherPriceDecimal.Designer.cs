@@ -11,9 +11,10 @@ using System;
 namespace PetTime.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180816155643_UpdatedCorpTherPriceDecimal")]
+    partial class UpdatedCorpTherPriceDecimal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -311,8 +312,6 @@ namespace PetTime.Data.Migrations
 
                     b.Property<DateTime?>("StartDate");
 
-                    b.Property<int>("TimeLength");
-
                     b.HasKey("ID");
 
                     b.HasIndex("PetCartID");
@@ -361,7 +360,7 @@ namespace PetTime.Data.Migrations
 
                     b.Property<string>("ProductDescription");
 
-                    b.Property<string>("ProductEventType");
+                    b.Property<int?>("ProductEventType");
 
                     b.Property<int?>("ProductID");
 

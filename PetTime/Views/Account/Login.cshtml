@@ -8,11 +8,11 @@
     ViewData["Title"] = "Log in";
 }
 <div class="w3-content w3-container w3-padding-64">
-    <h3 class="w3-center">
+    <h2 class="w3-center">
         LOG IN
-    </h3>
+    </h2>
     <div class="w3-row">
-        <div class="w3-col m6 w3-center w3-padding-large">
+        <div class="w3-col m6 w3-center w3-hide w3-padding-large">
             <img src="~/images/golden.jpg" class="w3-round w3-image" alt="Photo of Me" width="500" height="333">
         </div>
         <div class="w3-col m6 w3-padding-large">
@@ -37,12 +37,11 @@
                     </div>
                 </div>
                 <div class="form-group">
-                        <a asp-action="ForgotPassword" class="formlabel">Forgot your password</a>
-                        <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" class="formlabel">Register as a new user</a>
- 
+                        <a asp-action="ForgotPassword" class="formlabel" style="text-decoration: none; color: #ed8c72;">Forgot your password</a>
+                        <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" class="formlabel"  style="text-decoration: none; color: #ed8c72;">Register as a new user</a>
                 </div>
                 <div class="form-group">
-                    <button class="w3-button w3-black w3-right w3-section">
+                    <button class="w3-button w3-right w3-section" style="background-color: #ed8c72">
                         LOG IN
                     </button>
                 </div>

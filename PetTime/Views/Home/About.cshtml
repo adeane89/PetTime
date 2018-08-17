@@ -3,16 +3,8 @@
     ViewData["Title"] = "About Us";
     string apiUrl = "https://maps.googleapis.com/maps/api/js?key=" + @ViewBag.ApiKey + "&callback=initMap";
 }
-<!-- Third Parallax Image with Portfolio Text -->
-<div class="bgimg-3 w3-display-container w3-opacity-min">
-    <div class="w3-display-middle">
-        <span class="w3-xxlarge w3-text-white w3-wide">ABOUT US</span>
-    </div>
-</div>
-
-<!-- Container (Contact Section) -->
 <div class="w3-content w3-container w3-padding-64" id="contact">
-    <h3 class="w3-center">ABOUT US </h3>
+    <h2 class="w3-center">ABOUT US </h2>
     <p class="w3-center">
     <p>
         Cuddling is a great stress reliever. Petting and talking to a dog for just a
@@ -20,14 +12,14 @@
         often referred to as the love hormone, is associated with social bonding and trust. 
         New research found that human-dog interactions can elicit the same positive hormonal response that 
         mothers have with their infants.
-        <a href="https://www.health.harvard.edu/blog/therapy-dog-offers-stress-relief-at-work-201107223111">Go check it out!</a>
+        <a href="https://www.health.harvard.edu/blog/therapy-dog-offers-stress-relief-at-work-201107223111" style="color: #ed8c72; text-decoration: none">Go check it out!</a>
     </p>
     <p>
         We partner with shelters in the area to encourage pet adoption through our events.
     </p>
 
     <div class="w3-row w3-padding-32 w3-section">
-        <div class="w3-col m4 w3-container">
+        <div class="w3-col m4 w3-container w3-hide-small">
             <!-- Add Google Maps -->
             <div id="map" class="w3-round-large w3-greyscale" style="width:100%;height:400px;"></div>
             <script>
@@ -73,14 +65,14 @@
             <form method="post">
                 <div class="w3-row-padding" style="margin:0 -16px 8px -16px">
                     <div class="w3-half">
-                        <input type="text" asp-for="Name" class="w3-input w3-border" type="text" placeholder="Name" required name="Name">
+                        <input type="text" asp-for="Name" class="w3-input w3-border" placeholder="Name" required name="Name">
                     </div>
                     <div class="w3-half">
                         <input type="email" asp-for="Email" class="w3-input w3-border" placeholder="Email" required name="Email">
                     </div>
                 </div>
                 <input type="text" asp-for="Question" class="w3-input w3-border" placeholder="Message" required name="Message">
-                <button class="w3-button w3-black w3-right w3-section" type="submit">
+                <button  class="w3-button w3-right w3-section" style="background-color: #ed8c72" type="submit">
                     <i class="fa fa-paper-plane"></i> SEND MESSAGE
                 </button>
             </form>

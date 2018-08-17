@@ -14,7 +14,22 @@ namespace PetTime
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            if ((args.Length > 0) && (args[0].ToLowerInvariant() == "scrape"))
+            {
+                var builder = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                    .AddUserSecrets<Program>();
+
+                IConfigurationRoot configuration = builder.Build();
+
+                Services.DataScraper scraper = new Services.DataScraper(configuration.GetValue<string>("Dog.ApiKey"));
+                scraper.Scrape();
+            }
+            else
+            {
+                BuildWebHost(args).Run();
+            }
         }
 
         public static IWebHost BuildWebHost(string[] args) =>

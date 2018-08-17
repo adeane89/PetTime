@@ -1,9 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Locked out";
 }
-<div class="pages overlay">
-    <header>
-        <h2 class="text-danger">@ViewData["Title"]</h2>
-        <p class="text-danger">This account has been locked out, please try again later.</p>
-    </header>
+<div class="w3-content w3-container w3-padding-64">
+    <h3 class="w3-center">
+        @ViewData["Title"]
+    </h3>
+    <div class="w3-row">
+        <div class="w3-col m6 w3-center w3-padding-large">
+            This account has been locked out, please try again later.
+        </div>
+    </div>
 </div>
+

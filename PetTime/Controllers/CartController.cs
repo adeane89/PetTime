@@ -42,11 +42,83 @@ namespace PetTime.Controllers
 
             return View(model);
         }
-      
-        public IActionResult Remove(int id)
+
+        public async Task<IActionResult> Remove(int? id, int quantity, string breed, string length, int animalCount)
         {
-            //if(id != null)
-            return RedirectToAction("Index");
+            PetCart cart = null;
+            if (User.Identity.IsAuthenticated)
+            {
+                var currentUser = await _userManager.GetUserAsync(User);
+                cart = await _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefaultAsync(x => x.ApplicationUserID == currentUser.Id);
+                if (cart == null)
+                {
+                    cart = new PetCart();
+                    cart.ApplicationUserID = currentUser.Id;
+                    cart.DateCreated = DateTime.Now;
+                    cart.DateLastModified = DateTime.Now;
+                    _context.PetCarts.Add(cart);
+                }
+            }
+            else
+            {
+                if (Request.Cookies.ContainsKey("cart_id"))
+                {
+                    int existingCartID = int.Parse(Request.Cookies["cart_id"]);
+                    cart = await _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefaultAsync(x => x.ID == existingCartID);
+                }
+
+                if (cart == null)
+                {
+                    cart = new PetCart
+                    {
+                        DateCreated = DateTime.Now,
+                        DateLastModified = DateTime.Now
+                    };
+
+                    _context.PetCarts.Add(cart);
+                }
+            }
+
+            PetCartProduct product = cart.PetCartProducts.FirstOrDefault(x => x.PetID == id);
+            if (product != null)
+            {
+                product = new PetCartProduct
+                {
+                    DateCreated = DateTime.Now,
+                    DateLastModified = DateTime.Now,
+                    PetID = id ?? 0,
+                    Quantity = 0,
+                    Length = length,
+                    AnimalCount = 0
+                };
+
+                cart.PetCartProducts.Remove(product);
+            }
+            //product.Quantity= 0;
+            //product.AnimalCount = animalCount;
+            //product.DateLastModified = DateTime.Now;
+            //product.Length = length;
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Cart");
         }
+
+
+        //public IActionResult Remove(/*int id, int quantity, int animalCount, DateTime dateLastModified*/)
+        //{
+        //    //PetCart cart = null;
+        //    //PetCartProduct product = cart.PetCartProducts.FirstOrDefault(x => x.PetID == id);
+        //    //if (product != null)
+        //    //{
+        //    //    cart.PetCartProducts.Remove(product);
+        //    //}
+        //    //product.Quantity = 0;
+        //    //product.AnimalCount = 0;
+        //    //product.DateLastModified = DateTime.Now;
+
+        //    //await _context.SaveChangesAsync();
+
+        //    return RedirectToAction("Index", "Cart");
+        //}
     }
 }

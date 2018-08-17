@@ -8,6 +8,7 @@ using PetTime.Models;
 using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using PetTime.Services;
 
 namespace PetTime.Controllers
 {
@@ -16,29 +17,50 @@ namespace PetTime.Controllers
         private ApplicationDbContext _context;
 
         private UserManager<ApplicationUser> _userManager;
+        private DataScraper _dataScraper;
 
-        public PetController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        //private string _apiKey;
+
+        public PetController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, DataScraper dataScraper)
         {
             this._context = context;
             this._userManager = userManager;
+            this._dataScraper = dataScraper;
         }
 
         public async Task<IActionResult> Index(string category)
         {
             if (_context.Pets.Count() == 0)
             {
-                List<Pet> springerSpaniel = new List<Pet>();
-                springerSpaniel.Add(new Pet { Name = "English Springer Spaniel", Description = "English Springer Spaniel", ImagePath = "/images/puppy3.jpg", Price = 5.00m, DateCreated = DateTime.Now, DateLastModified = DateTime.Now });
-                _context.Categories.Add(new CategoryModel { Name = "English Springer Spaniel", Pets = springerSpaniel });
 
-                List<Pet> retrievers = new List<Pet>();
-                retrievers.Add(new Pet { Name = "Golden Retriever", Description = "Golden Retriever", ImagePath = "/images/golden.jpg", Price = 5.00m, DateCreated = DateTime.Now, DateLastModified = DateTime.Now });
-                _context.Categories.Add(new CategoryModel { Name = "Golden Retriever", Pets = retrievers });
+                foreach(var dog in _dataScraper.Scrape())
+                {
+                    
+                    foreach(var breed in dog.breeds)
+                    {
+                        CategoryModel cat = await _context.Categories.FirstOrDefaultAsync(x => x.Name == breed.name);
+                        if(cat == null)
+                        {
+                            cat = new CategoryModel { Name = breed.name };
+                            _context.Categories.Add(cat);
+                        }
+                        Pet p = new Pet
+                        {
+                            Name = breed.name,
+                            Description = breed.name,
+                            ImagePath = dog.url,
+                            Price = 5.00m,
+                            DateCreated = DateTime.Now,
+                            DateLastModified = DateTime.Now,
+                            Category = cat
+                        };
 
-                List<Pet> corgis = new List<Pet>();
-                corgis.Add(new Pet { Name = "Corgi", Description = "Corgi", ImagePath = "/images/puppy4.jpg", Price = 5.00m, DateCreated = DateTime.Now, DateLastModified = DateTime.Now });
-                _context.Categories.Add(new CategoryModel { Name = "Corgi", Pets = corgis });
+                        _context.Pets.Add(p);
+                        
 
+                    }
+
+                }
                await _context.SaveChangesAsync();
             }
             
@@ -65,14 +87,14 @@ namespace PetTime.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Details(int? id, int quantity, string breed, string length, DateTime startDate, int animalCount)
+        public async Task<IActionResult> Details(int? id, int quantity, string breed, int timeLength, DateTime startDate, int animalCount, decimal price)
         {
             PetCart cart = null;
             if (User.Identity.IsAuthenticated)
             {
                 var currentUser = await _userManager.GetUserAsync(User);
                 cart = await _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefaultAsync(x => x.ApplicationUserID == currentUser.Id);
-                if (cart == null)
+                if (cart == null)   
                 {
                     cart = new PetCart();
                     cart.ApplicationUserID = currentUser.Id;
@@ -114,17 +136,18 @@ namespace PetTime.Controllers
                     DateLastModified = DateTime.Now,
                     PetID = id ?? 0,
                     Quantity = 0,
-                    Length = length,
+                    TimeLength = timeLength,
                     StartDate = startDate,
-                    AnimalCount = 0
-    };
+                    AnimalCount = 0,
+                 };
+
                 cart.PetCartProducts.Add(product);
             }
             product.Quantity += quantity;
             product.AnimalCount += animalCount;
             product.DateLastModified = DateTime.Now;
             product.StartDate = startDate;
-            product.Length = length;
+            product.TimeLength = timeLength;
             
             await _context.SaveChangesAsync();
 
@@ -200,15 +223,17 @@ namespace PetTime.Controllers
                     AnimalCount = model.AnimalCount,
                     StartDate = model.StartDate,
                     EventType = model.EventType,
-                    Length = model.Length
+                    TimeLength = model.TimeLength,
+                    Price = 10.00m
                 };
                 cart.CorporateCart = model;
             }
             prod.DateLastModified = DateTime.Now;
             prod.StartDate = model.StartDate;
-            prod.Length = model.Length;
+            prod.TimeLength = model.TimeLength;
             prod.EventType = model.EventType;
             prod.AnimalCount = model.AnimalCount;
+            prod.Price = model.Price;
 
             if (!User.Identity.IsAuthenticated)
             {
@@ -278,15 +303,17 @@ namespace PetTime.Controllers
                     AnimalCount = model.AnimalCount,
                     StartDate = model.StartDate,
                     EventType = model.EventType,
-                    Length = model.Length
+                    TimeLength = model.TimeLength,
+                    Price = 10.00m
                 };
                 cart.TherapyCart = model;
             }
             product.DateLastModified = DateTime.Now;
             product.StartDate = model.StartDate;
-            product.Length = model.Length;
+            product.TimeLength = model.TimeLength;
             product.EventType = model.EventType;
             product.AnimalCount = model.AnimalCount;
+            product.Price = model.Price;
 
             if (!User.Identity.IsAuthenticated)
             {

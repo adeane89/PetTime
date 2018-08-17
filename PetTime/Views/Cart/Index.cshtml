@@ -3,72 +3,115 @@
 @{
     ViewData["Title"] = "Index";
 }
-<div class="w3-content w3-container w3-padding-64" id="about">
-    @if ((Model.PetCartProducts.Count == 0) && (Model.CorporateCartID != 0) && (Model.TherapyCartID != 0))
-    {
-        <p>You have nothing scheduled,<a asp-controller="Pet" asp-action="index"> check out some animals or host an event!</a></p>
-    }
-    else
-    {
-        <h3 class="w3-center">VISITS</h3>
-        <table class="table">
-            @foreach (var product in Model.PetCartProducts)
+<div class="w3-content w3-container w3-padding-64">
+    <div class="w3-col w3-center 3-padding-large">
+        <h2 class="w3-center">CART</h2>
+        @if ((Model.PetCartProducts.Count == 0) && (Model.CorporateCartID == null) && (Model.TherapyCartID == null))
+        {
+            <p>You have nothing scheduled,<a asp-controller="Pet" asp-action="index"> check out some animals or host an event!</a></p>
+        }
+        else
+        {
+            @if (Model.PetCartProducts != null)
             {
-            <tr>
-                <td>@product.Pet.Name</td>
-                <td>@product.StartDate </td>
-                <td>@product.Length</td>
-                <td>@(((decimal)(product.AnimalCount * product.Pet.Price)).ToString("c"))</td>
-                <td>@product.AnimalCount puppies!</td>
-                <td>
-                    <form asp-action="remove" method="post">
-                        <input type="hidden" value="@product.ID" />
-                        <button class="w3-bar-item w3-button" style="border: solid;">Remove</button>
-                    </form>
-                </td>
-            </tr>
+                <h3>VISITS</h3>
+                <table class="table">
+                    @foreach (var product in Model.PetCartProducts)
+                    {
+                        <thead>
+                            <tr>
+                                <th>Puppy</th>
+                                <th>Visit Date & Time</th>
+                                <th>Length of Visit</th>
+                                <th>Price</th>
+                                <th>Number of puppies</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>@product.Pet.Name</td>
+                                <td>@product.StartDate </td>
+                                <td>@product.TimeLength</td>
+                                <td>@(((decimal)(product.AnimalCount * product.Pet.Price)).ToString("c"))</td>
+                                <td>@product.AnimalCount</td>
+                                <td style="border: none;">
+                                    <form asp-action="remove" method="post">
+                                        <input type="hidden" value="@product.ID" />
+                                        <button class="w3-bar-item w3-button" style="border: solid;">Remove</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    }
+                </table>
             }
-        </table>
+            @if (Model.CorporateCart != null)
+            {
+                <h3>CORPORATE</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Event Type</th>
+                            <th>Visist Date & Time</th>
+                            <th>Length of Visit</th>
+                            <th>Price</th>
+                            <th>Number of puppies</th>
 
-        @if (Model.CorporateCart != null)
-        {
-            <h3 class="w3-center">CORPORATE</h3>
-            <table class="table">
-                <tr>
-                    <td>@Model.CorporateCart.EventType</td>
-                    <td>@Model.CorporateCart.StartDate</td>
-                    <td>@Model.CorporateCart.Length</td>
-                    <td>@Model.CorporateCart.AnimalCount puppies!</td>
-                    <td>
-                        <form asp-action="remove" method="post">
-                            <input type="hidden" value="@Model.CorporateCartID" />
-                            <button class="w3-bar-item w3-button" style="border: solid;">Remove</button>
-                        </form>
-                    </td>
-                </tr>
-            </table>
-        }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Model.CorporateCart.EventType</td>
+                            <td>@Model.CorporateCart.StartDate</td>
+                            <td>@Model.CorporateCart.TimeLength</td>
+                            <td>@(((decimal)(Model.CorporateCart.AnimalCount * 50)).ToString("c"))</td>
+                            <td>@Model.CorporateCart.AnimalCount</td>
+                            <td style="border: none;">
+                                <form asp-action="remove" method="post">
+                                    <input type="hidden" value="@Model.CorporateCartID" />
+                                    <button class="w3-bar-item w3-button" style="border: solid;">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
 
-        @if (Model.TherapyCart != null)
-        {
-            <h3 class="w3-center">THERAPY</h3>
-            <table class="table">
-                <tr>
-                    <td>@Model.TherapyCart.EventType</td>
-                    <td>@Model.TherapyCart.StartDate</td>
-                    <td>@Model.TherapyCart.Length</td>
-                    <td>@Model.TherapyCart.AnimalCount puppies!</td>
-                    <td>Instructions: @Model.TherapyCart.Instructions</td>
-                    <td>
-                        <form asp-action="remove" method="post">
-                            <input type="hidden" value="@Model.TherapyCartID" />
-                            <button  class="w3-bar-item w3-button" style="border: solid;">Remove</button>
-                        </form>
-                    </td>
-                </tr>
-            </table>
+            @if (Model.TherapyCart != null)
+            {
+                <h3>THERAPY</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Event Type</th>
+                            <th>Visist Date & Time</th>
+                            <th>Length of Visit</th>
+                            <th>Price</th>
+                            <th>Number of puppies</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Model.TherapyCart.EventType</td>
+                            <td>@Model.TherapyCart.StartDate</td>
+                            <td>@Model.TherapyCart.TimeLength</td>
+                            <td>@(((decimal)(Model.TherapyCart.AnimalCount * 50)).ToString("c"))</td>
+                            <td>@Model.TherapyCart.AnimalCount</td>
+                            <td style="border: none;">
+                                <form asp-action="remove" method="post">
+                                    <input type="hidden" value="@Model.TherapyCartID" />
+                                    <button class="w3-bar-item w3-button" style="border: solid;">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                </table>
+            }
+
+            <a asp-controller="Checkout" asp-action="Index" class="w3-button w3-right w3-section" style="background-color: #ed8c72">
+                <i class="far fa-credit-card"></i> CHECKOUT
+            </a>
         }
-    }
-    <a asp-controller="Checkout" asp-action="Index" class="w3-button w3-black w3-right w3-section">
-        <i class="far fa-credit-card"></i> CHECKOUT</a>
+    </div>
 </div>

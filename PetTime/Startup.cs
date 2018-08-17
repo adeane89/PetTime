@@ -40,6 +40,8 @@ namespace PetTime
             // Add application services.
             services.AddTransient<IEmailSender>((IServiceProvider) => new EmailSender(Configuration.GetValue<string>("SendGrid.ApiKey")));
 
+            services.AddTransient((isp) => new Services.DataScraper(Configuration.GetValue<string>("Dog.ApiKey")));
+
             services.AddTransient<Braintree.IBraintreeGateway>((IServiceProvider) => new Braintree.BraintreeGateway(
                    Configuration.GetValue<string>("Braintree.Environment"),
                    Configuration.GetValue<string>("Braintree.MerchantId"),

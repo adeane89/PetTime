@@ -23,7 +23,7 @@ namespace PetTime.Models
         
         public DateTime? StartDate { get; set; }
 
-        public int? ProductEventType { get; set; }
+        public string ProductEventType { get; set; }
 
         public int ProductAnimalCount { get; set; }
 

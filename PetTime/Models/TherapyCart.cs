@@ -11,8 +11,10 @@ namespace PetTime.Models
         public string EventType { get; set; }
         public int? AnimalCount { get; set; }
         public string Length { get; set; }
+        public int TimeLength { get; set; }
         public bool? IsRecurring { get; set; }
         public DateTime? StartDate { get; set; }
+        public decimal Price { get; set; }
         public string Instructions { get; set; }
         public DateTime? DateCreated { get; set; }
         public DateTime? DateLastModified { get; set; }

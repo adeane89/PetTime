@@ -63,13 +63,13 @@ namespace PetTime.Controllers
                 if (User.Identity.IsAuthenticated)
                 {
                     var currentUser = _userManager.GetUserAsync(User).Result;
-                    cart = _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).Single(x => x.ApplicationUserID == currentUser.Id);
+                    cart = _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).Include(x => x.CorporateCart).Include(x => x.TherapyCart).Single(x => x.ApplicationUserID == currentUser.Id);
                 }
 
                 else if (Request.Cookies.ContainsKey("cart_id"))
                 {
                     int existingCartID = int.Parse(Request.Cookies["cart_id"]);
-                    cart = _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).FirstOrDefault(x => x.ID == existingCartID);
+                    cart = _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).Include(x => x.CorporateCart).Include(x => x.TherapyCart).FirstOrDefault(x => x.ID == existingCartID);
                 }
 
                 foreach (var cartItem in cart.PetCartProducts)
@@ -82,7 +82,10 @@ namespace PetTime.Controllers
                         ProductID = cartItem.PetID,
                         ProductDescription = cartItem.Pet.Description,
                         ProductName = cartItem.Pet.Name,
-                        ProductPrice = cartItem.Pet.Price ?? 0,
+                        ProductPrice = ((decimal)(cartItem.Pet.Price * cartItem.AnimalCount)),
+                        ProductAnimalCount = cartItem.AnimalCount,
+                        ProductEventType = cartItem.PetCart.CorporateCart.EventType,
+                        ProductLength = cartItem.TimeLength
                     });
                 }
 
@@ -104,8 +107,11 @@ namespace PetTime.Controllers
                 await _emailSender.SendEmailAsync(model.Email, "Your order " + order.ID, 
                     "Thanks for ordering! You scheduled :" + 
                     String.Join(",", order.PetOrderProducts.Select(x => x.ProductName)) + 
-                    String.Join(",", order.PetOrderProducts.Select(x => x.Quantity)) + 
-                    String.Join(",", order.PetOrderProducts.Select(x => x.ProductDescription)));
+                    String.Join(",", order.PetOrderProducts.Select(x => x.Quantity)) +
+                    String.Join(",", order.PetOrderProducts.Select(x => x.ProductPrice)) +
+                    String.Join(",", order.PetOrderProducts.Select(x => x.ProductEventType)) +
+                    String.Join(",", order.PetOrderProducts.Select(x => x.ProductAnimalCount)) +
+                    String.Join(",", order.PetOrderProducts.Select(x => x.ProductLength)));
                 
                 return RedirectToAction("Index", "Receipt", new { id = order.ID });
             }

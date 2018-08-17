@@ -23,6 +23,8 @@ namespace PetTime.Models
 
         public string Length { get; set; }
 
+        public int TimeLength { get; set; }
+
         public DateTime? StartDate { get; set; }
 
         public DateTime? DateCreated { get; set; }

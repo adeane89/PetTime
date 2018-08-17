@@ -4,8 +4,8 @@
 }
 
 <!-- Container (About Section) -->
-<div class="w3-content w3-container w3-padding-64" id="about">
-    <h3 class="w3-center">SCHEDULE VISIT</h3>
+<div class="w3-content w3-padding-64" id="services">
+    <h2 class="w3-center">SCHEDULE VISIT</h2>
     <p class="w3-center"><em>Schedule a time and come in to meet our fabulous puppies!</em></p>
     <div class="w3-center w3-hide-small">
         <a asp-controller="Pet" asp-action="Index" class="w3-bar-item w3-button" style="border: solid;">Schedule Visit</a>
@@ -14,9 +14,14 @@
     </div>
 
     <form class="breedform">
-        <div class="w3-row-padding" style="margin:0 -16px 8px -16px">
-            <div class="w3-half">
-                <label for="category"></label>
+        <div class="w3-row-padding">
+            <div class="w3-row w3-center">
+                <p></p>
+            </div>
+            <div class=" w3-col m4">
+                <p class="w3-right">Find a breed:</p>
+            </div>
+            <div class=" w3-col m4">
                 <select name="category" class="form-control">
                     @if (string.IsNullOrEmpty(ViewBag.selectedCategory))
                     {
@@ -39,30 +44,34 @@
                     }
                 </select>
             </div>
-            <label>&nbsp;</label>
-            <button class="w3-button w3-black w3-right w3-section" type="submit">
-                SORT
-            </button>
+            <div class=" w3-col m4">
+                <label>&nbsp;</label>
+                <button class="w3-button w3-left" style="background-color: #ed8c72" type="submit">
+                    GO
+                </button>
+            </div>
         </div>
-    </form>
+</form>
 
+</div>
+<div class="w3-padding-large">
     <div class="card-deck">
         @foreach (var pet in Model)
         {
-            <div class="card container" style="text-align: center" width="300" height="200">
-                <p><b>@pet.Description</b></p>
-                <div class="card-img-top">
-                    <a asp-controller="Pet" asp-action="Details" asp-route-id="@pet.ID">
-                        <img src="@pet.ImagePath" class="w3-round w3-image w3-opacity w3-hover-opacity-off" width="300" height="200">
-                    </a>
+            <div class="card-body" style="text-align: center;">
+                <a asp-controller="Pet" asp-action="Details" asp-route-id="@pet.ID">
+                    <img src="@pet.ImagePath" class="w3-round w3-image w3-opacity w3-hover-opacity-off" width="300" height="200">
+                </a>
+                <div class="card-text">
+                    <h5 class="">@pet.Description</h5>
+                    <a asp-controller="Pet" asp-action="Details" asp-route-id="@pet.ID" class="w3-bar-item w3-button" style="border: solid">Pick Me!</a>
                 </div>
-                <div class="card-body">
-                    <p style="text-align: center">
-                        <a asp-controller="Pet" asp-action="Details" asp-route-id="@pet.ID" class="w3-bar-item w3-button" style="border: solid">Pick Me!</a>
-                    </p>
-                </div>
+
             </div>
         }
     </div>
+    <footer class="w3-center w3-padding-64 w3-opacity w3-hover-opacity-off">
+        <a href="#services"  class="w3-button w3-section" style="background-color: #ed8c72"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</a>
+    </footer>
 </div>
     
