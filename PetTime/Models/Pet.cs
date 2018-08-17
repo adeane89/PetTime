@@ -18,6 +18,7 @@ namespace PetTime.Models
         public decimal? Price { get; set; }
         public string ImagePath { get; set; }
         public DateTime DateTime { get; set; }
+        public DateTime? StartDate { get; set; }
         public int Age { get; set; }
 
         public DateTime? DateCreated { get; set; }

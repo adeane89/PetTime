@@ -43,12 +43,12 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="formlabel " for="event-time">Date/time:</label>
-                    <input type="datetime-local" name="startDate" value="2018-08-20T14:30"
-                           min=@DateTime.Now max=@DateTime.Now.AddYears(1) required class="form-control" />
+                    <label class="formlabel " for="event-time">Date/time of event:</label>
+                    <input type="datetime-local" asp-for="StartDate" value="2018-07-27T19:30"
+                           min="2018-07-27T00:00" max="2019-06-14T00:00" required class="form-control" />
                 </div>
                 <div>
-                    <button  class="w3-button w3-right w3-section" style="background-color: #ed8c72" type="submit">
+                    <button class="w3-button w3-right w3-section" style="background-color: #ed8c72" type="submit">
                         <i class="far fa-calendar-alt"></i> SCHEDULE VISIT
                     </button>
                 </div>

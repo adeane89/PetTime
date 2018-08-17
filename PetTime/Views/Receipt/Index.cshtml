@@ -9,12 +9,12 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Puppy</th>
-                        <th>Visit</th>
+                        <th>Purchase</th>
+                        <th>Visit Type</th>
+                        <th>Scheduled Visit</th>
                         <th>Length of Visit</th>
-                        <th>Price</th>
+                        <th>Puppies Joining</th>
                         <th>Total Price</th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -22,8 +22,9 @@
                     {
                         <tr>
                             <td>@product.ProductName</td>
+                            <td>@product.ProductEventType</td>
                             <td>@product.StartDate</td>
-                            <td>@product.ProductLength</td>
+                            <td>@product.ProductLength @product.ProductDescription</td>
                             <td>@product.ProductAnimalCount</td>
                             <td>@((product.ProductAnimalCount * product.ProductPrice).ToString("c"))</td>
                         </tr>
@@ -31,8 +32,8 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th colspan="4">Total</th>
-                        <td>@(Model.PetOrderProducts.Sum(x => x.Quantity * x.ProductPrice).ToString("c"))</td>
+                        <th colspan="5">Total</th>
+                        <td>@(Model.PetOrderProducts.Sum((x => ((x.Quantity * x.ProductPrice) + (x.ProductAnimalCount * x.ProductPrice)))).ToString("c"))</td>
                     </tr>
                 </tfoot>
             </table>

@@ -279,15 +279,22 @@ thead{
         }
 
         td:nth-of-type(3):before {
-            content: "Length of Visit:";
+            content: "Visit Date:";
         }
 
         td:nth-of-type(4):before {
-            content: "Price:";
+            content: "Length:";
         }
 
         td:nth-of-type(5):before {
             content: "Number of puppies:";
         }
 
+        td:nth-of-type(6):before {
+            content: "Price:";
+        }
+
+        td:nth-child(7):before {
+            content: "Total Price:";
+        }
 }

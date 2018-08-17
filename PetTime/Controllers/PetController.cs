@@ -19,8 +19,6 @@ namespace PetTime.Controllers
         private UserManager<ApplicationUser> _userManager;
         private DataScraper _dataScraper;
 
-        //private string _apiKey;
-
         public PetController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, DataScraper dataScraper)
         {
             this._context = context;
@@ -87,7 +85,7 @@ namespace PetTime.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Details(int? id, int quantity, string breed, int timeLength, DateTime startDate, int animalCount, decimal price)
+        public async Task<IActionResult> Details(int? id, int quantity, string breed, int timeLength, DateTime startDate, int animalCount, decimal price, string length)
         {
             PetCart cart = null;
             if (User.Identity.IsAuthenticated)
@@ -139,6 +137,7 @@ namespace PetTime.Controllers
                     TimeLength = timeLength,
                     StartDate = startDate,
                     AnimalCount = 0,
+                    Length = length
                  };
 
                 cart.PetCartProducts.Add(product);
@@ -147,9 +146,9 @@ namespace PetTime.Controllers
             product.AnimalCount += animalCount;
             product.DateLastModified = DateTime.Now;
             product.StartDate = startDate;
-            product.TimeLength = timeLength;
-            
-            await _context.SaveChangesAsync();
+            product.Length = length;
+
+            await _context.SaveChangesAsync ();
 
 
             if (!User.Identity.IsAuthenticated)
