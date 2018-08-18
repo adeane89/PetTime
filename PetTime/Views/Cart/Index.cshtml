@@ -6,11 +6,11 @@
 <div class="w3-content w3-padding-64">
     <div class="w3-row-padding w3-container">
         <h2 class="w3-center">CART</h2>
-        <div class="w3-row">
-            @if ((Model.PetCartProducts.Count == 0) && (Model.CorporateCartID == null) && (Model.TherapyCartID == null))
+            @if ((Model.PetCartProducts.Count == 0) && (Model.CorporateCartID == null) && (Model.TherapyCartID == null)) 
             {
-                <p>You have nothing scheduled,<a asp-controller="Pet" asp-action="index" style="color: #ed8c72"> check out some animals or host an event!</a></p>
+                <p class="w3-center">You have nothing scheduled,<a asp-controller="Pet" asp-action="index" style="color: #ed8c72"> check out some animals or host an event!</a></p>
             }
+
             else
             {
                 @if (Model.PetCartProducts.Count != 0)
@@ -22,10 +22,9 @@
                             <thead>
                                 <tr>
                                     <th>Puppy</th>
-                                    <th>Visit Type</th>
                                     <th>Scheduled Visit</th>
                                     <th>Length of Visit</th>
-                                    <th>Puppies Joining</th>
+                                    <th>Number of Puppies</th>
                                     <th>Price</th>
 
                                 </tr>
@@ -33,7 +32,6 @@
                             <tbody>
                                 <tr>
                                     <td>@product.Pet.Name</td>
-                                    <td>Individual</td>
                                     <td>@product.StartDate </td>
                                     <td>@product.Length</td>
                                     <td>@product.AnimalCount</td>
@@ -56,7 +54,7 @@
                         <thead>
                             <tr>
                                 <th>Event Type</th>
-                                <th>Visist Date & Time</th>
+                                <th>Scheduled Event</th>
                                 <th>Length of Visit</th>
                                 <th>Number of puppies</th>
                                 <th>Price</th>
@@ -67,7 +65,7 @@
                             <tr>
                                 <td>@Model.CorporateCart.EventType</td>
                                 <td>@Model.CorporateCart.StartDate</td>
-                                <td>@Model.CorporateCart.TimeLength</td>
+                                <td>@Model.CorporateCart.Length</td>
                                 <td>@Model.CorporateCart.AnimalCount</td>
                                 <td>@(((decimal)(Model.CorporateCart.AnimalCount * 50)).ToString("c"))</td>
                                 <td style="border: none;">
@@ -88,7 +86,7 @@
                         <thead>
                             <tr>
                                 <th>Event Type</th>
-                                <th>Visist Date & Time</th>
+                                <th>Scheduled Event</th>
                                 <th>Length of Visit</th>
                                 <th>Number of puppies</th>
                                 <th>Price</th>
@@ -99,7 +97,7 @@
                             <tr>
                                 <td>@Model.TherapyCart.EventType</td>
                                 <td>@Model.TherapyCart.StartDate</td>
-                                <td>@Model.TherapyCart.TimeLength</td>
+                                <td>@Model.TherapyCart.Length</td>
                                 <td>@Model.TherapyCart.AnimalCount</td>
                                 <td>@(((decimal)(Model.TherapyCart.AnimalCount * 50)).ToString("c"))</td>
                                 <td style="border: none;">

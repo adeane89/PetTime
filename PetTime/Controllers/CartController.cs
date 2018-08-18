@@ -28,7 +28,7 @@ namespace PetTime.Controllers
             {
                 var currentUser = _userManager.GetUserAsync(User).Result;
                 model = _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).
-                        Include(x => x.CorporateCart).Include(x => x.TherapyCart).Single(x => x.ApplicationUserID == currentUser.Id);
+                        Include(x => x.CorporateCart).Include(x => x.TherapyCart).FirstOrDefault(x => x.ApplicationUserID == currentUser.Id);
             }
 
             else if (Request.Cookies.ContainsKey("cart_id"))

@@ -14,7 +14,7 @@
                         <th>Scheduled Visit</th>
                         <th>Length of Visit</th>
                         <th>Puppies Joining</th>
-                        <th>Total Price</th>
+                        <th>Price</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,7 +24,7 @@
                             <td>@product.ProductName</td>
                             <td>@product.ProductEventType</td>
                             <td>@product.StartDate</td>
-                            <td>@product.ProductLength @product.ProductDescription</td>
+                            <td>@product.ProductDescription</td>
                             <td>@product.ProductAnimalCount</td>
                             <td>@((product.ProductAnimalCount * product.ProductPrice).ToString("c"))</td>
                         </tr>

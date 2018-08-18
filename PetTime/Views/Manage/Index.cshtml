@@ -4,49 +4,44 @@
     ViewData.AddActivePage(ManageNavPages.Index);
 }
 
-<div class="w3-content w3-container w3-padding-64">
-    <h3 class="w3-center">
-        @Html.Partial("_StatusMessage", Model.StatusMessage)
-    </h3>
-    <div class="w3-row">
-        <div class="w3-col m6 w3-center w3-padding-large">
-            <img src="~/images/golden.jpg" class="w3-round w3-image" alt="Photo of Me" width="500" height="333">
+<p class="w3-center">
+    @Html.Partial("_StatusMessage", Model.StatusMessage)
+</p>
+<div class=" w3-col m4"><p></p></div>
+<div class="w3-col m4">
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Username" class="formlabel"></label>
+            <input asp-for="Username" class="w3-input w3-border" disabled />
         </div>
-        <div class="w3-col m6 w3-padding-large">
-            <form method="post">
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Username" class="formlabel"></label>
-                    <input asp-for="Username" class="form-control" disabled />
+        <div class="form-group">
+            <label asp-for="Email" class="formlabel"></label>
+            @if (Model.IsEmailConfirmed)
+            {
+                <div class="input-group">
+                    <input asp-for="Email" class="w3-input w3-border" />
+                    <span class="input-group-addon" aria-hidden="true"><span class="glyphicon glyphicon-ok text-success"></span></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Email" class="formlabel"></label>
-                    @if (Model.IsEmailConfirmed)
-                    {
-                        <div class="input-group">
-                            <input asp-for="Email" class="form-control" />
-                            <span class="input-group-addon" aria-hidden="true"><span class="glyphicon glyphicon-ok text-success"></span></span>
-                        </div>
-                    }
-                    else
-                    {
-                        <input asp-for="Email" class="form-control" />
-                        <button asp-action="SendVerificationEmail" class="btn btn-link">Send verification email</button>
-                    }
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PhoneNumber" class="formlabel"></label>
-                    <input asp-for="PhoneNumber" class="form-control" />
-                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                </div>
-                <button class="w3-button w3-black w3-right w3-section">
-                    SAVE
-                </button>
-            </form>
-            @section Scripts {
-                @await Html.PartialAsync("_ValidationScriptsPartial")
             }
+            else
+            {
+                <input asp-for="Email" class="w3-input w3-border" />
+                <button asp-action="SendVerificationEmail" class="w3-button w3-right w3-section" style="background-color: #ed8c72">Send verification email</button>
+            }
+            <span asp-validation-for="Email" class="text-danger"></span>
         </div>
-    </div>
+        <div class="form-group">
+            <label asp-for="PhoneNumber" class="formlabel"></label>
+            <input asp-for="PhoneNumber" class="w3-input w3-border" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+        <button class="w3-button w3-right w3-section" style="background-color: #ed8c72">
+            SAVE
+        </button>
+    </form>
+    @section Scripts {
+        @await Html.PartialAsync("_ValidationScriptsPartial")
+    }
 </div>
+<div class=" w3-col m4"><p></p></div>

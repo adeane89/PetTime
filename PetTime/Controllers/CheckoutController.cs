@@ -39,6 +39,7 @@ namespace PetTime.Controllers
             }
 
             ViewBag.ClientAuthorization = await _braintreeGateway.ClientToken.GenerateAsync();
+
             return View(model);
         }
 
@@ -74,7 +75,7 @@ namespace PetTime.Controllers
                     cart = _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).Include(x => x.CorporateCart).Include(x => x.TherapyCart).FirstOrDefault(x => x.ID == existingCartID);
                 }
 
-                if(cart.PetCartProducts != null)
+                if(cart.PetCartProducts.Count != 0)
                 {
                     foreach (var cartItem in cart.PetCartProducts)
                     {
@@ -104,7 +105,7 @@ namespace PetTime.Controllers
                         ProductPrice = ((decimal)(10 * cart.CorporateCart.AnimalCount)),
                         ProductAnimalCount = cart.CorporateCart.AnimalCount ?? 1,
                         ProductEventType = cart.CorporateCart.EventType,
-                        ProductLength = cart.CorporateCart.TimeLength,
+                        ProductDescription = cart.CorporateCart.Length,
                         StartDate = cart.CorporateCart.StartDate
                     });
                 }
@@ -119,12 +120,26 @@ namespace PetTime.Controllers
                         ProductPrice = ((decimal)(10 * cart.TherapyCart.AnimalCount)),
                         ProductAnimalCount = cart.TherapyCart.AnimalCount ?? 1,
                         ProductEventType = cart.TherapyCart.EventType,
-                        ProductLength = cart.TherapyCart.TimeLength,
+                        ProductDescription = cart.CorporateCart.Length,
                         StartDate = cart.TherapyCart.StartDate
                     });
                 }
 
-                _context.PetCartProducts.RemoveRange(cart.PetCartProducts);
+                if (cart.PetCartProducts.Count != 0)
+                {
+                    _context.PetCartProducts.RemoveRange(cart.PetCartProducts);
+                }
+
+                if (cart.CorporateCart != null)
+                {
+                    _context.CorporateCarts.Remove(cart.CorporateCart);
+                }
+
+                if (cart.TherapyCart != null)
+                {
+                    _context.TherapyCarts.Remove(cart.TherapyCart);
+                }
+
                 _context.PetCarts.Remove(cart);
 
                 if (Request.Cookies.ContainsKey("cart_id"))

@@ -220,17 +220,19 @@ namespace PetTime.Controllers
                     AnimalCount = model.AnimalCount,
                     StartDate = model.StartDate,
                     EventType = model.EventType,
-                    TimeLength = model.TimeLength,
+                    //TimeLength = model.TimeLength,
+                    Length = model.Length,
                     Price = 10.00m
                 };
                 cart.CorporateCart = model;
             }
             prod.DateLastModified = DateTime.Now;
             prod.StartDate = model.StartDate;
-            prod.TimeLength = model.TimeLength;
+            //prod.TimeLength = model.TimeLength;
             prod.EventType = model.EventType;
             prod.AnimalCount = model.AnimalCount;
             prod.Price = model.Price;
+            prod.Length = model.Length;
 
             if (!User.Identity.IsAuthenticated)
             {
@@ -300,17 +302,18 @@ namespace PetTime.Controllers
                     AnimalCount = model.AnimalCount,
                     StartDate = model.StartDate,
                     EventType = model.EventType,
-                    TimeLength = model.TimeLength,
+                    //TimeLength = model.TimeLength,
                     Price = 10.00m
                 };
                 cart.TherapyCart = model;
             }
             product.DateLastModified = DateTime.Now;
             product.StartDate = model.StartDate;
-            product.TimeLength = model.TimeLength;
+            //product.TimeLength = model.TimeLength;
             product.EventType = model.EventType;
             product.AnimalCount = model.AnimalCount;
             product.Price = model.Price;
+            product.Length = model.Length;
 
             await _context.SaveChangesAsync();
 

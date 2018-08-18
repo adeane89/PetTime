@@ -11,6 +11,22 @@ h2, h3 {
     color: #ed8c72;
 }
 
+#card-number, #expiration-date, #cvv, #postalCode {
+    background-color: white;
+    height: 40px;
+    padding: 8px;
+    display: block;
+    font-size: 14px;
+    width: 100%;
+    overflow: visible;
+    margin: 0;
+    box-sizing: border-box;
+    border-radius: inherit;
+    box-shadow: inherit;
+    border-color: none;
+    outline: none;
+}
+
 .a {
     color: #ed8c72;
     text-decoration: none;
