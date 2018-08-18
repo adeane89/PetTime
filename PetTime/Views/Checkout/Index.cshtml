@@ -21,116 +21,122 @@
                 }
             </ul>
         </div>
-     }
-        <div class="w3-row">
-            <div class="w3-col m6 w3-center w3-padding-large">
-                <form class="checkout" method="post">
-                    <div class="w3-row-padding" style="margin:0 -16px 8px -16px">
-                        <label asp-for="Email" class="w3-half">Email</label>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <input type="email" asp-for="Email" required class="form-control" />
-                            <input type="hidden" asp-for="Email" class="w3-input w3-border" />
-                        }
-                        else
-                        {
-                            <input type="email" asp-for="Email" required class="form-control" />
-                        }
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="StreetAddress" class="formlabel">Street Address</label>
-                        <input type="text" asp-for="StreetAddress" required class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="City" class="formlabel"></label>
-                        <input type="text" asp-for="City" required class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="State" class="formlabel"></label>
-                        <select asp-for="State" required class="form-control">
-                            <option value="AL">Alabama</option>
-                            <option value="AK">Alaska</option>
-                            <option value="AZ">Arizona</option>
-                            <option value="AR">Arkansas</option>
-                            <option value="CA">California</option>
-                            <option value="CO">Colorado</option>
-                            <option value="CT">Connecticut</option>
-                            <option value="DE">Delaware</option>
-                            <option value="DC">District Of Columbia</option>
-                            <option value="FL">Florida</option>
-                            <option value="GA">Georgia</option>
-                            <option value="HI">Hawaii</option>
-                            <option value="ID">Idaho</option>
-                            <option value="IL">Illinois</option>
-                            <option value="IN">Indiana</option>
-                            <option value="IA">Iowa</option>
-                            <option value="KS">Kansas</option>
-                            <option value="KY">Kentucky</option>
-                            <option value="LA">Louisiana</option>
-                            <option value="ME">Maine</option>
-                            <option value="MD">Maryland</option>
-                            <option value="MA">Massachusetts</option>
-                            <option value="MI">Michigan</option>
-                            <option value="MN">Minnesota</option>
-                            <option value="MS">Mississippi</option>
-                            <option value="MO">Missouri</option>
-                            <option value="MT">Montana</option>
-                            <option value="NE">Nebraska</option>
-                            <option value="NV">Nevada</option>
-                            <option value="NH">New Hampshire</option>
-                            <option value="NJ">New Jersey</option>
-                            <option value="NM">New Mexico</option>
-                            <option value="NY">New York</option>
-                            <option value="NC">North Carolina</option>
-                            <option value="ND">North Dakota</option>
-                            <option value="OH">Ohio</option>
-                            <option value="OK">Oklahoma</option>
-                            <option value="OR">Oregon</option>
-                            <option value="PA">Pennsylvania</option>
-                            <option value="RI">Rhode Island</option>
-                            <option value="SC">South Carolina</option>
-                            <option value="SD">South Dakota</option>
-                            <option value="TN">Tennessee</option>
-                            <option value="TX">Texas</option>
-                            <option value="UT">Utah</option>
-                            <option value="VT">Vermont</option>
-                            <option value="VA">Virginia</option>
-                            <option value="WA">Washington</option>
-                            <option value="WV">West Virginia</option>
-                            <option value="WI">Wisconsin</option>
-                            <option value="WY">Wyoming</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ZipCode" class="formlabel">Zip Code</label>
-                        <input type="text" asp-for="ZipCode" required class="form-control" />
-                    </div>
-            </div>
-            <div class="w3-col m6 w3-center w3-padding-large">
+    }
+
+    @*<input type="text" asp-for="Question" class="w3-input w3-border" placeholder="Message" required name="Message">
+    <button class="w3-button w3-right w3-section" style="background-color: #ed8c72" type="submit">
+        <i class="fa fa-paper-plane"></i> SEND MESSAGE
+    </button>*@
+
+    <div class="w3-row">
+        <div class="w3-col m6 w3-padding-large">
+            <form class="checkout" method="post">
                 <div class="form-group">
-                    <label for="card-number" class="formlabel">Card Number</label>
-                    <div id="card-number" class="form-control"></div>
+                    <label asp-for="Email" class="formlabel">Email</label>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <input type="email" asp-for="Email" required class="w3-input w3-border" />
+                        <input type="hidden" asp-for="Email" class="form-control" />
+                    }
+                    else
+                    {
+                        <input type="email" asp-for="Email" required class="w3-input w3-border" />
+                    }
                 </div>
                 <div class="form-group">
-                    <label for="expiration-date" class="formlabel">Card Expiration Date</label>
-                    <div id="expiration-date" class="form-control"></div>
+                    <label asp-for="StreetAddress" class="formlabel">Street Address</label>
+                    <input type="text" asp-for="StreetAddress"  required class="w3-input w3-border" />
                 </div>
                 <div class="form-group">
-                    <label for="cvv" class="formlabel">CVV</label>
-                    <div id="cvv" class="form-control"></div>
+                    <label asp-for="City" class="formlabel"></label>
+                    <input type="text" asp-for="City" required class="w3-input w3-border" />
                 </div>
                 <div class="form-group">
-                    <label for="postalCode" class="formlabel">Postal Code</label>
-                    <div type="text" id="postalCode" required class="form-control" />
+                    <label asp-for="State" class="formlabel"></label>
+                    <select asp-for="State" required class="w3-input w3-border">
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="DC">District Of Columbia</option>
+                        <option value="FL">Florida</option>
+                        <option value="GA">Georgia</option>
+                        <option value="HI">Hawaii</option>
+                        <option value="ID">Idaho</option>
+                        <option value="IL">Illinois</option>
+                        <option value="IN">Indiana</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                        <option value="KY">Kentucky</option>
+                        <option value="LA">Louisiana</option>
+                        <option value="ME">Maine</option>
+                        <option value="MD">Maryland</option>
+                        <option value="MA">Massachusetts</option>
+                        <option value="MI">Michigan</option>
+                        <option value="MN">Minnesota</option>
+                        <option value="MS">Mississippi</option>
+                        <option value="MO">Missouri</option>
+                        <option value="MT">Montana</option>
+                        <option value="NE">Nebraska</option>
+                        <option value="NV">Nevada</option>
+                        <option value="NH">New Hampshire</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NM">New Mexico</option>
+                        <option value="NY">New York</option>
+                        <option value="NC">North Carolina</option>
+                        <option value="ND">North Dakota</option>
+                        <option value="OH">Ohio</option>
+                        <option value="OK">Oklahoma</option>
+                        <option value="OR">Oregon</option>
+                        <option value="PA">Pennsylvania</option>
+                        <option value="RI">Rhode Island</option>
+                        <option value="SC">South Carolina</option>
+                        <option value="SD">South Dakota</option>
+                        <option value="TN">Tennessee</option>
+                        <option value="TX">Texas</option>
+                        <option value="UT">Utah</option>
+                        <option value="VT">Vermont</option>
+                        <option value="VA">Virginia</option>
+                        <option value="WA">Washington</option>
+                        <option value="WV">West Virginia</option>
+                        <option value="WI">Wisconsin</option>
+                        <option value="WY">Wyoming</option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <input type="hidden" name="nonce" class="nonce formlabel" />
-                    <input type="submit"  class="w3-button w3-right w3-section" style="background-color: #ed8c72"  value="Submit Order" />
+                    <label asp-for="ZipCode" class="formlabel">Zip Code</label>
+                    <input type="text" asp-for="ZipCode" required class="w3-input w3-border" />
                 </div>
-                </form>
-            </div>
-            </div>
         </div>
+        <div class="w3-col m6 w3-center w3-padding-large">
+            <div class="form-group">
+                <label for="card-number" class="formlabel">Card Number</label>
+                <div id="card-number" class=" form-control w3-input w3-border"></div>
+            </div>
+            <div class="form-group">
+                <label for="expiration-date" class="formlabel">Card Expiration Date</label>
+                <div id="expiration-date" class="form-control"></div>
+            </div>
+            <div class="form-group">
+                <label for="cvv" class="formlabel">CVV</label>
+                <div id="cvv" class="form-control"></div>
+            </div>
+            <div class="form-group">
+                <label for="postalCode" class="formlabel">Postal Code</label>
+                <div type="text" id="postalCode" required class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="hidden" name="nonce" class="nonce formlabel" />
+                <input type="submit" class="w3-button w3-right w3-section" style="background-color: #ed8c72" value="Submit Order" />
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 @section Scripts{
     <script src="https://js.braintreegateway.com/web/3.35.0/js/client.min.js"></script>

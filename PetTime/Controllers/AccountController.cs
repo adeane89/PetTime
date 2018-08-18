@@ -385,7 +385,7 @@ namespace PetTime.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPasswordConfirmation()
         {
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return View();
         }
 
         [HttpGet]

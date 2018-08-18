@@ -15,7 +15,6 @@ namespace PetTime.Controllers
     public class PetController : Controller
     {
         private ApplicationDbContext _context;
-
         private UserManager<ApplicationUser> _userManager;
         private DataScraper _dataScraper;
 
@@ -30,7 +29,6 @@ namespace PetTime.Controllers
         {
             if (_context.Pets.Count() == 0)
             {
-
                 foreach(var dog in _dataScraper.Scrape())
                 {
                     
@@ -108,7 +106,7 @@ namespace PetTime.Controllers
                 {
                     int existingCartID = int.Parse(Request.Cookies["cart_id"]);
                     cart = await _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefaultAsync(x => x.ID == existingCartID);
-                    //cart.DateLastModified = DateTime.Now;
+                    cart.DateLastModified = DateTime.Now;
                 }
 
                 if (cart == null)
@@ -314,6 +312,8 @@ namespace PetTime.Controllers
             product.AnimalCount = model.AnimalCount;
             product.Price = model.Price;
 
+            await _context.SaveChangesAsync();
+
             if (!User.Identity.IsAuthenticated)
             {
                 Response.Cookies.Append("cart_id", cart.ID.ToString(), new Microsoft.AspNetCore.Http.CookieOptions
@@ -322,7 +322,6 @@ namespace PetTime.Controllers
                 });
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Cart");
         }
     }

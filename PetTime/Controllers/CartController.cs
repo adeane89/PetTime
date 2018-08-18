@@ -24,17 +24,21 @@ namespace PetTime.Controllers
         public IActionResult Index()
         {
             PetCart model = null;
-            if(User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
                 var currentUser = _userManager.GetUserAsync(User).Result;
-                model = _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).Include(x => x.CorporateCart).Include(x => x.TherapyCart).Single(x => x.ApplicationUserID == currentUser.Id);
+                model = _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).
+                        Include(x => x.CorporateCart).Include(x => x.TherapyCart).Single(x => x.ApplicationUserID == currentUser.Id);
             }
+
             else if (Request.Cookies.ContainsKey("cart_id"))
             {
                 int existingCartID = int.Parse(Request.Cookies["cart_id"]);
-                model = _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).Include(x => x.CorporateCart).Include(x => x.TherapyCart).FirstOrDefault(x => x.ID == existingCartID);
-            
+                model = _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).Include(x => x.CorporateCart).
+                    Include(x => x.TherapyCart).FirstOrDefault(x => x.ID == existingCartID);
+
             }
+
             else
             {
                 model = new PetCart();
@@ -43,82 +47,48 @@ namespace PetTime.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Remove(int? id, int quantity, string breed, string length, int animalCount)
+        public async Task<IActionResult> Delete(int? id)
         {
-            PetCart cart = null;
-            if (User.Identity.IsAuthenticated)
+            if (id == null)
             {
-                var currentUser = await _userManager.GetUserAsync(User);
-                cart = await _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefaultAsync(x => x.ApplicationUserID == currentUser.Id);
-                if (cart == null)
-                {
-                    cart = new PetCart();
-                    cart.ApplicationUserID = currentUser.Id;
-                    cart.DateCreated = DateTime.Now;
-                    cart.DateLastModified = DateTime.Now;
-                    _context.PetCarts.Add(cart);
-                }
-            }
-            else
-            {
-                if (Request.Cookies.ContainsKey("cart_id"))
-                {
-                    int existingCartID = int.Parse(Request.Cookies["cart_id"]);
-                    cart = await _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefaultAsync(x => x.ID == existingCartID);
-                }
-
-                if (cart == null)
-                {
-                    cart = new PetCart
-                    {
-                        DateCreated = DateTime.Now,
-                        DateLastModified = DateTime.Now
-                    };
-
-                    _context.PetCarts.Add(cart);
-                }
+                return NotFound();
             }
 
-            PetCartProduct product = cart.PetCartProducts.FirstOrDefault(x => x.PetID == id);
-            if (product != null)
+            var pet = await _context.PetCarts
+                .SingleOrDefaultAsync(m => m.ID == id);
+            if (pet == null)
             {
-                product = new PetCartProduct
-                {
-                    DateCreated = DateTime.Now,
-                    DateLastModified = DateTime.Now,
-                    PetID = id ?? 0,
-                    Quantity = 0,
-                    Length = length,
-                    AnimalCount = 0
-                };
-
-                cart.PetCartProducts.Remove(product);
+                return NotFound();
             }
-            //product.Quantity= 0;
-            //product.AnimalCount = animalCount;
-            //product.DateLastModified = DateTime.Now;
-            //product.Length = length;
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Cart");
+            return View(pet);
         }
-
-
-        //public IActionResult Remove(/*int id, int quantity, int animalCount, DateTime dateLastModified*/)
-        //{
-        //    //PetCart cart = null;
-        //    //PetCartProduct product = cart.PetCartProducts.FirstOrDefault(x => x.PetID == id);
-        //    //if (product != null)
-        //    //{
-        //    //    cart.PetCartProducts.Remove(product);
-        //    //}
-        //    //product.Quantity = 0;
-        //    //product.AnimalCount = 0;
-        //    //product.DateLastModified = DateTime.Now;
-
-        //    //await _context.SaveChangesAsync();
-
-        //    return RedirectToAction("Index", "Cart");
-        //}
     }
 }
+
+//        // POST: PetsAdmin/Delete/5
+//        [HttpPost, ActionName("Delete")]
+//        [ValidateAntiForgeryToken]
+//        public IActionResult DeleteConfirmed()
+//        {
+//            //var pet = await _context.Pets.SingleOrDefaultAsync(m => m.ID == id);
+//            //_context.Pets.Remove(pet);
+//            //await _context.SaveChangesAsync();
+//            //return RedirectToAction(nameof(Index));
+//            PetCart cart = null;
+//            if (Request.Cookies.ContainsKey("cart_id"))
+//            {
+//                int existingCartID = int.Parse(Request.Cookies["cart_id"]);
+//                cart = _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).Include(x => x.CorporateCart).Include(x => x.TherapyCart).FirstOrDefault(x => x.ID == existingCartID);
+//                _context.PetCarts.Remove(cart);
+//                _context.SaveChanges();
+//            }
+//                return RedirectToAction(nameof(Index));
+//        }
+
+//        private bool PetExists(int existingCartID)
+//        {
+//                return _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).Include(x => x.CorporateCart).Include(x => x.TherapyCart).Any(x => x.ID == existingCartID);
+//        }
+//    }
+//}

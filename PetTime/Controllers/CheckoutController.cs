@@ -18,12 +18,14 @@ namespace PetTime.Controllers
         private UserManager<ApplicationUser> _userManager;
         private IEmailSender _emailSender;
         private IBraintreeGateway _braintreeGateway;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public CheckoutController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IEmailSender emailSender, IBraintreeGateway braintreeGateway)
+        public CheckoutController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IEmailSender emailSender, IBraintreeGateway braintreeGateway, SignInManager<ApplicationUser> signInManager)
         {
             _context = context;
             _userManager = userManager;
             _emailSender = emailSender;
+            _signInManager = signInManager;
             _braintreeGateway = braintreeGateway;
         }
 
@@ -124,10 +126,12 @@ namespace PetTime.Controllers
 
                 _context.PetCartProducts.RemoveRange(cart.PetCartProducts);
                 _context.PetCarts.Remove(cart);
+
                 if (Request.Cookies.ContainsKey("cart_id"))
                 {
                     Response.Cookies.Delete("cart_id");
                 }
+
                 _context.PetOrders.Add(order);
                 _context.SaveChanges();
 
@@ -145,7 +149,7 @@ namespace PetTime.Controllers
                     String.Join(" , ", order.PetOrderProducts.Select(x => x.ProductLength)) + ", " +
                     String.Join(" , ", order.PetOrderProducts.Select(x => x.ProductAnimalCount)) + "puppies." +
                     " Your total payment is : " + 
-                    String.Join(" , ", order.PetOrderProducts.Sum((x => ((x.Quantity * x.ProductPrice) + (x.ProductAnimalCount * x.ProductPrice)))).ToString("c"))));
+                    String.Join(" , ", order.PetOrderProducts.Sum((x => ((x.Quantity * x.ProductPrice) + (x.ProductAnimalCount * x.ProductPrice)))).ToString("c")));
                 
                 return RedirectToAction("Index", "Receipt", new { id = order.ID });
             }

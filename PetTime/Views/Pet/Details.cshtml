@@ -26,7 +26,7 @@
                 <input type="hidden" name="id" value="@Model.ID" />
                 <div class="form-group">
                     <label class="formlabel">How many puppies would you like to visit?</label>
-                    <select name="animalCount" required class="form-control">
+                    <select name="animalCount" required class="w3-input w3-border">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -35,7 +35,7 @@
                 </div>
                 <div class="form-group">
                     <label class="formlabel" for="formGroupExampleInput3">How long would you like your visit to be?</label>
-                    <select name="length" required class="form-control">
+                    <select name="length" required class="w3-input w3-border">
                         <option value="Fifteen minutes">15 minutes</option>
                         <option value="Thirty minutes">30 minutes</option>
                         <option value="Forty-five minutes">45 minutes</option>
@@ -45,7 +45,7 @@
                 <div class="form-group">
                     <label class="formlabel " for="event-time">Date/time of event:</label>
                     <input type="datetime-local" asp-for="StartDate" value="2018-07-27T19:30"
-                           min="2018-07-27T00:00" max="2019-06-14T00:00" required class="form-control" />
+                           min="2018-07-27T00:00" max="2019-06-14T00:00" required class="w3-input w3-border" />
                 </div>
                 <div>
                     <button class="w3-button w3-right w3-section" style="background-color: #ed8c72" type="submit">
