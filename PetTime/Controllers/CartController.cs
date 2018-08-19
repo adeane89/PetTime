@@ -65,22 +65,15 @@ namespace PetTime.Controllers
         //    return RedirectToAction(nameof(Index));
         //}
 
-        public async Task<IActionResult> Remove(int id, int quantity, string breed, int timeLength, DateTime startDate, int animalCount, decimal price, string length)
+        public async Task<IActionResult> Remove(int id)
         {
             PetCart cart = null;
             if (User.Identity.IsAuthenticated)
             {
                 var currentUser = await _userManager.GetUserAsync(User);
                 cart = await _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefaultAsync(x => x.ApplicationUserID == currentUser.Id);
-                if (cart == null)
-                {
-                    cart = new PetCart();
-                    cart.ApplicationUserID = currentUser.Id;
-                    cart.DateCreated = DateTime.Now;
-                    cart.DateLastModified = DateTime.Now;
-                    _context.PetCarts.Add(cart);
-                }
             }
+
             else
             {
                 if (Request.Cookies.ContainsKey("cart_id"))
@@ -89,30 +82,11 @@ namespace PetTime.Controllers
                     cart = await _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefaultAsync(x => x.ID == existingCartID);
                     cart.DateLastModified = DateTime.Now;
                 }
-
-                if (cart == null)
-                {
-                    cart = new PetCart
-                    {
-                        DateCreated = DateTime.Now,
-                        DateLastModified = DateTime.Now
-                    };
-
-                    _context.PetCarts.Add(cart);
-                }
             }
-            //find the first product in the cart with the product id we are looking for if none exists, return null
-            PetCartProduct product = cart.PetCartProducts.FirstOrDefault(x => x.ID == id);
             
-            //had to change x.PetID to x.ID to get the right item to delete
+            PetCartProduct product = cart.PetCartProducts.FirstOrDefault(x => x.ID == id);
             cart.PetCartProducts.Remove(product);
-            if (product != null)
-            {
-                cart.PetCartProducts.Remove(product);
-            }
-
             await _context.SaveChangesAsync();
-
             if (!User.Identity.IsAuthenticated)
             {
                 Response.Cookies.Append("cart_id", cart.ID.ToString(), new Microsoft.AspNetCore.Http.CookieOptions
@@ -120,7 +94,6 @@ namespace PetTime.Controllers
                     Expires = DateTime.Now.AddYears(1)
                 });
             }
-
             return RedirectToAction("Index", "Cart");
 
         }
@@ -130,17 +103,8 @@ namespace PetTime.Controllers
             PetCart cart = null;
             if (User.Identity.IsAuthenticated)
             {
-                //authenticated path
                 var currentUser = _userManager.GetUserAsync(User).Result;
                 cart = _context.PetCarts.Include(x => x.PetCartProducts).Include(x => x.CorporateCart).FirstOrDefault(x => x.ApplicationUserID == currentUser.Id);
-                if (cart == null)
-                {
-                    cart = new PetCart();
-                    cart.ApplicationUserID = currentUser.Id;
-                    cart.DateCreated = DateTime.Now;
-                    cart.DateLastModified = DateTime.Now;
-                    _context.PetCarts.Add(cart);
-                }
             }
             else
             {
@@ -150,25 +114,10 @@ namespace PetTime.Controllers
                     cart = _context.PetCarts.Include(x => x.PetCartProducts).Include(x => x.CorporateCart).FirstOrDefault(x => x.ID == existingCartID);
                     cart.DateLastModified = DateTime.Now;
                 }
-
-                if (cart == null)
-                {
-                    cart = new PetCart
-                    {
-                        DateCreated = DateTime.Now,
-                        DateLastModified = DateTime.Now
-                    };
-
-                    _context.PetCarts.Add(cart);
-                }
             }
-
-            //at this point, the cart is not null = it's either newly created or existing
-            if (cart.CorporateCart != null)
-            {
-                cart.CorporateCart = null; 
-            }
-
+            
+            cart.CorporateCart = null;
+            await _context.SaveChangesAsync();
             if (!User.Identity.IsAuthenticated)
             {
                 Response.Cookies.Append("cart_id", cart.ID.ToString(), new Microsoft.AspNetCore.Http.CookieOptions
@@ -176,8 +125,6 @@ namespace PetTime.Controllers
                     Expires = DateTime.Now.AddYears(1)
                 });
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Cart");
         }
 
@@ -188,14 +135,6 @@ namespace PetTime.Controllers
             {
                 var currentUser = _userManager.GetUserAsync(User).Result;
                 cart = _context.PetCarts.Include(x => x.PetCartProducts).Include(x => x.TherapyCart).FirstOrDefault(x => x.ApplicationUserID == currentUser.Id);
-                if (cart == null)
-                {
-                    cart = new PetCart();
-                    cart.ApplicationUserID = currentUser.Id;
-                    cart.DateCreated = DateTime.Now;
-                    cart.DateLastModified = DateTime.Now;
-                    _context.PetCarts.Add(cart);
-                }
             }
             else
             {
@@ -205,27 +144,10 @@ namespace PetTime.Controllers
                     cart = _context.PetCarts.Include(x => x.PetCartProducts).Include(x => x.TherapyCart).FirstOrDefault(x => x.ID == existingCartID);
                     cart.DateLastModified = DateTime.Now;
                 }
-
-                if (cart == null)
-                {
-                    cart = new PetCart
-                    {
-                        DateCreated = DateTime.Now,
-                        DateLastModified = DateTime.Now
-                    };
-
-                    _context.PetCarts.Add(cart);
-                }
             }
 
-            if (cart.TherapyCart != null)
-            {
-                //cart.PetCartProducts.Remove(product);
-                cart.TherapyCart = null;
-            }
-
+            cart.TherapyCart = null;
             await _context.SaveChangesAsync();
-
             if (!User.Identity.IsAuthenticated)
             {
                 Response.Cookies.Append("cart_id", cart.ID.ToString(), new Microsoft.AspNetCore.Http.CookieOptions
@@ -233,7 +155,6 @@ namespace PetTime.Controllers
                     Expires = DateTime.Now.AddYears(1)
                 });
             }
-
             return RedirectToAction("Index", "Cart");
         }
     }
