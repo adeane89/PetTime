@@ -47,6 +47,18 @@
                     <input type="datetime-local" asp-for="StartDate" value="2018-07-27T19:30"
                            min="2018-07-27T00:00" max="2019-06-14T00:00" required class="w3-input w3-border" />
                 </div>
+                <div class="form-check">
+                    <input type="radio" asp-for="IsRecurring" value="false" class="form-check-input" name="exampleRadios" id="exampleRadios1" checked>
+                    <label class="formlabel" for="exampleRadios1">
+                        One Time
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" asp-for="IsRecurring" value="true" class="form-check-input" name="exampleRadios" id="exampleRadios2">
+                    <label class="formlabel" for="exampleRadios2">
+                        Recurring
+                    </label>
+                </div>
                 <div>
                     <button class="w3-button w3-right w3-section" style="background-color: #ed8c72" type="submit">
                         <i class="far fa-calendar-alt"></i> SCHEDULE VISIT

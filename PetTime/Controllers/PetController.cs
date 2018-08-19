@@ -83,7 +83,7 @@ namespace PetTime.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Details(int? id, int quantity, string breed, int timeLength, DateTime startDate, int animalCount, decimal price, string length)
+        public async Task<IActionResult> Details(int? id, int quantity, string breed, int timeLength, DateTime startDate, int animalCount, decimal price, string length, bool isRecurring)
         {
             PetCart cart = null;
             if (User.Identity.IsAuthenticated)
@@ -135,7 +135,8 @@ namespace PetTime.Controllers
                     TimeLength = timeLength,
                     StartDate = startDate,
                     AnimalCount = 0,
-                    Length = length
+                    Length = length,
+                    IsRecurring = isRecurring
                  };
 
                 cart.PetCartProducts.Add(product);
@@ -145,6 +146,7 @@ namespace PetTime.Controllers
             product.DateLastModified = DateTime.Now;
             product.StartDate = startDate;
             product.Length = length;
+            product.IsRecurring = isRecurring;
 
             await _context.SaveChangesAsync ();
 
@@ -174,7 +176,6 @@ namespace PetTime.Controllers
             PetCart cart = null;
             if (User.Identity.IsAuthenticated)
             {
-                //authenticated path
                 var currentUser = _userManager.GetUserAsync(User).Result;
                 cart = _context.PetCarts.Include(x => x.PetCartProducts).Include(x => x.CorporateCart).FirstOrDefault(x => x.ApplicationUserID == currentUser.Id);
                 if (cart == null)
@@ -208,7 +209,6 @@ namespace PetTime.Controllers
             }
             //at this point, the cart is not null = it's either newly created or existing
 
-            //find the first product in the cart with the prodcut id we are looking for if none exists, return null
             CorporateCart prod = cart.CorporateCart;
            
             if (prod == null)
@@ -220,19 +220,19 @@ namespace PetTime.Controllers
                     AnimalCount = model.AnimalCount,
                     StartDate = model.StartDate,
                     EventType = model.EventType,
-                    //TimeLength = model.TimeLength,
                     Length = model.Length,
-                    Price = 10.00m
+                    Price = 50.00m,
+                    IsRecurring = model.IsRecurring
                 };
-                cart.CorporateCart = model;
+                cart.CorporateCart = prod;
             }
             prod.DateLastModified = DateTime.Now;
             prod.StartDate = model.StartDate;
-            //prod.TimeLength = model.TimeLength;
             prod.EventType = model.EventType;
             prod.AnimalCount = model.AnimalCount;
-            prod.Price = model.Price;
+            prod.Price = 50.00m;
             prod.Length = model.Length;
+            prod.IsRecurring = model.IsRecurring;
 
             if (!User.Identity.IsAuthenticated)
             {
@@ -302,18 +302,21 @@ namespace PetTime.Controllers
                     AnimalCount = model.AnimalCount,
                     StartDate = model.StartDate,
                     EventType = model.EventType,
-                    //TimeLength = model.TimeLength,
-                    Price = 10.00m
+                    Price = 50.00m,
+                    Instructions = model.Instructions,
+                    IsRecurring = model.IsRecurring
                 };
-                cart.TherapyCart = model;
+
+                cart.TherapyCart = product;
             }
             product.DateLastModified = DateTime.Now;
             product.StartDate = model.StartDate;
-            //product.TimeLength = model.TimeLength;
             product.EventType = model.EventType;
             product.AnimalCount = model.AnimalCount;
-            product.Price = model.Price;
+            product.Price = 50.00m;
             product.Length = model.Length;
+            product.Instructions = model.Instructions;
+            product.IsRecurring = model.IsRecurring;
 
             await _context.SaveChangesAsync();
 

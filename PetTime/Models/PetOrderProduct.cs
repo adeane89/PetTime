@@ -31,6 +31,10 @@ namespace PetTime.Models
 
         public int? ProductLength { get; set; }
 
+        public string Instructions { get; set; }
+
+        public bool? IsRecurring { get; set; }
+
         public DateTime? DateCreated { get; set; }
 
         public DateTime? DateLastModified { get; set; }

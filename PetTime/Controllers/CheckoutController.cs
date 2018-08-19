@@ -102,11 +102,12 @@ namespace PetTime.Controllers
                         DateCreated = DateTime.Now,
                         DateLastModified = DateTime.Now,
                         ProductID = cart.CorporateCartID,
-                        ProductPrice = ((decimal)(10 * cart.CorporateCart.AnimalCount)),
+                        ProductPrice = ((decimal)(cart.CorporateCart.Price * cart.CorporateCart.AnimalCount)),
                         ProductAnimalCount = cart.CorporateCart.AnimalCount ?? 1,
                         ProductEventType = cart.CorporateCart.EventType,
                         ProductDescription = cart.CorporateCart.Length,
-                        StartDate = cart.CorporateCart.StartDate
+                        StartDate = cart.CorporateCart.StartDate,
+                        IsRecurring = cart.CorporateCart.IsRecurring
                     });
                 }
 
@@ -117,11 +118,14 @@ namespace PetTime.Controllers
                         DateCreated = DateTime.Now,
                         DateLastModified = DateTime.Now,
                         ProductID = cart.TherapyCartID,
-                        ProductPrice = ((decimal)(10 * cart.TherapyCart.AnimalCount)),
+                        ProductPrice = ((decimal)(cart.TherapyCart.Price * cart.TherapyCart.AnimalCount)),
                         ProductAnimalCount = cart.TherapyCart.AnimalCount ?? 1,
                         ProductEventType = cart.TherapyCart.EventType,
-                        ProductDescription = cart.CorporateCart.Length,
-                        StartDate = cart.TherapyCart.StartDate
+                        ProductDescription = cart.TherapyCart.Length,
+                        StartDate = cart.TherapyCart.StartDate,
+                        Instructions = cart.TherapyCart.Instructions,
+                        IsRecurring = cart.TherapyCart.IsRecurring
+                        
                     });
                 }
 
@@ -139,7 +143,6 @@ namespace PetTime.Controllers
                 {
                     _context.TherapyCarts.Remove(cart.TherapyCart);
                 }
-                
 
                 if (Request.Cookies.ContainsKey("cart_id"))
                 {
@@ -151,19 +154,19 @@ namespace PetTime.Controllers
 
                 var result = await _braintreeGateway.Transaction.SaleAsync(new TransactionRequest
                 {
-                    Amount = order.PetOrderProducts.Sum(x => (x.Quantity * x.ProductPrice)),
+                    Amount = order.PetOrderProducts.Sum(x => (x.ProductPrice)),
                     PaymentMethodNonce = nonce
                 });
 
                 await _emailSender.SendEmailAsync(model.Email, "Your scheduled visit!" ,
                     "Thanks for ordering! Your order number is: " + order.ID + " You scheduled : " + 
-                    String.Join(" , ", order.PetOrderProducts.Select(x => x.ProductName)) + ", " +
-                    String.Join(" , ", order.PetOrderProducts.Select(x => x.ProductEventType)) + ", " +
-                    String.Join(" , ", order.PetOrderProducts.Select(x => x.StartDate)) + ", " +
-                    String.Join(" , ", order.PetOrderProducts.Select(x => x.ProductLength)) + ", " +
-                    String.Join(" , ", order.PetOrderProducts.Select(x => x.ProductAnimalCount)) + "puppies." +
+                    String.Join(" , ", order.PetOrderProducts.Select(x => x.ProductName)) + " " +
+                    String.Join(" , ", order.PetOrderProducts.Select(x => x.ProductEventType)) + "  Event. Event date/time: " +
+                    String.Join(" , ", order.PetOrderProducts.Select(x => x.StartDate)) + "  for " +
+                    String.Join(" , ", order.PetOrderProducts.Select(x => x.ProductDescription)) + "  with " +
+                    String.Join(" , ", order.PetOrderProducts.Select(x => x.ProductAnimalCount)) + " puppies." +
                     " Your total payment is : " + 
-                    String.Join(" , ", order.PetOrderProducts.Sum((x => ((x.Quantity * x.ProductPrice) + (x.ProductAnimalCount * x.ProductPrice)))).ToString("c")));
+                    String.Join(" , ", order.PetOrderProducts.Sum((x => (x.ProductPrice))).ToString("c")));
                 
                 return RedirectToAction("Index", "Receipt", new { id = order.ID });
             }

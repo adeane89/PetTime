@@ -13,6 +13,7 @@
                         <th>Visit Type</th>
                         <th>Scheduled Visit</th>
                         <th>Length of Visit</th>
+                        <th>Recurring</th>
                         <th>Puppies Joining</th>
                         <th>Price</th>
                     </tr>
@@ -25,15 +26,16 @@
                             <td>@product.ProductEventType</td>
                             <td>@product.StartDate</td>
                             <td>@product.ProductDescription</td>
+                            <td>@product.IsRecurring</td>
                             <td>@product.ProductAnimalCount</td>
-                            <td>@((product.ProductAnimalCount * product.ProductPrice).ToString("c"))</td>
+                            <td>@((product.ProductPrice).ToString("c"))</td>
                         </tr>
                     }
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th colspan="5">Total</th>
-                        <td>@(Model.PetOrderProducts.Sum((x => ((x.Quantity * x.ProductPrice) + (x.ProductAnimalCount * x.ProductPrice)))).ToString("c"))</td>
+                        <th colspan="6">Total</th>
+                        <td>@(Model.PetOrderProducts.Sum((x => (x.ProductPrice))).ToString("c"))</td>
                     </tr>
                 </tfoot>
             </table>

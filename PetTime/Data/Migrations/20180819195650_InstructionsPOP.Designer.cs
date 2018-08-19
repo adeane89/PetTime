@@ -11,9 +11,10 @@ using System;
 namespace PetTime.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180819195650_InstructionsPOP")]
+    partial class InstructionsPOP
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,8 +248,6 @@ namespace PetTime.Data.Migrations
 
                     b.Property<string>("ImagePath");
 
-                    b.Property<bool?>("IsRecurring");
-
                     b.Property<string>("Name");
 
                     b.Property<decimal?>("Price");
@@ -305,8 +304,6 @@ namespace PetTime.Data.Migrations
 
                     b.Property<DateTime?>("DateLastModified");
 
-                    b.Property<bool?>("IsRecurring");
-
                     b.Property<string>("Length");
 
                     b.Property<int>("PetCartID");
@@ -362,8 +359,6 @@ namespace PetTime.Data.Migrations
                     b.Property<DateTime?>("DateLastModified");
 
                     b.Property<string>("Instructions");
-
-                    b.Property<bool?>("IsRecurring");
 
                     b.Property<Guid>("PetOrderID");
 
