@@ -37,8 +37,8 @@
                                     <td>@product.AnimalCount</td>
                                     <td>@(((decimal)(product.AnimalCount * product.Pet.Price)).ToString("c"))</td>
                                     <td style="border: none;">
-                                        <form asp-action="Delete" method="post">
-                                            <input type="hidden" value="@product.ID" />
+                                        <form asp-action="remove" method="post">
+                                            <input type="hidden" name="id" value="@product.ID" />
                                             <button class="w3-bar-item w3-button" style="border: solid;">Remove</button>
                                         </form>
                                     </td>
@@ -69,7 +69,7 @@
                                 <td>@Model.CorporateCart.AnimalCount</td>
                                 <td>@(((decimal)(Model.CorporateCart.AnimalCount * 50)).ToString("c"))</td>
                                 <td style="border: none;">
-                                    <form asp-action="Delete" method="post">
+                                    <form asp-action="removeCorporate" method="post">
                                         <input type="hidden" value="@Model.CorporateCartID" />
                                         <button class="w3-bar-item w3-button" style="border: solid;">Remove</button>
                                     </form>
@@ -90,7 +90,7 @@
                                 <th>Length of Visit</th>
                                 <th>Number of puppies</th>
                                 <th>Price</th>
-
+                                    
                             </tr>
                         </thead>
                         <tbody>
@@ -101,7 +101,7 @@
                                 <td>@Model.TherapyCart.AnimalCount</td>
                                 <td>@(((decimal)(Model.TherapyCart.AnimalCount * 50)).ToString("c"))</td>
                                 <td style="border: none;">
-                                    <form asp-action="Delete" method="post">
+                                    <form asp-action="removeTherapy" method="post">
                                         <input type="hidden" value="@Model.TherapyCartID" />
                                         <button class="w3-bar-item w3-button" style="border: solid;">Remove</button>
                                     </form>
@@ -116,4 +116,3 @@
             }
         </div>
     </div>
-</div>

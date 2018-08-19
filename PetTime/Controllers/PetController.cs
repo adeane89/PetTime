@@ -106,7 +106,7 @@ namespace PetTime.Controllers
                 {
                     int existingCartID = int.Parse(Request.Cookies["cart_id"]);
                     cart = await _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefaultAsync(x => x.ID == existingCartID);
-                    cart.DateLastModified = DateTime.Now;
+                    //cart.DateLastModified = DateTime.Now;
                 }
 
                 if (cart == null)
@@ -191,7 +191,7 @@ namespace PetTime.Controllers
                 if (Request.Cookies.ContainsKey("cart_id"))
                 {
                     int existingCartID = int.Parse(Request.Cookies["cart_id"]);
-                    cart = _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefault(x => x.ID == existingCartID);
+                    cart = _context.PetCarts.Include(x => x.PetCartProducts).Include(x => x.CorporateCart).FirstOrDefault(x => x.ID == existingCartID);
                     cart.DateLastModified = DateTime.Now;
                 }
 
@@ -275,7 +275,7 @@ namespace PetTime.Controllers
                 if (Request.Cookies.ContainsKey("cart_id"))
                 {
                     int existingCartID = int.Parse(Request.Cookies["cart_id"]);
-                    cart = _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefault(x => x.ID == existingCartID);
+                    cart = _context.PetCarts.Include(x => x.PetCartProducts).Include(x => x.TherapyCart).FirstOrDefault(x => x.ID == existingCartID);
                     cart.DateLastModified = DateTime.Now;
                 }
 
