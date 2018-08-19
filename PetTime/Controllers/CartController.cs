@@ -103,7 +103,8 @@ namespace PetTime.Controllers
             }
             //find the first product in the cart with the product id we are looking for if none exists, return null
             PetCartProduct product = cart.PetCartProducts.FirstOrDefault(x => x.ID == id);
-            // PetCartProduct products = cart.PetCartProducts.SingleOrDefault(x => x.PetID == id);
+            
+            //had to change x.PetID to x.ID to get the right item to delete
             cart.PetCartProducts.Remove(product);
             if (product != null)
             {
@@ -146,7 +147,7 @@ namespace PetTime.Controllers
                 if (Request.Cookies.ContainsKey("cart_id"))
                 {
                     int existingCartID = int.Parse(Request.Cookies["cart_id"]);
-                    cart = _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefault(x => x.ID == existingCartID);
+                    cart = _context.PetCarts.Include(x => x.PetCartProducts).Include(x => x.CorporateCart).FirstOrDefault(x => x.ID == existingCartID);
                     cart.DateLastModified = DateTime.Now;
                 }
 
@@ -161,23 +162,13 @@ namespace PetTime.Controllers
                     _context.PetCarts.Add(cart);
                 }
             }
+
             //at this point, the cart is not null = it's either newly created or existing
-
-            //find the first product in the cart with the prodcut id we are looking for if none exists, return null
-            CorporateCart prod = cart.CorporateCart;
-
-            if (prod != null)
+            if (cart.CorporateCart != null)
             {
                 cart.CorporateCart = null; 
-                //}
-                //prod.DateLastModified = DateTime.Now;
-                //prod.StartDate = model.StartDate;
-                ////prod.TimeLength = model.TimeLength;
-                //prod.EventType = model.EventType;
-                //prod.AnimalCount = model.AnimalCount;
-                //prod.Price = model.Price;
-                //prod.Length = model.Length;
             }
+
             if (!User.Identity.IsAuthenticated)
             {
                 Response.Cookies.Append("cart_id", cart.ID.ToString(), new Microsoft.AspNetCore.Http.CookieOptions
@@ -211,7 +202,7 @@ namespace PetTime.Controllers
                 if (Request.Cookies.ContainsKey("cart_id"))
                 {
                     int existingCartID = int.Parse(Request.Cookies["cart_id"]);
-                    cart = _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefault(x => x.ID == existingCartID);
+                    cart = _context.PetCarts.Include(x => x.PetCartProducts).Include(x => x.TherapyCart).FirstOrDefault(x => x.ID == existingCartID);
                     cart.DateLastModified = DateTime.Now;
                 }
 
@@ -227,29 +218,11 @@ namespace PetTime.Controllers
                 }
             }
 
-            TherapyCart product = cart.TherapyCart;
-
-            if (product == null)
+            if (cart.TherapyCart != null)
             {
-                product = new TherapyCart
-                {
-                    DateCreated = DateTime.Now,
-                    DateLastModified = DateTime.Now,
-                    AnimalCount = model.AnimalCount,
-                    StartDate = model.StartDate,
-                    EventType = model.EventType,
-                    //TimeLength = model.TimeLength,
-                    Price = 10.00m
-                };
-                cart.TherapyCart = model;
+                //cart.PetCartProducts.Remove(product);
+                cart.TherapyCart = null;
             }
-            product.DateLastModified = DateTime.Now;
-            product.StartDate = model.StartDate;
-            //product.TimeLength = model.TimeLength;
-            product.EventType = model.EventType;
-            product.AnimalCount = model.AnimalCount;
-            product.Price = model.Price;
-            product.Length = model.Length;
 
             await _context.SaveChangesAsync();
 
