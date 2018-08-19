@@ -139,8 +139,7 @@ namespace PetTime.Controllers
                 {
                     _context.TherapyCarts.Remove(cart.TherapyCart);
                 }
-
-                _context.PetCarts.Remove(cart);
+                
 
                 if (Request.Cookies.ContainsKey("cart_id"))
                 {
