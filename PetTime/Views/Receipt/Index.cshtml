@@ -5,39 +5,29 @@
 }
 <div class="w3-content w3-container w3-padding-64">
     <h2 class="w3-center">Thanks for ordering!</h2>
+    <p class="w3-center"><strong>Order Number: </strong>@Model.ID</p>
     <div class="w3-row">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Purchase</th>
-                        <th>Visit Type</th>
-                        <th>Scheduled Visit</th>
-                        <th>Length of Visit</th>
-                        <th>Recurring</th>
-                        <th>Puppies Joining</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var product in Model.PetOrderProducts)
+        <div class="card-deck">
+            @foreach (var product in Model.PetOrderProducts)
+            {
+                <div class="card-body" style="max-width: 360px">
+                    <p><strong>Visit Type: </strong>@product.ProductName @product.ProductEventType</p>
+                    <p><strong>Scheduled Visit: </strong>@product.StartDate</p>
+                    <p><strong>Length of Visit: </strong>@product.ProductDescription</p>
+                    @if (product.IsRecurring == false)
                     {
-                        <tr>
-                            <td>@product.ProductName</td>
-                            <td>@product.ProductEventType</td>
-                            <td>@product.StartDate</td>
-                            <td>@product.ProductDescription</td>
-                            <td>@product.IsRecurring</td>
-                            <td>@product.ProductAnimalCount</td>
-                            <td>@((product.ProductPrice).ToString("c"))</td>
-                        </tr>
+                        <p><strong>Recurrence: One Time</strong></p>
                     }
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th colspan="6">Total</th>
-                        <td>@(Model.PetOrderProducts.Sum((x => (x.ProductPrice))).ToString("c"))</td>
-                    </tr>
-                </tfoot>
-            </table>
+                    else
+                    {
+                        <p><strong>Recurrence: Recurring Event </strong></p>
+                    }
+                    <p><strong>Puppies Joining: </strong>@product.ProductAnimalCount</p>
+                    <p><strong>Price: </strong>@((product.ProductPrice).ToString("c"))</p>
+                </div>
+            }
+        </div>
     </div>
+    <p style="font-size: 2em">Total</p>
+    <p>@(Model.PetOrderProducts.Sum((x => (x.ProductPrice))).ToString("c"))</p>
 </div>

@@ -4,9 +4,8 @@
     ViewData.AddActivePage(ManageNavPages.Index);
 }
 
-<p class="w3-center">
-    @Html.Partial("_StatusMessage", Model.StatusMessage)
-</p>
+@Html.Partial("_StatusMessage", Model.StatusMessage)
+
 <div class=" w3-col m4"><p></p></div>
 <div class="w3-col m4">
     <form method="post">

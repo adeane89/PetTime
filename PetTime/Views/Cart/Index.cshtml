@@ -23,8 +23,8 @@
                                 <tr>
                                     <th>Puppy</th>
                                     <th>Scheduled Visit</th>
-                                    <th>Length of Visit</th>
-                                    <th>Recurring</th>
+                                    <th>Visit Length</th>
+                                    <th>Recurrence</th>
                                     <th>Number of Puppies</th>
                                     <th>Price</th>
 
@@ -35,7 +35,18 @@
                                     <td>@product.Pet.Name</td>
                                     <td>@product.StartDate </td>
                                     <td>@product.Length</td>
-                                    <td>@product.IsRecurring</td>
+                                    @if (product.IsRecurring == false)
+                                    {
+                                        <td>
+                                            One Time
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            Recurring Event
+                                        </td>
+                                    }
                                     <td>@product.AnimalCount</td>
                                     <td>@(((decimal)(product.AnimalCount * product.Pet.Price)).ToString("c"))</td>
                                     <td style="border: none;">
@@ -57,8 +68,8 @@
                             <tr>
                                 <th>Event Type</th>
                                 <th>Scheduled Event</th>
-                                <th>Length of Visit</th>
-                                <th>Recurring</th>
+                                <th>Event Length</th>
+                                <th>Recurrence</th>
                                 <th>Number of puppies</th>
                                 <th>Price</th>
 
@@ -69,7 +80,18 @@
                                 <td>@Model.CorporateCart.EventType</td>
                                 <td>@Model.CorporateCart.StartDate</td>
                                 <td>@Model.CorporateCart.Length</td>
-                                <td>@Model.CorporateCart.IsRecurring</td>
+                                @if (Model.CorporateCart.IsRecurring == false)
+                                {
+                                    <td>
+                                        One Time
+                                    </td>
+                                }
+                                else 
+                                {
+                                    <td>
+                                        Recurring Event
+                                    </td>
+                                }
                                 <td>@Model.CorporateCart.AnimalCount</td>
                                 <td>@(((decimal)(Model.CorporateCart.AnimalCount * Model.CorporateCart.Price)).ToString("c"))</td>
                                 <td style="border: none;">
@@ -91,8 +113,8 @@
                             <tr>
                                 <th>Event Type</th>
                                 <th>Scheduled Event</th>
-                                <th>Length of Visit</th>
-                                <th>Recurring</th>
+                                <th>Event Length</th>
+                                <th>Recurrence</th>
                                 <th>Number of puppies</th>
                                 <th>Price</th>
                                     
@@ -103,7 +125,18 @@
                                 <td>@Model.TherapyCart.EventType</td>
                                 <td>@Model.TherapyCart.StartDate</td>
                                 <td>@Model.TherapyCart.Length</td>
-                                <td>@Model.TherapyCart.IsRecurring</td>
+                                @if (Model.TherapyCart.IsRecurring == false)
+                                {
+                                    <td>
+                                        One Time
+                                    </td>
+                                }
+                                else 
+                                {
+                                    <td>
+                                        Recurring Event
+                                    </td>
+                                }
                                 <td>@Model.TherapyCart.AnimalCount</td>
                                 <td>@(((decimal)(Model.TherapyCart.AnimalCount * Model.TherapyCart.Price)).ToString("c"))</td>
                                 <td style="border: none;">
@@ -113,9 +146,20 @@
                                     </form>
                                 </td>
                             </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                @if (Model.TherapyCart.Instructions != null)
+                                {
+                                    <td style="font-size: 10px; border: 0; width: 10vw">
+                                        *Special Instructions: @Model.TherapyCart.Instructions
+                                    </td>
+                                }
+                            </tr>
+                        </tfoot>
                     </table>
-                }
 
+                }
                 <a asp-controller="Checkout" asp-action="Index" class="w3-button w3-right w3-section" style="background-color: #ed8c72">
                     <i class="far fa-credit-card"></i> CHECKOUT
                 </a>
