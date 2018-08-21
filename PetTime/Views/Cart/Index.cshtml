@@ -3,166 +3,169 @@
 @{
     ViewData["Title"] = "Index";
 }
-<div class="w3-content  w3-padding-64">
-    <div class="w3-row-padding-large">
+<div class="w3-padding-large" style="margin: 4vw">
         <h2 class="w3-center">CART</h2>
-            @if ((Model.PetCartProducts.Count == 0) && (Model.CorporateCartID == null) && (Model.TherapyCartID == null)) 
-            {
-                <p class="w3-center">You have nothing scheduled,<a asp-controller="Pet" asp-action="index" style="color: #ed8c72"> check out some animals or host an event!</a></p>
-            }
+        @if ((Model.PetCartProducts.Count == 0) && (Model.CorporateCartID == null) && (Model.TherapyCartID == null))
+        {
+            <p class="w3-center">You have nothing scheduled,<a asp-controller="Pet" asp-action="index" style="color: #ed8c72"> check out some animals or host an event!</a></p>
+        }
 
-            else
+        else
+        {
+            @if (Model.PetCartProducts.Count != 0)
             {
-                @if (Model.PetCartProducts.Count != 0)
-                {
-                    <h3>VISITS</h3>
-                    <table class="table">
+                <h3>VISITS</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Puppy</th>
+                            <th>Date/Time</th>
+                            <th>Visit Length</th>
+                            <th>Recurrence</th>
+                            <th>Number of Puppies</th>
+                            <th>Price</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
                         @foreach (var product in Model.PetCartProducts)
                         {
-                            <thead>
-                                <tr>
-                                    <th>Puppy</th>
-                                    <th>Scheduled Visit</th>
-                                    <th>Visit Length</th>
-                                    <th>Recurrence</th>
-                                    <th>Number of Puppies</th>
-                                    <th>Price</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>@product.Pet.Name</td>
-                                    <td>@product.StartDate </td>
-                                    <td>@product.Length</td>
-                                    @if (product.IsRecurring == false)
-                                    {
-                                        <td>
-                                            One Time
-                                        </td>
-                                    }
-                                    else
-                                    {
-                                        <td>
-                                            Recurring Event
-                                        </td>
-                                    }
-                                    <td>@product.AnimalCount</td>
-                                    <td>@(((decimal)(product.AnimalCount * product.Pet.Price)).ToString("c"))</td>
-                                    <td style="border: none;">
-                                        <form asp-action="remove" method="post">
-                                            <input type="hidden" name="id" value="@product.ID" />
-                                            <button class="w3-bar-item w3-button" style="border: solid;">Remove</button>
-                                        </form>
+                            <tr>
+                                <td>@product.Pet.Name</td>
+                                <td>@product.StartDate </td>
+                                <td>@product.Length</td>
+                                @if (product.IsRecurring == false)
+                                {
+                                    <td>
+                                        One Time
                                     </td>
-                                </tr>
-                            </tbody>
+                                }
+                                else
+                                {
+                                    <td>
+                                        Recurring Event
+                                    </td>
+                                }
+                                <td>@product.AnimalCount</td>
+                                <td>@(((decimal)(product.AnimalCount * product.Pet.Price)).ToString("c"))</td>
+                                <td style="border: none">
+                                    <form asp-action="remove" method="post">
+                                        <input type="hidden" name="id" value="@product.ID" />
+                                        <button class="w3-bar-item w3-button" style="border: solid;">Remove</button>
+                                    </form>
+                                </td>
+                            </tr>
                         }
-                    </table>
-                }
-                @if (Model.CorporateCart != null)
-                {
-                    <h3>CORPORATE</h3>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Event Type</th>
-                                <th>Scheduled Event</th>
-                                <th>Event Length</th>
-                                <th>Recurrence</th>
-                                <th>Number of puppies</th>
-                                <th>Price</th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>@Model.CorporateCart.EventType</td>
-                                <td>@Model.CorporateCart.StartDate</td>
-                                <td>@Model.CorporateCart.Length</td>
-                                @if (Model.CorporateCart.IsRecurring == false)
-                                {
-                                    <td>
-                                        One Time
-                                    </td>
-                                }
-                                else 
-                                {
-                                    <td>
-                                        Recurring Event
-                                    </td>
-                                }
-                                <td>@Model.CorporateCart.AnimalCount</td>
-                                <td>@(((decimal)(Model.CorporateCart.AnimalCount * Model.CorporateCart.Price)).ToString("c"))</td>
-                                <td style="border: none;">
-                                    <form asp-action="removeCorporate" method="post">
-                                        <input type="hidden" value="@Model.CorporateCartID" />
-                                        <button class="w3-bar-item w3-button" style="border: solid;">Remove</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                }
-
-                @if (Model.TherapyCart != null)
-                {
-                    <h3>THERAPY</h3>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Event Type</th>
-                                <th>Scheduled Event</th>
-                                <th>Event Length</th>
-                                <th>Recurrence</th>
-                                <th>Number of puppies</th>
-                                <th>Price</th>
-                                    
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>@Model.TherapyCart.EventType</td>
-                                <td>@Model.TherapyCart.StartDate</td>
-                                <td>@Model.TherapyCart.Length</td>
-                                @if (Model.TherapyCart.IsRecurring == false)
-                                {
-                                    <td>
-                                        One Time
-                                    </td>
-                                }
-                                else 
-                                {
-                                    <td>
-                                        Recurring Event
-                                    </td>
-                                }
-                                <td>@Model.TherapyCart.AnimalCount</td>
-                                <td>@(((decimal)(Model.TherapyCart.AnimalCount * Model.TherapyCart.Price)).ToString("c"))</td>
-                                <td style="border: none;">
-                                    <form asp-action="removeTherapy" method="post">
-                                        <input type="hidden" value="@Model.TherapyCartID" />
-                                        <button class="w3-bar-item w3-button" style="border: solid;">Remove</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                @if (Model.TherapyCart.Instructions != null)
-                                {
-                                    <td style="font-size: 10px; border: 0; width: 10vw">
-                                        *Special Instructions: @Model.TherapyCart.Instructions
-                                    </td>
-                                }
-                            </tr>
-                        </tfoot>
-                    </table>
-
-                }
-                <a asp-controller="Checkout" asp-action="Index" class="w3-button w3-right w3-section" style="background-color: #ed8c72">
-                    <i class="far fa-credit-card"></i> CHECKOUT
-                </a>
+                    </tbody>
+                </table>
             }
-        </div>
+            @if (Model.CorporateCart != null)
+            {
+                <h3>EVENTS</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Event Type</th>
+                            <th>Date/Time</th>
+                            <th>Event Length</th>
+                            <th>Recurrence</th>
+                            <th>Number of puppies</th>
+                            <th>Price</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Model.CorporateCart.EventType</td>
+                            <td>@Model.CorporateCart.StartDate</td>
+                            <td>@Model.CorporateCart.Length</td>
+                            @if (Model.CorporateCart.IsRecurring == false)
+                            {
+                                <td>
+                                    One Time
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    Recurring Event
+                                </td>
+                            }
+                            <td>@Model.CorporateCart.AnimalCount</td>
+                            <td>@(((decimal)(Model.CorporateCart.AnimalCount * Model.CorporateCart.Price)).ToString("c"))</td>
+                            <td style="border: none;">
+                                <form asp-action="removeCorporate" method="post">
+                                    <input type="hidden" value="@Model.CorporateCartID" />
+                                    <button class="w3-bar-item w3-button" style="border: solid;">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+
+            @if (Model.TherapyCart != null)
+            {
+                <h3>THERAPY</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Event Type</th>
+                            <th>Date/Time</th>
+                            <th>Event Length</th>
+                            <th>Recurrence</th>
+                            <th>Number of puppies</th>
+                            <th>Price</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Model.TherapyCart.EventType</td>
+                            <td>@Model.TherapyCart.StartDate</td>
+                            <td>@Model.TherapyCart.Length</td>
+                            @if (Model.TherapyCart.IsRecurring == false)
+                            {
+                                <td>
+                                    One Time
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    Recurring Event
+                                </td>
+                            }
+                            <td>@Model.TherapyCart.AnimalCount</td>
+                            <td>@(((decimal)(Model.TherapyCart.AnimalCount * Model.TherapyCart.Price)).ToString("c"))</td>
+                            <td style="border: none;">
+                                <form asp-action="removeTherapy" method="post">
+                                    <input type="hidden" value="@Model.TherapyCartID" />
+                                    <button class="w3-bar-item w3-button" style="border: solid;">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+
+                            @if (Model.TherapyCart.Instructions != null)
+                            {
+                                <th colspan="2" style="border: none; font-size: 10px; border: 0; width: 10vw; padding: 0; font-weight: 400">
+                                    *Special Instructions: @Model.TherapyCart.Instructions
+                                 </th>
+                            }
+                            </tr>
+                    </tfoot>
+                </table>
+
+            }
+            <a asp-controller="Pet" asp-action="Index" class="w3-button w3-left w3-section" style="background-color: #ed8c72">
+                <i class="fas fa-plus-circle"></i> MORE PUPPIES
+            </a>
+            <a asp-controller="Checkout" asp-action="Index" class="w3-button w3-right w3-section" style="background-color: #ed8c72">
+                <i class="far fa-credit-card"></i> CHECKOUT
+            </a>
+        }
     </div>
