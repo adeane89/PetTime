@@ -10,17 +10,17 @@
         <div class="card-deck">
             @foreach (var product in Model.PetOrderProducts)
             {
-                <div class="card-body" style="max-width: 360px">
+                <div class="card-body" style="max-width: 360px; border: 1px dashed #ed8c72; margin: 5px;">
                     <p><strong>Visit Type: </strong>@product.ProductName @product.ProductEventType</p>
                     <p><strong>Date/Time: </strong>@product.StartDate</p>
                     <p><strong>Length of Visit: </strong>@product.ProductDescription</p>
                     @if (product.IsRecurring == false)
                     {
-                        <p><strong>Recurrence: One Time</strong></p>
+                        <p><strong>Recurrence:</strong> One Time</p>
                     }
                     else
                     {
-                        <p><strong>Recurrence: Recurring Event </strong></p>
+                        <p><strong>Recurrence: </strong> Recurring Event</p>
                     }
                     <p><strong>Puppies Joining: </strong>@product.ProductAnimalCount</p>
                     <p><strong>Price: </strong>@((product.ProductPrice).ToString("c"))</p>
@@ -28,6 +28,8 @@
             }
         </div>
     </div>
-    <p style="font-size: 2em">Total</p>
-    <p>@(Model.PetOrderProducts.Sum((x => (x.ProductPrice))).ToString("c"))</p>
+    <div class="w3-row w3-right">
+        <p style="font-size: 2em; color: #ed8c72;">Total</p>
+        <p style="font-size: 1.5em">@(Model.PetOrderProducts.Sum((x => (x.ProductPrice))).ToString("c"))</p>
+    </div>
 </div>

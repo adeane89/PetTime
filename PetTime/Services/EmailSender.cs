@@ -22,7 +22,7 @@ namespace PetTime.Services
 
             var msg = new SendGrid.Helpers.Mail.SendGridMessage()
             {
-                From = new SendGrid.Helpers.Mail.EmailAddress("admin@paws.codingtemple.com", "PAWS Admin"),
+                From = new SendGrid.Helpers.Mail.EmailAddress("admin@snug.codingtemple.com", "Snug Admin"),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message

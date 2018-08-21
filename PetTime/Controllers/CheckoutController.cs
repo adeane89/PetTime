@@ -158,16 +158,17 @@ namespace PetTime.Controllers
                     PaymentMethodNonce = nonce
                 });
 
-                await _emailSender.SendEmailAsync(model.Email, "Your scheduled visit!" ,
-                    "Thanks for ordering! Your order number is: " + order.ID + " You scheduled : " + 
-                    String.Join(" , ", order.PetOrderProducts.Select(x => x.ProductName)) + " " +
-                    String.Join(" , ", order.PetOrderProducts.Select(x => x.ProductEventType)) + "  Event. Event date/time: " +
-                    String.Join(" , ", order.PetOrderProducts.Select(x => x.StartDate)) + "  for " +
-                    String.Join(" , ", order.PetOrderProducts.Select(x => x.ProductDescription)) + "  with " +
-                    String.Join(" , ", order.PetOrderProducts.Select(x => x.ProductAnimalCount)) + " puppies." +
-                    " Your total payment is : " + 
-                    String.Join(" , ", order.PetOrderProducts.Sum((x => (x.ProductPrice))).ToString("c")));
-                
+                await _emailSender.SendEmailAsync(model.Email, "Your scheduled visit!",
+                    "Thanks for ordering! Your order number is: " + order.ID + " . To review your order, please go to http://localhost:60374/Receipt/Index/" + order.ID);
+                    //" You scheduled : " +
+                    //String.Join(" , ", order.PetOrderProducts.Select(x => x.ProductName)) + " " +
+                    //String.Join(" , ", order.PetOrderProducts.Select(x => x.ProductEventType)) + "  Event. Event date/time: " +
+                    //String.Join(" , ", order.PetOrderProducts.Select(x => x.StartDate)) + "  for " +
+                    //String.Join(" , ", order.PetOrderProducts.Select(x => x.ProductDescription)) + "  with " +
+                    //String.Join(" , ", order.PetOrderProducts.Select(x => x.ProductAnimalCount)) + " puppies." +
+                    //" Your total payment is : " +
+                    //String.Join(" , ", order.PetOrderProducts.Sum((x => (x.ProductPrice))).ToString("c")));
+
                 return RedirectToAction("Index", "Receipt", new { id = order.ID });
             }
             return View();
