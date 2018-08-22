@@ -19,7 +19,6 @@ namespace PetTime.Controllers
             _context = context;
         }
         
-        // GET: Receipt/Details/5
         public async Task<IActionResult> Index (Guid? id)
         {
             if (id == null)

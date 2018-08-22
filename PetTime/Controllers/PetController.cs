@@ -50,10 +50,7 @@ namespace PetTime.Controllers
                             DateLastModified = DateTime.Now,
                             Category = cat
                         };
-
                         _context.Pets.Add(p);
-                        
-
                     }
 
                 }
@@ -101,12 +98,10 @@ namespace PetTime.Controllers
             }
             else
             {
-                //make sure cart_id is cased properly everywhere
                 if (Request.Cookies.ContainsKey("cart_id"))
                 {
                     int existingCartID = int.Parse(Request.Cookies["cart_id"]);
                     cart = await _context.PetCarts.Include(x => x.PetCartProducts).FirstOrDefaultAsync(x => x.ID == existingCartID);
-                    //cart.DateLastModified = DateTime.Now;
                 }
 
                 if (cart == null)
@@ -120,9 +115,7 @@ namespace PetTime.Controllers
                     _context.PetCarts.Add(cart);
                 }
             }
-            //at this point, the cart is not null = it's either newly created or existing
 
-            //find the first product in the cart with the prodcut id we are looking for if none exists, return null
             PetCartProduct product = cart.PetCartProducts.FirstOrDefault(x => x.PetID == id);
             if (product == null)
             {
@@ -207,7 +200,6 @@ namespace PetTime.Controllers
                     _context.PetCarts.Add(cart);
                 }
             }
-            //at this point, the cart is not null = it's either newly created or existing
 
             CorporateCart prod = cart.CorporateCart;
            

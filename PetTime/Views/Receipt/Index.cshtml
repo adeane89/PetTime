@@ -1,13 +1,13 @@
 ﻿@model PetTime.Models.PetOrder
 
 @{
-    ViewData["Title"] = "Order" + Model.ID;
+    ViewData["Title"] = "Receipt";
 }
 <div class="w3-content w3-container w3-padding-64">
     <h2 class="w3-center">Thanks for ordering!</h2>
     <p class="w3-center"><strong>Order Number: </strong>@Model.ID</p>
     <div class="w3-row">
-        <div class="card-deck">
+        <div class="card-deck"  style="justify-content: center; margin-top: 5vh; margin-bottom: 5vh;">
             @foreach (var product in Model.PetOrderProducts)
             {
                 <div class="card-body" style="max-width: 360px; border: 1px dashed #ed8c72; margin: 5px;">
@@ -20,7 +20,7 @@
                     }
                     else
                     {
-                        <p><strong>Recurrence: </strong> Recurring Event</p>
+                        <p><strong>Recurrence: </strong> Recurring</p>
                     }
                     <p><strong>Puppies Joining: </strong>@product.ProductAnimalCount</p>
                     <p><strong>Price: </strong>@((product.ProductPrice).ToString("c"))</p>

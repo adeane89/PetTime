@@ -21,21 +21,21 @@ namespace PetTime.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             PetCart model = null;
             if (User.Identity.IsAuthenticated)
             {
-                var currentUser = _userManager.GetUserAsync(User).Result;
-                model = _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).
-                        Include(x => x.CorporateCart).Include(x => x.TherapyCart).FirstOrDefault(x => x.ApplicationUserID == currentUser.Id);
+                var currentUser =  _userManager.GetUserAsync(User).Result;
+                model = await _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).
+                        Include(x => x.CorporateCart).Include(x => x.TherapyCart).FirstOrDefaultAsync(x => x.ApplicationUserID == currentUser.Id);
             }
 
             else if (Request.Cookies.ContainsKey("cart_id"))
             {
                 int existingCartID = int.Parse(Request.Cookies["cart_id"]);
-                model = _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).Include(x => x.CorporateCart).
-                    Include(x => x.TherapyCart).FirstOrDefault(x => x.ID == existingCartID);
+                model = await _context.PetCarts.Include(x => x.PetCartProducts).ThenInclude(x => x.Pet).Include(x => x.CorporateCart).
+                    Include(x => x.TherapyCart).FirstOrDefaultAsync(x => x.ID == existingCartID);
 
             }
 
@@ -46,24 +46,6 @@ namespace PetTime.Controllers
 
             return View(model);
         }
-
-        //public async Task<IActionResult> Remove()
-        //{
-        //    if (Request.Cookies.ContainsKey("cart_id"))
-        //    {
-        //        int existingCartID = int.Parse(Request.Cookies["cart_id"]);
-        //        var pet = await _context.PetCartProducts.FirstOrDefaultAsync(m => m.ID == existingCartID);
-
-        //        if (pet == null)
-        //        {
-        //            _context.PetCartProducts.Remove(pet);
-        //        }
-
-        //        _context.PetCartProducts.Remove(pet);
-        //    }
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
 
         public async Task<IActionResult> Remove(int id)
         {

@@ -22,22 +22,19 @@ namespace PetTime
         }
 
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
             //services.AddDbContext<ApplicationDbContext>(options =>
-                //options.UseInMemoryDatabase("Default"));
+            //   options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseInMemoryDatabase("Default"));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-
-            // Add application services.
             services.AddTransient<IEmailSender>((IServiceProvider) => new EmailSender(Configuration.GetValue<string>("SendGrid.ApiKey")));
 
             services.AddTransient((isp) => new Services.DataScraper(Configuration.GetValue<string>("Dog.ApiKey")));
@@ -53,8 +50,7 @@ namespace PetTime
 
            services.AddMvc();
             }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider services)
         {
             if (env.IsDevelopment())
@@ -78,12 +74,6 @@ namespace PetTime
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            //var roleManager = services.GetService<RoleManager<IdentityRole>>();
-            //if(!roleManager.Roles.Any(x => x.Name == "Administrator"))
-            //{
-            //    roleManager.CreateAsync(new IdentityRole("Administrator")).Wait();
-            //}
         }
     }
 }

@@ -117,8 +117,7 @@ body, html {
         height: 100%;
         z-index: 0;
         background-color: #080d15;
-        opacity: .8;
-        padding-top: 25vh;
+        padding-top: 15vh;
     }
 
         .smallSet p {
@@ -291,7 +290,6 @@ thead{
         display: block;
     }
 
-        /* Hide table headers (but not display: none;, for accessibility) */
         thead tr {
             position: absolute;
             top: -9999px;
@@ -299,7 +297,6 @@ thead{
         }
 
     td {
-        /* Behave  like a "row" */
         border: none;
         border-bottom: 1px solid #eee;
         position: relative;
@@ -307,9 +304,7 @@ thead{
     }
 
         td:before {
-            /* Now like a table header */
             position: unset;
-            /* Top/left values mimic padding */
             top: 11px;
             left: -2px;
             width: 45%;
