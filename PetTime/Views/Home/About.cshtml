@@ -9,19 +9,19 @@
     <p>
         Cuddling is a great stress reliever. Petting and talking to a dog for just a
         few minutes has been shown to increase oxytocin levels in both dogs and humans. Oxytocin,
-        often referred to as the love hormone, is associated with social bonding and trust. 
-        New research found that human-dog interactions can elicit the same positive hormonal response that 
+        often referred to as the love hormone, is associated with social bonding and trust.
+        New research found that human-dog interactions can elicit the same positive hormonal response that
         mothers have with their infants.
         <a href="https://www.health.harvard.edu/blog/therapy-dog-offers-stress-relief-at-work-201107223111" style="color: #ed8c72;">Go check it out!</a>
     </p>
     <p>
-        Snug is devoted to spreading the love and joy that can only be found in man’s best friend. 
-        Whether you’re looking to stop in for a quick snuggle after work or you want some adorable puppies 
-        to highlight your child’s next birthday party, we are here to help! Be sure to checkout each of our 
+        Snug is devoted to spreading the love and joy that can only be found in man’s best friend.
+        Whether you’re looking to stop in for a quick snuggle after work or you want some adorable puppies
+        to highlight your child’s next birthday party, we are here to help! Be sure to check out each of our
         events and services to see how we can help get a cuddly companion in your life.
     </p>
     <p>
-        Snug proudly partners with rescue organizations in the area to 
+        Snug proudly partners with rescue organizations in the area to
         provide medical services and placement options that help hundreds of puppies find new homes each year.
     </p>
     <ul>
@@ -47,7 +47,7 @@
             <script async defer
                     src="@apiUrl">
             </script>
-         
+
 
         </div>
         <div class="w3-col m8 w3-panel">
@@ -72,17 +72,17 @@
 
             }
             <p>Swing by or send us a message:</p>
-            <form method="post">
+            <form method="post" id="myForm">
                 <div class="w3-row-padding" style="margin:0 -16px 8px -16px">
                     <div class="w3-half">
-                        <input type="text" asp-for="Name" class="w3-input w3-border" placeholder="Name" required name="Name">
+                        <input type="text" asp-for="Name" class="w3-input w3-border" placeholder="Name" required>
                     </div>
                     <div class="w3-half">
-                        <input type="email" asp-for="Email" class="w3-input w3-border" placeholder="Email" required name="Email">
+                        <input type="email" asp-for="Email" class="w3-input w3-border" placeholder="Email" required>
                     </div>
                 </div>
-                <input type="text" asp-for="Question" class="w3-input w3-border" placeholder="Message" required name="Message">
-                <button  class="w3-button w3-right w3-section" style="background-color: #ed8c72" type="submit">
+                <input type="text" asp-for="Question" class="w3-input w3-border" placeholder="Message" required>
+                <button class="w3-button w3-right w3-section" style="background-color: #ed8c72" type="submit">
                     <i class="fa fa-paper-plane"></i> SEND MESSAGE
                 </button>
             </form>
@@ -90,3 +90,8 @@
     </div>
 </div>
 
+<script>
+    function submit() {
+        document.getElementById("myForm").reset();
+    }
+</script>

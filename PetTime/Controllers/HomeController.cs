@@ -12,11 +12,13 @@ namespace PetTime.Controllers
 {
     public class HomeController : Controller
     {
+        private IEmailSender _emailSender;
         private Map _map;
 
-        public HomeController(Map map)
+        public HomeController(Map map, IEmailSender emailSender)
         {
             this._map = map;
+            this._emailSender = emailSender;
         }
         
         public IActionResult Index()
@@ -34,7 +36,13 @@ namespace PetTime.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult About(ContactModel model)
+        public async Task<IActionResult> About(ContactModel model)
+        {
+            await _emailSender.SendEmailAsync("adeane89@gmail.com", "Question from " + model.Email + " " + model.Name, model.Question);
+            return View("Message");
+        }
+
+        public IActionResult Message()
         {
             return View();
         }

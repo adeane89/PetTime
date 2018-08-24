@@ -1,13 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Confirm email";
 }
-<div class="w3-content w3-container w3-padding-64">
-    <h3 class="w3-center">
-        @ViewData["Title"]
-    </h3>
-    <div class="w3-row">
-        <div class="w3-col m6 w3-center w3-padding-large">
-            Thank you for confirming your email.
-        </div>
-    </div>
+
+<div class="w3-padding-large" style="margin: 2vw">
+    <h2 class="w3-center">@ViewData["Title"]</h2>
+    <p class="w3-center">Thank you for confirming your email. Check out some of our<a asp-controller="Pet" asp-action="index" style="color: #ed8c72">puppies!</a></p>
 </div>
