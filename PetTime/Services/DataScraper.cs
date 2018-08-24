@@ -45,36 +45,5 @@ namespace PetTime.Services
             public string name { get; set; }
             public string life_span { get; set; }
         }
-
-
-
-        /*
-         {[
-  {
-    "id": "BkrJjgcV7",
-    "url": "https://cdn2.thedogapi.com/images/BkrJjgcV7_640.jpg",
-    "breeds": [
-      {
-        "id": 223,
-        "name": "Shih Tzu",
-        "life_span": "10 - 18 years",
-        "bred_for": "Lapdog",
-        "breed_group": "Toy",
-        "temperament": "Clever, Spunky, Outgoing, Friendly, Affectionate, Lively, Alert, Loyal, Independent, Playful, Gentle, Intelligent, Happy, Active, Courageous",
-        "weight": {
-          "imperial": "9 - 16 lbs",
-          "metric": "4 - 7 kgs"
-        },
-        "height": {
-          "imperial": "8 - 11 inches at the withers",
-          "metric": "20 - 28 cm at the withers"
-        }
-      }
-    ],
-    "categories": []
-  }
-]}
-         */
-
     }
 }
