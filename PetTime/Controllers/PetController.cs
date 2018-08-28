@@ -31,7 +31,6 @@ namespace PetTime.Controllers
             {
                 foreach(var dog in _dataScraper.Scrape())
                 {
-                    
                     foreach(var breed in dog.breeds)
                     {
                         CategoryModel cat = await _context.Categories.FirstOrDefaultAsync(x => x.Name == breed.name);

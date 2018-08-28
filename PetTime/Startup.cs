@@ -25,11 +25,11 @@ namespace PetTime
         
         public void ConfigureServices(IServiceCollection services)
         {
-            //    services.AddDbContext<ApplicationDbContext>(options =>
-            //       options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseInMemoryDatabase("Default"));
+               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseInMemoryDatabase("Default"));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

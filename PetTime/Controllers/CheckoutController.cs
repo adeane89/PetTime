@@ -31,6 +31,7 @@ namespace PetTime.Controllers
 
         public async Task<IActionResult> Index()
         {
+            ViewData["Message"] = "About Us";
             CheckoutModel model = new CheckoutModel();
             if (User.Identity.IsAuthenticated)
             {
